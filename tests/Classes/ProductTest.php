@@ -8,7 +8,7 @@ class ProductTest extends TestCase
 {
     public function testCreateAndSetProduct()
     {
-        $product = new \Ipag\Classes\Product;
+        $product = new \Ipag\Classes\Product();
 
         $product->setName('PRODUTO')
             ->setUnitPrice(1.99)
@@ -23,7 +23,7 @@ class ProductTest extends TestCase
 
     public function testCreateAndSetUnitPriceOfProduct()
     {
-        $product = new \Ipag\Classes\Product;
+        $product = new \Ipag\Classes\Product();
 
         $product->setUnitPrice(1.99);
         $this->assertEquals(1.99, $product->getUnitPrice());
@@ -33,6 +33,5 @@ class ProductTest extends TestCase
 
         $product->setUnitPrice('1,99');
         $this->assertEquals(1.99, $product->getUnitPrice());
-
     }
 }

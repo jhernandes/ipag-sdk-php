@@ -83,7 +83,7 @@ final class Customer
     public function getPhone()
     {
         if ($this->phone != null) {
-            return $this->phone->getAreaCode() . $this->phone->getNumber();
+            return $this->phone->getAreaCode().$this->phone->getNumber();
         }
         return $this->phone;
     }
@@ -104,9 +104,9 @@ final class Customer
     private function setType()
     {
         if ($this->isIndividual()) {
-            $this->type = Customer::INDIVIDUAL;
+            $this->type = self::INDIVIDUAL;
         } else {
-            $this->type = Customer::BUSINESS;
+            $this->type = self::BUSINESS;
         }
 
         return $this;
@@ -159,6 +159,6 @@ final class Customer
 
     private function isIndividual()
     {
-        return (boolean) (strlen($this->taxpayerId) <= 11);
+        return (bool) (strlen($this->taxpayerId) <= 11);
     }
 }

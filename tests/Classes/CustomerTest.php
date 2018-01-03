@@ -8,14 +8,14 @@ class CustomerTest extends TestCase
 {
     public function testCreateAndSetCustomer()
     {
-        $customer = new \Ipag\Classes\Customer;
+        $customer = new \Ipag\Classes\Customer();
 
         $customer
             ->setName('Fulano da Silva')
             ->setTaxpayerId('799.993.388-01')
             ->setPhone('11', '98888-3333')
             ->setEmail('fulanodasilva@gmail.com')
-            ->setAddress(new \Ipag\Classes\Address);
+            ->setAddress(new \Ipag\Classes\Address());
 
         $this->assertEquals($customer->getName(), 'Fulano da Silva');
         $this->assertEquals($customer->getTaxpayerId(), '79999338801');
@@ -27,7 +27,7 @@ class CustomerTest extends TestCase
 
     public function testCreateAndSetBusinessCustomer()
     {
-        $customer = new \Ipag\Classes\Customer;
+        $customer = new \Ipag\Classes\Customer();
 
         $customer->setTaxpayerId('34.264.183/0001-74');
 
@@ -37,7 +37,7 @@ class CustomerTest extends TestCase
 
     public function testNewCustomerHasEmptyPhone()
     {
-        $customer = new \Ipag\Classes\Customer;
+        $customer = new \Ipag\Classes\Customer();
 
         $this->assertEquals($customer->getPhone(), null);
     }

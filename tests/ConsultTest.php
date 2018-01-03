@@ -6,7 +6,6 @@ use Ipag\Classes\Authentication;
 use Ipag\Classes\Endpoint;
 use Ipag\Ipag;
 use PHPUnit\Framework\TestCase;
-use Tests\PaymentTest;
 
 class ConsultTest extends TestCase
 {

@@ -15,7 +15,7 @@ final class Product
     private $quantity;
 
     /**
-     * @var double
+     * @var float
      */
     private $unitPrice;
 
@@ -63,7 +63,7 @@ final class Product
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getUnitPrice()
     {
@@ -71,7 +71,7 @@ final class Product
     }
 
     /**
-     * @param double $unitPrice
+     * @param float $unitPrice
      *
      * @return self
      */

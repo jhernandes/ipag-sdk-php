@@ -7,7 +7,7 @@ final class Cart
     /**
      * @var array of Product
      */
-    private $products = array();
+    private $products = [];
 
     /**
      * @return array of Product

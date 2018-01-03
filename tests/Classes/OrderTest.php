@@ -13,7 +13,7 @@ class OrderTest extends TestCase
     {
         parent::setUp();
 
-        $this->order = new Order;
+        $this->order = new Order();
     }
 
     public function testCreateAndSetOrder()
@@ -26,10 +26,10 @@ class OrderTest extends TestCase
             ->setExpiry('10/10/2018')
             ->setFingerPrint('ABCD123456789')
             ->setOperation(\Ipag\Classes\Enum\Operation::PAYMENT)
-            ->setPayment(new \Ipag\Classes\Payment)
-            ->setCustomer(new \Ipag\Classes\Customer)
-            ->setCart(new \Ipag\Classes\Cart)
-            ->setSubscription(new \Ipag\Classes\Subscription);
+            ->setPayment(new \Ipag\Classes\Payment())
+            ->setCustomer(new \Ipag\Classes\Customer())
+            ->setCart(new \Ipag\Classes\Cart())
+            ->setSubscription(new \Ipag\Classes\Subscription());
 
         $this->assertEquals('123456', $this->order->getOrderId());
         $this->assertEquals('https://minha_loja.com.br/ipag/callback', $this->order->getCallbackUrl());

@@ -20,7 +20,7 @@ final class Order
     private $callbackUrl;
 
     /**
-     * @var double
+     * @var float
      */
     private $amount;
 
@@ -84,9 +84,7 @@ final class Order
     }
 
     /**
-     * Get the value of Amount
-     *
-     * @return double
+     * @return float
      */
     public function getAmount()
     {
@@ -94,8 +92,6 @@ final class Order
     }
 
     /**
-     * Get the value of Installments
-     *
      * @return int
      */
     public function getInstallments()
@@ -134,7 +130,7 @@ final class Order
     }
 
     /**
-     * @param double $amount
+     * @param float $amount
      */
     public function setAmount($amount)
     {

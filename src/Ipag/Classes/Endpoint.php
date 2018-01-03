@@ -18,7 +18,7 @@ final class Endpoint
 
     public function __construct($endpoint = null)
     {
-        $this->endpoint = ($endpoint == null) ? Endpoint::PRODUCTION : $endpoint;
+        $this->endpoint = ($endpoint == null) ? self::PRODUCTION : $endpoint;
     }
 
     /**
@@ -26,7 +26,7 @@ final class Endpoint
      */
     public function payment()
     {
-        return $this->endpoint . Endpoint::PAYMENT;
+        return $this->endpoint.self::PAYMENT;
     }
 
     /**
@@ -34,7 +34,7 @@ final class Endpoint
      */
     public function consult()
     {
-        return $this->endpoint . Endpoint::CONSULT;
+        return $this->endpoint.self::CONSULT;
     }
 
     /**
@@ -42,7 +42,7 @@ final class Endpoint
      */
     public function capture()
     {
-        return $this->endpoint . Endpoint::CAPTURE;
+        return $this->endpoint.self::CAPTURE;
     }
 
     /**
@@ -50,7 +50,7 @@ final class Endpoint
      */
     public function cancel()
     {
-        return $this->endpoint . Endpoint::CANCEL;
+        return $this->endpoint.self::CANCEL;
     }
 
     /**

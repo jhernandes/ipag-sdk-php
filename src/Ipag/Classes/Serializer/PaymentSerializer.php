@@ -18,10 +18,10 @@ final class PaymentSerializer implements Serializer
 
     public function serialize()
     {
-        $serializedReturnType = array(
+        $serializedReturnType = [
             'retorno_tipo' => urlencode('xml'),
-            'boleto_tipo' => urlencode('xml'),
-        );
+            'boleto_tipo'  => urlencode('xml'),
+        ];
 
         $serializedUser = $this->serializeUser($this->transaction->getIpag()->getAuthentication());
         $serializedOrder = $this->serializeOrder($this->transaction->getOrder());
@@ -31,9 +31,9 @@ final class PaymentSerializer implements Serializer
 
     private function serializeUser($user)
     {
-        $serializedUser = array(
+        $serializedUser = [
             'identificacao' => urlencode($user->getIdentification()),
-        );
+        ];
 
         $parceiro = $user->getIdentification2();
         if (!empty($parceiro)) {
@@ -49,15 +49,15 @@ final class PaymentSerializer implements Serializer
             throw new \Exception('É necessário informar os dados do Pedido (Order)');
         }
 
-        $serializedOrder = array(
-            'pedido' => urlencode($order->getOrderId()),
-            'operacao' => urlencode($order->getOperation()),
-            'url_retorno' => urlencode($order->getCallbackUrl()),
-            'valor' => urlencode($order->getAmount()),
-            'parcelas' => urlencode($order->getInstallments()),
-            'vencto' => urlencode($order->getExpiry()),
+        $serializedOrder = [
+            'pedido'            => urlencode($order->getOrderId()),
+            'operacao'          => urlencode($order->getOperation()),
+            'url_retorno'       => urlencode($order->getCallbackUrl()),
+            'valor'             => urlencode($order->getAmount()),
+            'parcelas'          => urlencode($order->getInstallments()),
+            'vencto'            => urlencode($order->getExpiry()),
             'stelo_fingerprint' => urlencode($order->getFingerprint()),
-        );
+        ];
 
         $serializedPayment = $this->serializePayment($order->getPayment());
         $serializedCart = $this->serializeCart($order->getCart());
@@ -79,9 +79,9 @@ final class PaymentSerializer implements Serializer
             throw new \Exception('É necessário informar os dados do Pagamento (Payment)');
         }
 
-        $serializedMethod = array(
+        $serializedMethod = [
             'metodo' => urlencode($payment->getMethod()),
-        );
+        ];
 
         $serializedInstructions = $this->serializeInstructions($payment->getInstructions());
 
@@ -99,7 +99,7 @@ final class PaymentSerializer implements Serializer
 
     private function serializeInstructions($instructions)
     {
-        $serializedInstructions = array();
+        $serializedInstructions = [];
         foreach ($instructions as $key => $instruction) {
             $serializedInstructions["instrucoes[{$key}]"] = urlencode($instruction);
         }
@@ -109,7 +109,7 @@ final class PaymentSerializer implements Serializer
 
     private function serializeSoftDescriptor($softDescriptor)
     {
-        $serializedSoftDescriptor = array();
+        $serializedSoftDescriptor = [];
         if (!empty($softDescriptor)) {
             $serializedSoftDescriptor['softdescriptor'] = urlencode($softDescriptor);
         }
@@ -120,7 +120,7 @@ final class PaymentSerializer implements Serializer
     private function serializeCreditCard($creditCard)
     {
         if (empty($creditCard)) {
-            return array();
+            return [];
         }
 
         if ($creditCard->hasToken()) {
@@ -132,12 +132,12 @@ final class PaymentSerializer implements Serializer
 
     private function serializeCreditCardWithNumber($creditCard)
     {
-        $serializedCreditCard = array(
-            'num_cartao' => urlencode($creditCard->getNumber()),
+        $serializedCreditCard = [
+            'num_cartao'  => urlencode($creditCard->getNumber()),
             'nome_cartao' => urlencode($creditCard->getHolder()),
-            'mes_cartao' => urlencode($creditCard->getExpiryMonth()),
-            'ano_cartao' => urlencode($creditCard->getExpiryYear()),
-        );
+            'mes_cartao'  => urlencode($creditCard->getExpiryMonth()),
+            'ano_cartao'  => urlencode($creditCard->getExpiryYear()),
+        ];
 
         if ($creditCard->hasCvc()) {
             $serializedCreditCard['cvv_cartao'] = urlencode($creditCard->getCvc());
@@ -152,23 +152,23 @@ final class PaymentSerializer implements Serializer
 
     private function serializeCreditCardWithToken($creditCard)
     {
-        return array(
+        return [
             'token_cartao' => urlencode($creditCard->getToken()),
-        );
+        ];
     }
 
     private function serializeCart($cart)
     {
 
         if (empty($cart)) {
-            return array();
+            return [];
         }
 
         $serializedProducts = $this->serializeProducts($cart->getProducts());
 
-        return array(
+        return [
             'descricao_pedido' => urlencode(json_encode($serializedProducts)),
-        );
+        ];
 
     }
 
@@ -178,12 +178,12 @@ final class PaymentSerializer implements Serializer
         $i = 1;
 
         foreach ($products as $product) {
-            $serializedProducts[$i++] = array(
+            $serializedProducts[$i++] = [
                 'descr' => $product->getName(),
                 'valor' => $product->getUnitPrice(),
                 'quant' => $product->getQuantity(),
                 'id' => $product->getSku(),
-            );
+            ];
         }
         return $serializedProducts;
     }
@@ -191,15 +191,15 @@ final class PaymentSerializer implements Serializer
     private function serializeCustomer($customer)
     {
         if (empty($customer)) {
-            return array();
+            return [];
         }
 
-        $serializedCustomer = array(
-            'nome' => urlencode($customer->getName()),
+        $serializedCustomer = [
+            'nome'  => urlencode($customer->getName()),
             'email' => urlencode($customer->getEmail()),
-            'doc' => urlencode($customer->getTaxpayerId()),
-            'fone' => urlencode($customer->getPhone()),
-        );
+            'doc'   => urlencode($customer->getTaxpayerId()),
+            'fone'  => urlencode($customer->getPhone()),
+        ];
 
         $serializedCustomerAddress = $this->serializeCustomerAddress($customer->getAddress());
 
@@ -209,19 +209,19 @@ final class PaymentSerializer implements Serializer
     private function serializeCustomerAddress($address)
     {
         if (empty($address)) {
-            return array();
+            return [];
         }
 
-        $serializedCustomerAddress = array(
-            'endereco' => urlencode($address->getStreet()),
+        $serializedCustomerAddress = [
+            'endereco'        => urlencode($address->getStreet()),
             'numero_endereco' => urlencode($address->getNumber()),
-            'complemento' => urlencode($address->getComplement()),
-            'bairro' => urlencode($address->getNeighborhood()),
-            'cidade' => urlencode($address->getCity()),
-            'estado' => urlencode($address->getState()),
-            'pais' => urlencode($address->getCountry()),
-            'cep' => urlencode($address->getZipCode()),
-        );
+            'complemento'     => urlencode($address->getComplement()),
+            'bairro'          => urlencode($address->getNeighborhood()),
+            'cidade'          => urlencode($address->getCity()),
+            'estado'          => urlencode($address->getState()),
+            'pais'            => urlencode($address->getCountry()),
+            'cep'             => urlencode($address->getZipCode()),
+        ];
 
         return $serializedCustomerAddress;
     }
@@ -229,20 +229,20 @@ final class PaymentSerializer implements Serializer
     private function serializeSubscription($subscription)
     {
         if (empty($subscription)) {
-            return array();
+            return [];
         }
 
-        return array(
-            'profile_id' => urlencode($subscription->getProfileId()),
-            'frequencia' => urlencode($subscription->getFrequency()),
-            'intervalo' => urlencode($subscription->getInterval()),
-            'inicio' => urlencode($subscription->getStart()),
-            'ciclos' => urlencode($subscription->getCycle()),
-            'valor_rec' => urlencode($subscription->getAmount()),
-            'trial' => urlencode($subscription->getTrial()),
-            'trial_ciclos' => urlencode($subscription->getTrialCycle()),
+        return [
+            'profile_id'       => urlencode($subscription->getProfileId()),
+            'frequencia'       => urlencode($subscription->getFrequency()),
+            'intervalo'        => urlencode($subscription->getInterval()),
+            'inicio'           => urlencode($subscription->getStart()),
+            'ciclos'           => urlencode($subscription->getCycle()),
+            'valor_rec'        => urlencode($subscription->getAmount()),
+            'trial'            => urlencode($subscription->getTrial()),
+            'trial_ciclos'     => urlencode($subscription->getTrialCycle()),
             'trial_frequencia' => urlencode($subscription->getTrialFrequency()),
-            'trial_valor' => urlencode($subscription->getTrialAmount()),
-        );
+            'trial_valor'      => urlencode($subscription->getTrialAmount()),
+        ];
     }
 }

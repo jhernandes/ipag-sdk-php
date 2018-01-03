@@ -26,7 +26,6 @@ class TransactionTest extends TestCase
             );
 
         $response = $ipag->transaction()->setOrder($order)->execute();
-
     }
 
     public function testExecuteWithoutOrderShouldThrowException()
@@ -37,6 +36,5 @@ class TransactionTest extends TestCase
         $ipag = new Ipag(new Authentication('test@test.com'), 'http://google.com.br');
 
         $response = $ipag->transaction()->execute();
-
     }
 }

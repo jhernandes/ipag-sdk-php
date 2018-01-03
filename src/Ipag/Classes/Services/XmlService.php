@@ -12,6 +12,7 @@ class XmlService
         if ($response === false) {
             return false;
         }
+
         return $response;
     }
 }

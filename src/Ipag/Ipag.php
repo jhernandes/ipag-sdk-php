@@ -30,42 +30,42 @@ class Ipag
 
     public function order()
     {
-        return new Classes\Order;
+        return new Classes\Order();
     }
 
     public function customer()
     {
-        return new Classes\Customer;
+        return new Classes\Customer();
     }
 
     public function creditCard()
     {
-        return new Classes\CreditCard;
+        return new Classes\CreditCard();
     }
 
     public function address()
     {
-        return new Classes\Address;
+        return new Classes\Address();
     }
 
     public function cart()
     {
-        return new Classes\Cart;
+        return new Classes\Cart();
     }
 
     public function product()
     {
-        return new Classes\Product;
+        return new Classes\Product();
     }
 
     public function payment()
     {
-        return new Classes\Payment;
+        return new Classes\Payment();
     }
 
     public function subscription()
     {
-        return new Classes\Subscription;
+        return new Classes\Subscription();
     }
 
     /**

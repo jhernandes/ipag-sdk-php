@@ -3,11 +3,8 @@
 namespace Tests\Classes\Services;
 
 use Ipag\Classes\Authentication;
-use Ipag\Classes\Customer;
 use Ipag\Classes\Enum\Method;
-use Ipag\Classes\Order;
 use Ipag\Classes\Serializer\PaymentSerializer;
-use Ipag\Classes\Transaction;
 use Ipag\Ipag;
 use PHPUnit\Framework\TestCase;
 
@@ -76,43 +73,43 @@ class PaymentSerializerTest extends TestCase
 
         $response = $paymentSerializer->serialize();
 
-        $expected = array(
-            'identificacao' => 'app%40test.com',
-            'identificacao2' => 'partner%40test.com',
-            'url_retorno' => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
-            'retorno_tipo' => 'xml',
-            'boleto_tipo' => 'xml',
-            'pedido' => '10000',
-            'operacao' => '',
-            'valor' => '10',
-            'parcelas' => '1',
-            'vencto' => '',
+        $expected = [
+            'identificacao'     => 'app%40test.com',
+            'identificacao2'    => 'partner%40test.com',
+            'url_retorno'       => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
+            'retorno_tipo'      => 'xml',
+            'boleto_tipo'       => 'xml',
+            'pedido'            => '10000',
+            'operacao'          => '',
+            'valor'             => '10',
+            'parcelas'          => '1',
+            'vencto'            => '',
             'stelo_fingerprint' => '',
-            'metodo' => 'visa',
-            'num_cartao' => '4066553613548107',
-            'nome_cartao' => 'FULANO',
-            'mes_cartao' => '10',
-            'ano_cartao' => '2025',
-            'cvv_cartao' => '123',
+            'metodo'            => 'visa',
+            'num_cartao'        => '4066553613548107',
+            'nome_cartao'       => 'FULANO',
+            'mes_cartao'        => '10',
+            'ano_cartao'        => '2025',
+            'cvv_cartao'        => '123',
             'gera_token_cartao' => '1',
-            'nome' => 'Fulano+da+Silva',
-            'email' => 'fulanodasilva%40gmail.com',
-            'doc' => '79999338801',
-            'fone' => '11988883333',
-            'endereco' => 'Rua+J%C3%BAlio+Gonzalez',
-            'numero_endereco' => '1000',
-            'complemento' => '',
-            'bairro' => 'Barra+Funda',
-            'cidade' => 'S%C3%A3o+Paulo',
-            'estado' => 'SP',
-            'pais' => 'BR',
-            'cep' => '01156060',
-            'instrucoes[0]' => 'Instru%C3%A7%C3%A3o+1',
-            'instrucoes[1]' => 'Instru%C3%A7%C3%A3o+2',
-            'instrucoes[2]' => 'Instru%C3%A7%C3%A3o+3',
-            'softdescriptor' => 'EMPRESA',
-            'descricao_pedido' => '%7B%221%22%3A%7B%22descr%22%3A%22Produto+1%22%2C%22valor%22%3A1%2C%22quant%22%3A2%2C%22id%22%3A%22G9F07GSD96FA8%22%7D%7D',
-        );
+            'nome'              => 'Fulano+da+Silva',
+            'email'             => 'fulanodasilva%40gmail.com',
+            'doc'               => '79999338801',
+            'fone'              => '11988883333',
+            'endereco'          => 'Rua+J%C3%BAlio+Gonzalez',
+            'numero_endereco'   => '1000',
+            'complemento'       => '',
+            'bairro'            => 'Barra+Funda',
+            'cidade'            => 'S%C3%A3o+Paulo',
+            'estado'            => 'SP',
+            'pais'              => 'BR',
+            'cep'               => '01156060',
+            'instrucoes[0]'     => 'Instru%C3%A7%C3%A3o+1',
+            'instrucoes[1]'     => 'Instru%C3%A7%C3%A3o+2',
+            'instrucoes[2]'     => 'Instru%C3%A7%C3%A3o+3',
+            'softdescriptor'    => 'EMPRESA',
+            'descricao_pedido'  => '%7B%221%22%3A%7B%22descr%22%3A%22Produto+1%22%2C%22valor%22%3A1%2C%22quant%22%3A2%2C%22id%22%3A%22G9F07GSD96FA8%22%7D%7D',
+        ];
 
         $this->assertEquals($expected, $response);
     }
@@ -137,32 +134,32 @@ class PaymentSerializerTest extends TestCase
 
         $response = $paymentSerializer->serialize();
 
-        $expected = array(
-            'identificacao' => 'app%40test.com',
-            'url_retorno' => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
-            'retorno_tipo' => 'xml',
-            'boleto_tipo' => 'xml',
-            'pedido' => '10000',
-            'operacao' => '',
-            'valor' => '10',
-            'parcelas' => '1',
-            'vencto' => '',
+        $expected = [
+            'identificacao'     => 'app%40test.com',
+            'url_retorno'       => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
+            'retorno_tipo'      => 'xml',
+            'boleto_tipo'       => 'xml',
+            'pedido'            => '10000',
+            'operacao'          => '',
+            'valor'             => '10',
+            'parcelas'          => '1',
+            'vencto'            => '',
             'stelo_fingerprint' => '',
-            'metodo' => 'visa',
-            'token_cartao' => '123456789',
-            'nome' => 'Fulano+da+Silva',
-            'email' => 'fulanodasilva%40gmail.com',
-            'doc' => '79999338801',
-            'fone' => '11988883333',
-            'endereco' => 'Rua+J%C3%BAlio+Gonzalez',
-            'numero_endereco' => '1000',
-            'complemento' => '',
-            'bairro' => 'Barra+Funda',
-            'cidade' => 'S%C3%A3o+Paulo',
-            'estado' => 'SP',
-            'pais' => 'BR',
-            'cep' => '01156060',
-        );
+            'metodo'            => 'visa',
+            'token_cartao'      => '123456789',
+            'nome'              => 'Fulano+da+Silva',
+            'email'             => 'fulanodasilva%40gmail.com',
+            'doc'               => '79999338801',
+            'fone'              => '11988883333',
+            'endereco'          => 'Rua+J%C3%BAlio+Gonzalez',
+            'numero_endereco'   => '1000',
+            'complemento'       => '',
+            'bairro'            => 'Barra+Funda',
+            'cidade'            => 'S%C3%A3o+Paulo',
+            'estado'            => 'SP',
+            'pais'              => 'BR',
+            'cep'               => '01156060',
+        ];
 
         $this->assertEquals($expected, $response);
     }
@@ -187,20 +184,20 @@ class PaymentSerializerTest extends TestCase
 
         $response = $paymentSerializer->serialize();
 
-        $expected = array(
-            'identificacao' => 'app%40test.com',
-            'url_retorno' => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
-            'retorno_tipo' => 'xml',
-            'boleto_tipo' => 'xml',
-            'pedido' => '10000',
-            'operacao' => '',
-            'valor' => '10',
-            'parcelas' => '1',
-            'vencto' => '',
+        $expected = [
+            'identificacao'     => 'app%40test.com',
+            'url_retorno'       => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
+            'retorno_tipo'      => 'xml',
+            'boleto_tipo'       => 'xml',
+            'pedido'            => '10000',
+            'operacao'          => '',
+            'valor'             => '10',
+            'parcelas'          => '1',
+            'vencto'            => '',
             'stelo_fingerprint' => '',
-            'metodo' => 'visa',
-            'token_cartao' => '123456789',
-        );
+            'metodo'            => 'visa',
+            'token_cartao'      => '123456789',
+        ];
 
         $this->assertEquals($expected, $response);
     }
@@ -225,24 +222,24 @@ class PaymentSerializerTest extends TestCase
 
         $response = $paymentSerializer->serialize();
 
-        $expected = array(
-            'identificacao' => 'app%40test.com',
-            'url_retorno' => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
-            'retorno_tipo' => 'xml',
-            'boleto_tipo' => 'xml',
-            'pedido' => '10000',
-            'operacao' => '',
-            'valor' => '10',
-            'parcelas' => '1',
-            'vencto' => '',
+        $expected = [
+            'identificacao'     => 'app%40test.com',
+            'url_retorno'       => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
+            'retorno_tipo'      => 'xml',
+            'boleto_tipo'       => 'xml',
+            'pedido'            => '10000',
+            'operacao'          => '',
+            'valor'             => '10',
+            'parcelas'          => '1',
+            'vencto'            => '',
             'stelo_fingerprint' => '',
-            'metodo' => 'visa',
-            'token_cartao' => '123456789',
-            'nome' => '',
-            'email' => '',
-            'doc' => '',
-            'fone' => '',
-        );
+            'metodo'            => 'visa',
+            'token_cartao'      => '123456789',
+            'nome'              => '',
+            'email'             => '',
+            'doc'               => '',
+            'fone'              => '',
+        ];
 
         $this->assertEquals($expected, $response);
     }
@@ -290,31 +287,31 @@ class PaymentSerializerTest extends TestCase
 
         $response = $paymentSerializer->serialize();
 
-        $expected = array(
-            'identificacao' => 'app%40test.com',
-            'url_retorno' => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
-            'retorno_tipo' => 'xml',
-            'boleto_tipo' => 'xml',
-            'pedido' => '10000',
-            'operacao' => '',
-            'valor' => '10',
-            'parcelas' => '1',
-            'vencto' => '',
+        $expected = [
+            'identificacao'     => 'app%40test.com',
+            'url_retorno'       => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
+            'retorno_tipo'      => 'xml',
+            'boleto_tipo'       => 'xml',
+            'pedido'            => '10000',
+            'operacao'          => '',
+            'valor'             => '10',
+            'parcelas'          => '1',
+            'vencto'            => '',
             'stelo_fingerprint' => '',
-            'metodo' => 'boleto_itau',
-            'nome' => 'Fulano+da+Silva',
-            'email' => 'fulanodasilva%40gmail.com',
-            'doc' => '79999338801',
-            'fone' => '11988883333',
-            'endereco' => 'Rua+J%C3%BAlio+Gonzalez',
-            'numero_endereco' => '1000',
-            'complemento' => '',
-            'bairro' => 'Barra+Funda',
-            'cidade' => 'S%C3%A3o+Paulo',
-            'estado' => 'SP',
-            'pais' => 'BR',
-            'cep' => '01156060',
-        );
+            'metodo'            => 'boleto_itau',
+            'nome'              => 'Fulano+da+Silva',
+            'email'             => 'fulanodasilva%40gmail.com',
+            'doc'               => '79999338801',
+            'fone'              => '11988883333',
+            'endereco'          => 'Rua+J%C3%BAlio+Gonzalez',
+            'numero_endereco'   => '1000',
+            'complemento'       => '',
+            'bairro'            => 'Barra+Funda',
+            'cidade'            => 'S%C3%A3o+Paulo',
+            'estado'            => 'SP',
+            'pais'              => 'BR',
+            'cep'               => '01156060',
+        ];
 
         $this->assertEquals($expected, $response);
     }
@@ -343,42 +340,42 @@ class PaymentSerializerTest extends TestCase
 
         $response = $paymentSerializer->serialize();
 
-        $expected = array(
-            'identificacao' => 'app%40test.com',
-            'url_retorno' => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
-            'retorno_tipo' => 'xml',
-            'boleto_tipo' => 'xml',
-            'pedido' => '10000',
-            'operacao' => '',
-            'valor' => '10',
-            'parcelas' => '1',
-            'vencto' => '',
+        $expected = [
+            'identificacao'     => 'app%40test.com',
+            'url_retorno'       => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
+            'retorno_tipo'      => 'xml',
+            'boleto_tipo'       => 'xml',
+            'pedido'            => '10000',
+            'operacao'          => '',
+            'valor'             => '10',
+            'parcelas'          => '1',
+            'vencto'            => '',
             'stelo_fingerprint' => '',
-            'metodo' => 'visa',
-            'token_cartao' => '123456789',
-            'nome' => 'Fulano+da+Silva',
-            'email' => 'fulanodasilva%40gmail.com',
-            'doc' => '79999338801',
-            'fone' => '11988883333',
-            'endereco' => 'Rua+J%C3%BAlio+Gonzalez',
-            'numero_endereco' => '1000',
-            'complemento' => '',
-            'bairro' => 'Barra+Funda',
-            'cidade' => 'S%C3%A3o+Paulo',
-            'estado' => 'SP',
-            'pais' => 'BR',
-            'cep' => '01156060',
-            'profile_id' => '',
-            'frequencia' => '1',
-            'intervalo' => 'month',
-            'inicio' => '',
-            'ciclos' => '',
-            'valor_rec' => '',
-            'trial' => '',
-            'trial_ciclos' => '',
-            'trial_frequencia' => '',
-            'trial_valor' => '',
-        );
+            'metodo'            => 'visa',
+            'token_cartao'      => '123456789',
+            'nome'              => 'Fulano+da+Silva',
+            'email'             => 'fulanodasilva%40gmail.com',
+            'doc'               => '79999338801',
+            'fone'              => '11988883333',
+            'endereco'          => 'Rua+J%C3%BAlio+Gonzalez',
+            'numero_endereco'   => '1000',
+            'complemento'       => '',
+            'bairro'            => 'Barra+Funda',
+            'cidade'            => 'S%C3%A3o+Paulo',
+            'estado'            => 'SP',
+            'pais'              => 'BR',
+            'cep'               => '01156060',
+            'profile_id'        => '',
+            'frequencia'        => '1',
+            'intervalo'         => 'month',
+            'inicio'            => '',
+            'ciclos'            => '',
+            'valor_rec'         => '',
+            'trial'             => '',
+            'trial_ciclos'      => '',
+            'trial_frequencia'  => '',
+            'trial_valor'       => '',
+        ];
 
         $this->assertEquals($expected, $response);
     }

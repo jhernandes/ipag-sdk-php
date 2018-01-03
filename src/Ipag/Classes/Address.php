@@ -52,8 +52,6 @@ final class Address
     }
 
     /**
-     * Get the value of Street
-     *
      * @return string
      */
     public function getStreet()
@@ -62,8 +60,6 @@ final class Address
     }
 
     /**
-     * Get the value of Number
-     *
      * @return string
      */
     public function getNumber()
@@ -72,8 +68,6 @@ final class Address
     }
 
     /**
-     * Get the value of Complement
-     *
      * @return string
      */
     public function getComplement()
@@ -82,8 +76,6 @@ final class Address
     }
 
     /**
-     * Get the value of Neighboorhood
-     *
      * @return string
      */
     public function getNeighborhood()
@@ -92,8 +84,6 @@ final class Address
     }
 
     /**
-     * Get the value of City
-     *
      * @return string
      */
     public function getCity()
@@ -102,8 +92,6 @@ final class Address
     }
 
     /**
-     * Get the value of State
-     *
      * @return string
      */
     public function getState()
@@ -112,8 +100,6 @@ final class Address
     }
 
     /**
-     * Get the value of Country
-     *
      * @return string
      */
     public function getCountry()
@@ -122,8 +108,6 @@ final class Address
     }
 
     /**
-     * Get the value of Zip Code
-     *
      * @return string
      */
     public function getZipCode()

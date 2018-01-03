@@ -17,7 +17,7 @@ final class Payment
     /**
      * @var array
      */
-    private $instructions = array();
+    private $instructions = [];
 
     /**
      * @var string
@@ -100,6 +100,6 @@ final class Payment
 
     private function instructionsAreNotFull()
     {
-        return (boolean) (count($this->instructions) < 3);
+        return (bool) (count($this->instructions) < 3);
     }
 }

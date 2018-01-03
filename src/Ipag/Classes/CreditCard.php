@@ -163,36 +163,36 @@ final class CreditCard
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getSave()
     {
-        return (boolean) $this->save;
+        return (bool) $this->save;
     }
 
     /**
-     * @param boolean $save
+     * @param bool $save
      */
     public function setSave($save)
     {
-        $this->save = (boolean) $save;
+        $this->save = (bool) $save;
 
         return $this;
     }
 
     private function isValidMonth($month)
     {
-        return (boolean) (is_numeric($month) && $month >= 1 && $month <= 12);
+        return (bool) (is_numeric($month) && $month >= 1 && $month <= 12);
     }
 
     private function isValidYear($year)
     {
-        return (boolean) (is_numeric($year) && strlen($year) >= 2 && strlen($year) <= 4);
+        return (bool) (is_numeric($year) && strlen($year) >= 2 && strlen($year) <= 4);
     }
 
     private function isValidCvc($cvc)
     {
-        return (boolean) (is_numeric($cvc) && (strlen($cvc) == 3 || strlen($cvc) == 4));
+        return (bool) (is_numeric($cvc) && (strlen($cvc) == 3 || strlen($cvc) == 4));
     }
 
     public function hasToken()

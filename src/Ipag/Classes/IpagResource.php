@@ -60,7 +60,7 @@ abstract class IpagResource
     {
         $xmlObject = Services\XmlService::validate($xmlResponse);
         if (!$xmlObject) {
-            throw new \Exception("Não foi possível identificar o XML de retorno.");
+            throw new \Exception('Não foi possível identificar o XML de retorno.');
         }
 
         return json_decode(json_encode((array) $xmlObject));
@@ -68,10 +68,10 @@ abstract class IpagResource
 
     private function getIpagHeaders()
     {
-        return array(
+        return [
             'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8',
-            'Accept' => 'application/xml',
-        );
+            'Accept'       => 'application/xml',
+        ];
     }
 
     /**

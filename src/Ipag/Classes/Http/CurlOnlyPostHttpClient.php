@@ -7,7 +7,7 @@ final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
     private $httpHeaders;
     private $httpPostFields;
 
-    public function __invoke($endpoint, array $headers = array(), array $fields = array())
+    public function __invoke($endpoint, array $headers = [], array $fields = [])
     {
         $this->httpHeaders = $this->formatToHttpHeaders($headers);
         $this->httpPostFields = $this->formatToHttpPostFields($fields);
@@ -38,7 +38,7 @@ final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
         return $response;
     }
 
-    private function formatToHttpHeaders(array $headers = array())
+    private function formatToHttpHeaders(array $headers = [])
     {
         return array_map(
             function ($name, $value) {
@@ -49,7 +49,7 @@ final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
         );
     }
 
-    private function formatToHttpPostFields(array $fields = array())
+    private function formatToHttpPostFields(array $fields = [])
     {
         $formattedFields = '';
         foreach ($fields as $name => $value) {
@@ -63,7 +63,7 @@ final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
     private function curlHasError($curl)
     {
         if (curl_errno($curl)) {
-            throw new \Exception('Curl error: ' . curl_error($curl));
+            throw new \Exception('Curl error: '.curl_error($curl));
         }
     }
 }

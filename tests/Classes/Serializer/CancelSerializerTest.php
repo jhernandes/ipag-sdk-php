@@ -14,7 +14,7 @@ class CancelSerializerTest extends TestCase
     public function testSerialize()
     {
         $transaction = new Transaction(new Ipag(new Authentication('app@test.com')));
-        $order = new Order;
+        $order = new Order();
         $order->setCallbackUrl('https://minha_loja.com.br/ipag/callback');
         $transaction->setOrder($order)->setTid('123456789');
 
@@ -22,12 +22,12 @@ class CancelSerializerTest extends TestCase
 
         $response = $cancelSerializer->serialize();
 
-        $expected = array(
+        $expected = [
             'identificacao' => urlencode('app@test.com'),
-            'transId' => urlencode('123456789'),
-            'url_retorno' => urlencode('https://minha_loja.com.br/ipag/callback'),
-            'retorno_tipo' => urlencode('xml'),
-        );
+            'transId'       => urlencode('123456789'),
+            'url_retorno'   => urlencode('https://minha_loja.com.br/ipag/callback'),
+            'retorno_tipo'  => urlencode('xml'),
+        ];
 
         $this->assertEquals($expected, $response);
     }

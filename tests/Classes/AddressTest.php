@@ -8,7 +8,7 @@ class AddressTest extends TestCase
 {
     public function testCreateAndCompleteSetAddress()
     {
-        $address = new \Ipag\Classes\Address;
+        $address = new \Ipag\Classes\Address();
 
         $address->setStreet('Rua Manoel da Silva')
             ->setNumber('10000')

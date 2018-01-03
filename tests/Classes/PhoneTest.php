@@ -8,7 +8,7 @@ class PhoneTest extends TestCase
 {
     public function testCreateAndSetPhone()
     {
-        $phone = new \Ipag\Classes\Phone;
+        $phone = new \Ipag\Classes\Phone();
 
         $phone->setAreaCode('11')->setNumber('95555-5555');
 

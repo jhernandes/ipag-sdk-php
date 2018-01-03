@@ -55,20 +55,20 @@ final class Transaction extends IpagResource
 
     protected function populate(stdClass $response)
     {
-        $transaction = new stdClass;
+        $transaction = new stdClass();
         $transaction->tid = ObjectUtil::getProperty($response, 'id_transacao');
         $transaction->acquirer = ObjectUtil::getProperty($response, 'operadora');
         $transaction->acquirerMessage = ObjectUtil::getProperty($response, 'operadora_mensagem');
         $transaction->urlAthentication = ObjectUtil::getProperty($response, 'url_autenticacao');
-        $transaction->payment = new stdClass;
+        $transaction->payment = new stdClass();
         $transaction->payment->status = ObjectUtil::getProperty($response, 'status_pagamento');
         $transaction->payment->message = ObjectUtil::getProperty($response, 'mensagem_transacao');
 
-        $transaction->order = new stdClass;
+        $transaction->order = new stdClass();
         $transaction->order->orderId = ObjectUtil::getProperty($response, 'num_pedido');
 
         if (isset($response->token)) {
-            $transaction->creditCard = new stdClass;
+            $transaction->creditCard = new stdClass();
             $transaction->creditCard->token = ObjectUtil::getProperty($response, 'token');
             $transaction->creditCard->last4 = ObjectUtil::getProperty($response, 'last4');
             $transaction->creditCard->expiryMonth = ObjectUtil::getProperty($response, 'mes');
@@ -76,7 +76,7 @@ final class Transaction extends IpagResource
         }
 
         if (isset($response->id_assinatura)) {
-            $transaction->subscription = new stdClass;
+            $transaction->subscription = new stdClass();
             $transaction->subscription->id = ObjectUtil::getProperty($response, 'id_assinatura');
             $transaction->subscription->profileId = ObjectUtil::getProperty($response, 'profile_id');
         }

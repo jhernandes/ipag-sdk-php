@@ -13,7 +13,7 @@ class SubscriptionPaymentTest extends TestCase
     public function doPayment($identification, $orderId = null)
     {
         if ($orderId == null) {
-            $orderId = date("mdHis");
+            $orderId = date('mdHis');
         }
 
         $ipag = new Ipag(new Authentication($identification), Endpoint::SANDBOX);
@@ -57,7 +57,7 @@ class SubscriptionPaymentTest extends TestCase
 
     public function testExecutePaymentSuccessfully()
     {
-        $orderId = date("mdHis");
+        $orderId = date('mdHis');
         $transaction = $this->doPayment(getenv('ID_IPAG'), $orderId);
 
         $this->assertEquals(getenv('APPROVED'), $transaction->payment->status);

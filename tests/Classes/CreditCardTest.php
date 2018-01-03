@@ -12,7 +12,7 @@ class CreditCardTest extends TestCase
     {
         parent::setUp();
 
-        $this->card = new \Ipag\Classes\CreditCard;
+        $this->card = new \Ipag\Classes\CreditCard();
     }
 
     public function testCreateAndSetCreditCardSuccessfully()

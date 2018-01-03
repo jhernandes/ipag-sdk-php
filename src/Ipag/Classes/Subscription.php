@@ -30,12 +30,12 @@ final class Subscription
     private $cycle;
 
     /**
-     * @var double
+     * @var float
      */
     private $amount;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $trial;
 
@@ -50,7 +50,7 @@ final class Subscription
     private $trialFrequency;
 
     /**
-     * @var double
+     * @var float
      */
     private $trialAmount;
 
@@ -87,7 +87,7 @@ final class Subscription
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getAmount()
     {
@@ -95,7 +95,7 @@ final class Subscription
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getTrial()
     {
@@ -119,7 +119,7 @@ final class Subscription
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getTrialAmount()
     {
@@ -189,7 +189,7 @@ final class Subscription
     }
 
     /**
-     * @param double $amount
+     * @param float $amount
      */
     public function setAmount($amount)
     {
@@ -199,11 +199,11 @@ final class Subscription
     }
 
     /**
-     * @param boolean $trial
+     * @param bool $trial
      */
     public function setTrial($trial)
     {
-        $this->trial = (boolean) $trial;
+        $this->trial = (bool) $trial;
 
         return $this;
     }
@@ -239,7 +239,7 @@ final class Subscription
     }
 
     /**
-     * @param double $trialAmount
+     * @param float $trialAmount
      */
     public function setTrialAmount($trialAmount)
     {
@@ -274,7 +274,7 @@ final class Subscription
 
     private function isValidFrequency($frequency)
     {
-        return (boolean) (is_numeric($frequency) && strlen($frequency) >= 1 && strlen($frequency) <= 2);
+        return (bool) (is_numeric($frequency) && strlen($frequency) >= 1 && strlen($frequency) <= 2);
     }
 
     private function isValidInterval($interval)
@@ -303,11 +303,11 @@ final class Subscription
 
     private function isValidCycle($cycle)
     {
-        return (boolean) (is_numeric($cycle) && strlen($cycle) >= 1 && strlen($cycle) <= 3);
+        return (bool) (is_numeric($cycle) && strlen($cycle) >= 1 && strlen($cycle) <= 3);
     }
 
     private function isValidProfileId($profileId)
     {
-        return (boolean) (is_numeric($profileId) && strlen($profileId) <= 32);
+        return (bool) (is_numeric($profileId) && strlen($profileId) <= 32);
     }
 }

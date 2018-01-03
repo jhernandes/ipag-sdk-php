@@ -12,7 +12,7 @@ class SubscriptionTest extends TestCase
     {
         parent::setUp();
 
-        $this->subscription = new \Ipag\Classes\Subscription;
+        $this->subscription = new \Ipag\Classes\Subscription();
     }
 
     public function testCreateAndSetSubscriptionSuccessfully()

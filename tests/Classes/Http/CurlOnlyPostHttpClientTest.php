@@ -13,20 +13,20 @@ class CurlOnlyPostHttpClientTest extends TestCase
 
         $onlyPost = new CurlOnlyPostHttpClient();
 
-        $onlyPost('', array(), array());
+        $onlyPost('', [], []);
     }
 
     public function testCallInvokeSuccessfully()
     {
         $onlyPost = new CurlOnlyPostHttpClient();
 
-        $response = $onlyPost(\Ipag\Classes\Endpoint::SANDBOX, array(
+        $response = $onlyPost(\Ipag\Classes\Endpoint::SANDBOX, [
             'Content-Type' => 'application/xml',
-            'Accept' => 'application/xml',
-        ), array(
-            'id' => 1,
+            'Accept'       => 'application/xml',
+        ], [
+            'id'   => 1,
             'name' => 'teste',
-        ));
+        ]);
 
         $this->assertEquals('API IPAG - SANDBOX', $response);
     }

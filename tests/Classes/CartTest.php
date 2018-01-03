@@ -12,7 +12,7 @@ class CartTest extends TestCase
     {
         parent::setUp();
 
-        $this->product = new \Ipag\Classes\Product;
+        $this->product = new \Ipag\Classes\Product();
         $this->product->setName('Produto de Testes')
             ->setQuantity(10)
             ->setUnitPrice(1.99)
@@ -21,7 +21,7 @@ class CartTest extends TestCase
 
     public function testCreateAndAddAProductToCart()
     {
-        $cart = new \Ipag\Classes\Cart;
+        $cart = new \Ipag\Classes\Cart();
 
         $cart->addProduct($this->product);
 
@@ -30,13 +30,13 @@ class CartTest extends TestCase
 
     public function testCreateAndAddManyProductsToCart()
     {
-        $cart = new \Ipag\Classes\Cart;
+        $cart = new \Ipag\Classes\Cart();
 
-        $products = array(
+        $products = [
             $this->product,
             $this->product,
             $this->product,
-        );
+        ];
 
         $cart->addProducts($products);
 
