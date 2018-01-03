@@ -2,8 +2,8 @@
 
 namespace Ipag\Classes;
 
-use Ipag\Http\CurlOnlyPostHttpClient;
-use Ipag\Http\OnlyPostHttpClientInterface;
+use Ipag\Classes\Http\CurlOnlyPostHttpClient;
+use Ipag\Classes\Http\OnlyPostHttpClientInterface;
 use Ipag\Ipag;
 
 abstract class IpagResource

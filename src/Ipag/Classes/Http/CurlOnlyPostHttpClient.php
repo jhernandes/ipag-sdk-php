@@ -1,6 +1,8 @@
 <?php
 
-namespace Ipag\Http;
+namespace Ipag\Classes\Http;
+
+use Ipag\Classes\Http\OnlyPostHttpClientInterface;
 
 final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
 {

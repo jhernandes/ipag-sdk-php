@@ -1,6 +1,6 @@
 <?php
 
-namespace Ipag\Http;
+namespace Ipag\Classes\Http;
 
 interface OnlyPostHttpClientInterface
 {

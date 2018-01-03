@@ -2,7 +2,7 @@
 
 namespace Tests\Classes\Http;
 
-use Ipag\Http\CurlOnlyPostHttpClient;
+use Ipag\Classes\Http\CurlOnlyPostHttpClient;
 use PHPUnit\Framework\TestCase;
 
 class CurlOnlyPostHttpClientTest extends TestCase
