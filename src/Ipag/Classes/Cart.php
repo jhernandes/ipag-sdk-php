@@ -38,5 +38,4 @@ final class Cart
 
         return $this;
     }
-
 }

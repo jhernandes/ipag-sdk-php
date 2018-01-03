@@ -63,7 +63,7 @@ class CreditCardTest extends TestCase
 
     public function testIfCreditCardHasCvc()
     {
-        $this->card = new \Ipag\Classes\CreditCard;
+        $this->card = new \Ipag\Classes\CreditCard();
         $this->assertFalse($this->card->hasCvc());
 
         $this->card->setCvc('123');

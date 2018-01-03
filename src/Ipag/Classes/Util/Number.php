@@ -12,7 +12,7 @@ final class Number
             throw new \UnexpectedValueException("{$number} não é um número válido");
         }
 
-        return (double) number_format($number, 2, '.', '');
+        return (float) number_format($number, 2, '.', '');
     }
 
     public static function getOnlyNumbers($string)

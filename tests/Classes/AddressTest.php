@@ -29,5 +29,4 @@ class AddressTest extends TestCase
         $this->assertEquals($address->getZipCode(), '01156060');
         $this->assertEquals(strlen($address->getZipCode()), 8);
     }
-
 }

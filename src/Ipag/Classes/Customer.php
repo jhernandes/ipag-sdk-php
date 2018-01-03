@@ -85,6 +85,7 @@ final class Customer
         if ($this->phone != null) {
             return $this->phone->getAreaCode().$this->phone->getNumber();
         }
+
         return $this->phone;
     }
 

@@ -265,7 +265,6 @@ final class Subscription
             throw new \UnexpectedValueException(
                 'Profile ID deve ser somente númerico e ter no máximo 32 caracteres.'
             );
-
         }
         $this->profileId = $profileId;
 
@@ -287,6 +286,7 @@ final class Subscription
             default:
                 return false;
         }
+
         return false;
     }
 
@@ -298,6 +298,7 @@ final class Subscription
                 return true;
             }
         }
+
         return false;
     }
 

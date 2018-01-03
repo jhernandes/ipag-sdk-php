@@ -159,7 +159,6 @@ final class PaymentSerializer implements Serializer
 
     private function serializeCart($cart)
     {
-
         if (empty($cart)) {
             return [];
         }
@@ -169,7 +168,6 @@ final class PaymentSerializer implements Serializer
         return [
             'descricao_pedido' => urlencode(json_encode($serializedProducts)),
         ];
-
     }
 
     private function serializeProducts($products)
@@ -182,9 +180,10 @@ final class PaymentSerializer implements Serializer
                 'descr' => $product->getName(),
                 'valor' => $product->getUnitPrice(),
                 'quant' => $product->getQuantity(),
-                'id' => $product->getSku(),
+                'id'    => $product->getSku(),
             ];
         }
+
         return $serializedProducts;
     }
 
