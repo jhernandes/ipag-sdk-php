@@ -3,6 +3,7 @@
 namespace Ipag;
 
 use Ipag\Classes\Authentication;
+use Ipag\Classes\Endpoint;
 
 class Ipag
 {
@@ -52,6 +53,11 @@ class Ipag
         return new Classes\Cart;
     }
 
+    public function product()
+    {
+        return new Classes\Product;
+    }
+
     public function payment()
     {
         return new Classes\Payment;
@@ -73,7 +79,7 @@ class Ipag
     /**
      * @param Authentication $authetication
      */
-    public function setAuthentication(Authentication $authetication)
+    public function setAuthentication(Authentication $authentication)
     {
         $this->authentication = $authentication;
 

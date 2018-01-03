@@ -204,4 +204,20 @@ final class CreditCard
     {
         return !empty($this->cvc);
     }
+
+    public function hide()
+    {
+        $this->hideCard();
+        $this->hideCvc();
+    }
+
+    public function hideCard()
+    {
+        $this->number = preg_replace('/^(\d{6})(\d+)(\d{4})$/', '$1******$3', $this->number);
+    }
+
+    public function hideCvc()
+    {
+        $this->cvc = preg_replace('/\d/', '*', $this->cvc);
+    }
 }

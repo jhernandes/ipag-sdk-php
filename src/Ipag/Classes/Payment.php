@@ -100,6 +100,6 @@ final class Payment
 
     private function instructionsAreNotFull()
     {
-        return (boolean) count($this->instructions) < 3;
+        return (boolean) (count($this->instructions) < 3);
     }
 }

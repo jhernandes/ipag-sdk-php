@@ -6,7 +6,7 @@ final class Endpoint
 {
     const PRODUCTION = 'https://www.librepag.com.br';
     const SANDBOX = 'https://sandbox.ipag.com.br';
-    const PAYMENT = '/pagamento.php';
+    const PAYMENT = '/pagamento';
     const CONSULT = '/consulta';
     const CAPTURE = '/captura';
     const CANCEL = '/cancela';

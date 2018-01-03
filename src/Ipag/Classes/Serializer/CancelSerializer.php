@@ -6,12 +6,22 @@ use Ipag\Classes\Transaction;
 
 final class CancelSerializer implements Serializer
 {
-    public function serialize(Transaction $transaction)
+    /**
+     * @var Transaction
+     */
+    private $transaction;
+
+    public function __construct(Transaction $transaction)
+    {
+        $this->transaction = $transaction;
+    }
+
+    public function serialize()
     {
         return array(
-            'identificacao' => urlencode($transaction->getUser()->getIdentification()),
-            'transId' => urlencode($transaction->getTid()),
-            'url_retorno' => urlencode($transaction->getOrder()->getCallbackUrl()),
+            'identificacao' => urlencode($this->transaction->getIpag()->getAuthentication()->getIdentification()),
+            'transId' => urlencode($this->transaction->getTid()),
+            'url_retorno' => urlencode($this->transaction->getOrder()->getCallbackUrl()),
             'retorno_tipo' => urlencode('xml'),
         );
     }

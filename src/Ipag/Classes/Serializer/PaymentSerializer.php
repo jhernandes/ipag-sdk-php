@@ -45,6 +45,10 @@ final class PaymentSerializer implements Serializer
 
     private function serializeOrder($order)
     {
+        if (empty($order)) {
+            throw new \Exception('É necessário informar os dados do Pedido (Order)');
+        }
+
         $serializedOrder = array(
             'pedido' => urlencode($order->getOrderId()),
             'operacao' => urlencode($order->getOperation()),
@@ -71,6 +75,10 @@ final class PaymentSerializer implements Serializer
 
     private function serializePayment($payment)
     {
+        if (empty($payment)) {
+            throw new \Exception('É necessário informar os dados do Pagamento (Payment)');
+        }
+
         $serializedMethod = array(
             'metodo' => urlencode($payment->getMethod()),
         );
@@ -225,6 +233,7 @@ final class PaymentSerializer implements Serializer
         }
 
         return array(
+            'profile_id' => urlencode($subscription->getProfileId()),
             'frequencia' => urlencode($subscription->getFrequency()),
             'intervalo' => urlencode($subscription->getInterval()),
             'inicio' => urlencode($subscription->getStart()),

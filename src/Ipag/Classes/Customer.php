@@ -119,6 +119,8 @@ final class Customer
     {
         $this->taxpayerId = substr(Util\Number::getOnlyNumbers($taxpayerId), 0, 14);
 
+        $this->setType();
+
         return $this;
     }
 
@@ -157,6 +159,6 @@ final class Customer
 
     private function isIndividual()
     {
-        return (boolean) strlen($this->taxpayerId) <= 11;
+        return (boolean) (strlen($this->taxpayerId) <= 11);
     }
 }

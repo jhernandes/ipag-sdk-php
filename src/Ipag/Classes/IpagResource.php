@@ -3,6 +3,7 @@
 namespace Ipag\Classes;
 
 use Ipag\Http\CurlOnlyPostHttpClient;
+use Ipag\Http\OnlyPostHttpClientInterface;
 use Ipag\Ipag;
 
 abstract class IpagResource
@@ -15,19 +16,37 @@ abstract class IpagResource
     /**
      * @var OnlyPostHttpClientInterface
      */
-    private $onlyPostClient;
+    protected $onlyPostClient;
 
     abstract protected function populate(\stdClass $response);
 
     public function __construct(Ipag $ipag)
     {
-        $this->onlyPostClient = new CurlOnlyPostHttpClient();
-        $this->ipag = $ipag;
+        $this->setOnlyPostClient(new CurlOnlyPostHttpClient());
+        $this->setIpag($ipag);
+    }
+
+    /**
+     * @return OnlyPostHttpClientInterface
+     */
+    public function getOnlyPostClient()
+    {
+        return $this->onlyPostClient;
+    }
+
+    /**
+     * @param OnlyPostHttpClientInterface $onlyPostClient
+     */
+    public function setOnlyPostClient(OnlyPostHttpClientInterface $onlyPostClient)
+    {
+        $this->onlyPostClient = $onlyPostClient;
+
+        return $this;
     }
 
     protected function sendHttpRequest($endpoint, $parameters)
     {
-        $onlyPostClient = $this->onlyPostClient;
+        $onlyPostClient = $this->getOnlyPostClient();
         $xmlResponse = $onlyPostClient(
             $endpoint,
             $this->getIpagHeaders(),

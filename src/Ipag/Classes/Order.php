@@ -196,10 +196,12 @@ final class Order
 
     private function checkIfInstallmentsIsValidAndReturn($installments)
     {
-        if ($installments < 1) {
+        if (empty($installments) || $installments < 1) {
             $installments = 1;
         } elseif ($installments > 12) {
-            $installments = 12;
+            throw new \UnexpectedValueException(
+                'O parcelamento não pode ser maior que 12 (doze)'
+            );
         }
 
         return (int) $installments;

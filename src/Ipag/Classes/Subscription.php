@@ -193,12 +193,7 @@ final class Subscription
      */
     public function setAmount($amount)
     {
-        if (!$this->isValidAmount($amount)) {
-            throw new \UnexpectedValueException(
-                'O Valor do Pedido deve ser do tipo double (ex: 1.00)'
-            );
-        }
-        $this->amount = $amount;
+        $this->amount = Util\Number::convertToDouble($amount);
 
         return $this;
     }
@@ -248,19 +243,38 @@ final class Subscription
      */
     public function setTrialAmount($trialAmount)
     {
-        if (!$this->isValidAmount($trialAmount)) {
+        $this->trialAmount = Util\Number::convertToDouble($trialAmount);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfileId()
+    {
+        return $this->profileId;
+    }
+
+    /**
+     * @param string $profileId
+     */
+    public function setProfileId($profileId)
+    {
+        if (!$this->isValidProfileId($profileId)) {
             throw new \UnexpectedValueException(
-                'O Valor do Pedido deve ser do tipo double (ex: 1.00)'
+                'Profile ID deve ser somente númerico e ter no máximo 32 caracteres.'
             );
+
         }
-        $this->trialAmount = $trialAmount;
+        $this->profileId = $profileId;
 
         return $this;
     }
 
     private function isValidFrequency($frequency)
     {
-        return (boolean) (!is_numeric($frequency) || strlen($frequency) < 1 || strlen($frequency) > 2);
+        return (boolean) (is_numeric($frequency) && strlen($frequency) >= 1 && strlen($frequency) <= 2);
     }
 
     private function isValidInterval($interval)
@@ -289,40 +303,11 @@ final class Subscription
 
     private function isValidCycle($cycle)
     {
-        return (boolean) (!is_numeric($cycle) || strlen($cycle) < 1 || strlen($cycle) > 3);
-    }
-
-    private function isValidAmount($amount)
-    {
-        return (boolean) is_double($amount);
-    }
-
-    /**
-     * @return string
-     */
-    public function getProfileId()
-    {
-        return $this->profileId;
-    }
-
-    /**
-     * @param string $profileId
-     */
-    public function setProfileId($profileId)
-    {
-        if (!$this->isValidProfileId($profileId)) {
-            throw new \UnexpectedValueException(
-                'Profile ID deve ser somente númerico e ter no máximo 32 caracteres.'
-            );
-
-        }
-        $this->profileId = $profileId;
-
-        return $this;
+        return (boolean) (is_numeric($cycle) && strlen($cycle) >= 1 && strlen($cycle) <= 3);
     }
 
     private function isValidProfileId($profileId)
     {
-        return (boolean) (!is_numeric($profileId) || strlen($profileId) > 32);
+        return (boolean) (is_numeric($profileId) && strlen($profileId) <= 32);
     }
 }

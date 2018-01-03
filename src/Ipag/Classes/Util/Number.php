@@ -4,12 +4,15 @@ namespace Ipag\Classes\Util;
 
 final class Number
 {
-    private function __construct()
-    {}
-
     public static function convertToDouble($number)
     {
-        return (double) number_format(str_replace(",", ".", (string) $number), 2, ".", "");
+        $number = str_replace(",", ".", (string) $number);
+
+        if (!is_numeric($number)) {
+            throw new \UnexpectedValueException("{$number} não é um número válido");
+        }
+
+        return (double) number_format($number, 2, ".", "");
     }
 
     public static function getOnlyNumbers($string)
