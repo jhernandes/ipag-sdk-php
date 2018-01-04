@@ -23,7 +23,7 @@ final class PaymentSerializer implements Serializer
             'boleto_tipo'  => urlencode('xml'),
         ];
 
-        $serializedUser = $this->serializeUser($this->transaction->getIpag()->getAuthentication());
+        $serializedUser  = $this->serializeUser($this->transaction->getIpag()->getAuthentication());
         $serializedOrder = $this->serializeOrder($this->transaction->getOrder());
 
         return array_merge($serializedReturnType, $serializedUser, $serializedOrder);
@@ -45,7 +45,7 @@ final class PaymentSerializer implements Serializer
 
     private function serializeOrder($order)
     {
-        if (empty($order)) {
+        if ($order->isEmpty()) {
             throw new \Exception('É necessário informar os dados do Pedido (Order)');
         }
 
@@ -59,9 +59,9 @@ final class PaymentSerializer implements Serializer
             'stelo_fingerprint' => urlencode($order->getFingerprint()),
         ];
 
-        $serializedPayment = $this->serializePayment($order->getPayment());
-        $serializedCart = $this->serializeCart($order->getCart());
-        $serializedCustomer = $this->serializeCustomer($order->getCustomer());
+        $serializedPayment      = $this->serializePayment($order->getPayment());
+        $serializedCart         = $this->serializeCart($order->getCart());
+        $serializedCustomer     = $this->serializeCustomer($order->getCustomer());
         $serializedSubscription = $this->serializeSubscription($order->getSubscription());
 
         return array_merge(
@@ -75,7 +75,7 @@ final class PaymentSerializer implements Serializer
 
     private function serializePayment($payment)
     {
-        if (empty($payment)) {
+        if ($payment->isEmpty()) {
             throw new \Exception('É necessário informar os dados do Pagamento (Payment)');
         }
 
@@ -119,7 +119,7 @@ final class PaymentSerializer implements Serializer
 
     private function serializeCreditCard($creditCard)
     {
-        if (empty($creditCard)) {
+        if ($creditCard->isEmpty()) {
             return [];
         }
 
@@ -159,7 +159,7 @@ final class PaymentSerializer implements Serializer
 
     private function serializeCart($cart)
     {
-        if (empty($cart)) {
+        if ($cart->isEmpty()) {
             return [];
         }
 
@@ -173,7 +173,7 @@ final class PaymentSerializer implements Serializer
     private function serializeProducts($products)
     {
         $serializedProducts = [];
-        $i = 1;
+        $i                  = 1;
 
         foreach ($products as $product) {
             $serializedProducts[$i++] = [
@@ -189,7 +189,7 @@ final class PaymentSerializer implements Serializer
 
     private function serializeCustomer($customer)
     {
-        if (empty($customer)) {
+        if ($customer->isEmpty()) {
             return [];
         }
 
@@ -207,7 +207,7 @@ final class PaymentSerializer implements Serializer
 
     private function serializeCustomerAddress($address)
     {
-        if (empty($address)) {
+        if ($address->isEmpty()) {
             return [];
         }
 
@@ -227,7 +227,7 @@ final class PaymentSerializer implements Serializer
 
     private function serializeSubscription($subscription)
     {
-        if (empty($subscription)) {
+        if ($subscription->isEmpty()) {
             return [];
         }
 
@@ -238,7 +238,7 @@ final class PaymentSerializer implements Serializer
             'inicio'           => urlencode($subscription->getStart()),
             'ciclos'           => urlencode($subscription->getCycle()),
             'valor_rec'        => urlencode($subscription->getAmount()),
-            'trial'            => urlencode($subscription->getTrial()),
+            'trial'            => urlencode($subscription->isTrial()),
             'trial_ciclos'     => urlencode($subscription->getTrialCycle()),
             'trial_frequencia' => urlencode($subscription->getTrialFrequency()),
             'trial_valor'      => urlencode($subscription->getTrialAmount()),

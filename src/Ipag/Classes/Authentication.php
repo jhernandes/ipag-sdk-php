@@ -2,8 +2,13 @@
 
 namespace Ipag\Classes;
 
-final class Authentication
+use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Traits\EmptiableTrait;
+
+final class Authentication implements Emptiable
 {
+    use EmptiableTrait;
+
     /**
      * @var string
      */
@@ -22,7 +27,7 @@ final class Authentication
     public function __construct($identification, $apiKey = null)
     {
         $this->identification = $identification;
-        $this->apiKey = $apiKey;
+        $this->apiKey         = $apiKey;
     }
 
     /**

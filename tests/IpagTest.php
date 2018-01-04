@@ -24,10 +24,10 @@ class IpagTest extends TestCase
     {
         $ipag = new Ipag(new Authentication('test@test.com'), Endpoint::SANDBOX);
 
-        $this->assertEquals(Endpoint::SANDBOX, $ipag->getEndpoint()->getEndpoint());
+        $this->assertEquals(Endpoint::SANDBOX, $ipag->getEndpoint()->getUrl());
 
         $ipag->setEndpoint(new Endpoint(Endpoint::PRODUCTION));
 
-        $this->assertEquals(Endpoint::PRODUCTION, $ipag->getEndpoint()->getEndpoint());
+        $this->assertEquals(Endpoint::PRODUCTION, $ipag->getEndpoint()->getUrl());
     }
 }

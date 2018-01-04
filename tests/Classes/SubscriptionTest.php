@@ -34,7 +34,7 @@ class SubscriptionTest extends TestCase
         $this->assertEquals(12, $this->subscription->getCycle());
         $this->assertEquals(39.99, $this->subscription->getAmount());
         $this->assertEquals('10/10/2018', $this->subscription->getStart());
-        $this->assertEquals(false, $this->subscription->getTrial());
+        $this->assertEquals(false, $this->subscription->isTrial());
         $this->assertEquals(3, $this->subscription->getTrialCycle());
         $this->assertEquals(1, $this->subscription->getTrialFrequency());
         $this->assertEquals(19.99, $this->subscription->getTrialAmount());

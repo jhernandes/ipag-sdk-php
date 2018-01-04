@@ -11,11 +11,11 @@ class EndpointTest extends TestCase
     {
         $endpoint = new Endpoint(Endpoint::SANDBOX);
 
-        $this->assertEquals($endpoint->getEndpoint(), Endpoint::SANDBOX);
+        $this->assertEquals($endpoint->getUrl(), Endpoint::SANDBOX);
 
-        $endpoint->setEndpoint(Endpoint::PRODUCTION);
+        $endpoint->setUrl(Endpoint::PRODUCTION);
 
-        $this->assertEquals($endpoint->getEndpoint(), Endpoint::PRODUCTION);
+        $this->assertEquals($endpoint->getUrl(), Endpoint::PRODUCTION);
     }
 
     public function testGetPaymentEndpointUrl()

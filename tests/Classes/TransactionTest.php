@@ -27,14 +27,4 @@ class TransactionTest extends TestCase
 
         $response = $ipag->transaction()->setOrder($order)->execute();
     }
-
-    public function testExecuteWithoutOrderShouldThrowException()
-    {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('É necessário inicializar o pedido (Order).');
-
-        $ipag = new Ipag(new Authentication('test@test.com'), 'http://google.com.br');
-
-        $response = $ipag->transaction()->execute();
-    }
 }

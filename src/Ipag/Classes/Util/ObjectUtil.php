@@ -2,9 +2,9 @@
 
 namespace Ipag\Classes\Util;
 
-class ObjectUtil
+final class ObjectUtil
 {
-    public static function getProperty($object, $property)
+    public function getProperty($object, $property)
     {
         if (!property_exists($object, $property)) {
             return;

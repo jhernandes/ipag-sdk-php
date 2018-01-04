@@ -2,9 +2,13 @@
 
 namespace Ipag\Classes\Util;
 
-final class Number
+final class NumberUtil
 {
-    public static function convertToDouble($number)
+    /**
+     * @param mixed $number
+     * @return float
+     */
+    public function convertToDouble($number)
     {
         $number = str_replace(',', '.', (string) $number);
 
@@ -15,8 +19,12 @@ final class Number
         return (float) number_format($number, 2, '.', '');
     }
 
-    public static function getOnlyNumbers($string)
+    /**
+     * @param string $string
+     * @return string
+     */
+    public function getOnlyNumbers($string)
     {
-        return preg_replace('/\D/', '', $string);
+        return (string) preg_replace('/\D/', '', $string);
     }
 }

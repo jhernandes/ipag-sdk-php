@@ -14,11 +14,11 @@ final class Endpoint
     /**
      * @var string
      */
-    private $endpoint;
+    private $url;
 
-    public function __construct($endpoint = null)
+    public function __construct($url = self::PRODUCTION)
     {
-        $this->endpoint = ($endpoint == null) ? self::PRODUCTION : $endpoint;
+        $this->url = $url;
     }
 
     /**
@@ -26,7 +26,7 @@ final class Endpoint
      */
     public function payment()
     {
-        return $this->endpoint.self::PAYMENT;
+        return $this->url.self::PAYMENT;
     }
 
     /**
@@ -34,7 +34,7 @@ final class Endpoint
      */
     public function consult()
     {
-        return $this->endpoint.self::CONSULT;
+        return $this->url.self::CONSULT;
     }
 
     /**
@@ -42,7 +42,7 @@ final class Endpoint
      */
     public function capture()
     {
-        return $this->endpoint.self::CAPTURE;
+        return $this->url.self::CAPTURE;
     }
 
     /**
@@ -50,25 +50,25 @@ final class Endpoint
      */
     public function cancel()
     {
-        return $this->endpoint.self::CANCEL;
+        return $this->url.self::CANCEL;
     }
 
     /**
      * @return string
      */
-    public function getEndpoint()
+    public function getUrl()
     {
-        return $this->endpoint;
+        return $this->url;
     }
 
     /**
-     * @param string $endpoint
+     * @param string $url
      *
      * @return self
      */
-    public function setEndpoint($endpoint)
+    public function setUrl($url)
     {
-        $this->endpoint = $endpoint;
+        $this->url = $url;
 
         return $this;
     }

@@ -2,8 +2,13 @@
 
 namespace Ipag\Classes;
 
-final class Subscription
+use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Traits\EmptiableTrait;
+
+final class Subscription extends BaseResource implements Emptiable
 {
+    use EmptiableTrait;
+
     /**
      * @var string
      */
@@ -97,7 +102,7 @@ final class Subscription
     /**
      * @return bool
      */
-    public function getTrial()
+    public function isTrial()
     {
         return $this->trial;
     }
@@ -193,7 +198,7 @@ final class Subscription
      */
     public function setAmount($amount)
     {
-        $this->amount = Util\Number::convertToDouble($amount);
+        $this->amount = $this->getNumberUtil()->convertToDouble($amount);
 
         return $this;
     }
@@ -243,7 +248,7 @@ final class Subscription
      */
     public function setTrialAmount($trialAmount)
     {
-        $this->trialAmount = Util\Number::convertToDouble($trialAmount);
+        $this->trialAmount = $this->getNumberUtil()->convertToDouble($trialAmount);
 
         return $this;
     }

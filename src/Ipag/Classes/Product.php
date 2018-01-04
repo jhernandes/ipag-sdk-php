@@ -2,8 +2,13 @@
 
 namespace Ipag\Classes;
 
-final class Product
+use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Traits\EmptiableTrait;
+
+final class Product extends BaseResource implements Emptiable
 {
+    use EmptiableTrait;
+
     /**
      * @var stirng
      */
@@ -77,7 +82,7 @@ final class Product
      */
     public function setUnitPrice($unitPrice)
     {
-        $this->unitPrice = Util\Number::convertToDouble($unitPrice);
+        $this->unitPrice = $this->getNumberUtil()->convertToDouble($unitPrice);
 
         return $this;
     }

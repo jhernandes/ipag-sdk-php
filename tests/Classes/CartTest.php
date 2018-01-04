@@ -2,6 +2,8 @@
 
 namespace Tests\Classes;
 
+use Ipag\Classes\Cart;
+use Ipag\Classes\Product;
 use PHPUnit\Framework\TestCase;
 
 class CartTest extends TestCase
@@ -12,7 +14,7 @@ class CartTest extends TestCase
     {
         parent::setUp();
 
-        $this->product = new \Ipag\Classes\Product();
+        $this->product = new Product();
         $this->product->setName('Produto de Testes')
             ->setQuantity(10)
             ->setUnitPrice(1.99)
@@ -21,7 +23,7 @@ class CartTest extends TestCase
 
     public function testCreateAndAddAProductToCart()
     {
-        $cart = new \Ipag\Classes\Cart();
+        $cart = new Cart();
 
         $cart->addProduct($this->product);
 
@@ -30,7 +32,7 @@ class CartTest extends TestCase
 
     public function testCreateAndAddManyProductsToCart()
     {
-        $cart = new \Ipag\Classes\Cart();
+        $cart = new Cart();
 
         $products = [
             $this->product,
@@ -41,5 +43,12 @@ class CartTest extends TestCase
         $cart->addProducts($products);
 
         $this->assertEquals(count($cart->getProducts()), 3);
+    }
+
+    public function testGetCartProductsIfItNotSetted()
+    {
+        $cart = new Cart();
+
+        $this->assertEquals([], $cart->getProducts());
     }
 }

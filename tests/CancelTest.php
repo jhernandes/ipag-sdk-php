@@ -13,17 +13,14 @@ class CancelTest extends TestCase
     {
         $ipag = new Ipag(new Authentication($identification), Endpoint::SANDBOX);
 
-        $order = $ipag->order()
-            ->setCallbackUrl(getenv('CALLBACK_URL'));
-
-        return $ipag->transaction()->setOrder($order)->setTid($tid)->cancel();
+        return $ipag->transaction()->setTid($tid)->cancel();
     }
 
     public function testCancelPaymentSuccessfully()
     {
         $identification = getenv('ID_IPAG');
-        $paymentTest = new PaymentTest();
-        $transaction = $paymentTest->doPayment($identification);
+        $paymentTest    = new PaymentTest();
+        $transaction    = $paymentTest->doPayment($identification);
 
         $canceledTransaction = $this->doCancel($identification, $transaction->tid);
 

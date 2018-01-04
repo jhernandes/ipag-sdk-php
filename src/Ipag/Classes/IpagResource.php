@@ -5,8 +5,9 @@ namespace Ipag\Classes;
 use Ipag\Classes\Http\CurlOnlyPostHttpClient;
 use Ipag\Classes\Http\OnlyPostHttpClientInterface;
 use Ipag\Ipag;
+use stdClass;
 
-abstract class IpagResource
+abstract class IpagResource extends BaseResource
 {
     /**
      * @var Ipag
@@ -18,7 +19,7 @@ abstract class IpagResource
      */
     protected $onlyPostClient;
 
-    abstract protected function populate(\stdClass $response);
+    abstract protected function populate(stdClass $response);
 
     public function __construct(Ipag $ipag)
     {
@@ -47,7 +48,7 @@ abstract class IpagResource
     protected function sendHttpRequest($endpoint, $parameters)
     {
         $onlyPostClient = $this->getOnlyPostClient();
-        $xmlResponse = $onlyPostClient(
+        $xmlResponse    = $onlyPostClient(
             $endpoint,
             $this->getIpagHeaders(),
             $parameters
@@ -58,7 +59,8 @@ abstract class IpagResource
 
     private function checkIfIsValidXmlAndReturnStdClass($xmlResponse)
     {
-        $xmlObject = Services\XmlService::validate($xmlResponse);
+        $xmlService = new Services\XmlService();
+        $xmlObject  = $xmlService->validate($xmlResponse);
         if (!$xmlObject) {
             throw new \Exception('Não foi possível identificar o XML de retorno.');
         }

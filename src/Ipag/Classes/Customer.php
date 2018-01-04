@@ -2,10 +2,15 @@
 
 namespace Ipag\Classes;
 
-final class Customer
+use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Traits\EmptiableTrait;
+
+final class Customer extends BaseResource implements Emptiable
 {
+    use EmptiableTrait;
+
     const INDIVIDUAL = 'f';
-    const BUSINESS = 'j';
+    const BUSINESS   = 'j';
 
     /**
      * @var string
@@ -42,6 +47,10 @@ final class Customer
      */
     public function getAddress()
     {
+        if (is_null($this->address)) {
+            $this->address = new Address();
+        }
+
         return $this->address;
     }
 
@@ -82,11 +91,11 @@ final class Customer
      */
     public function getPhone()
     {
-        if ($this->phone != null) {
-            return $this->phone->getAreaCode().$this->phone->getNumber();
+        if (is_null($this->phone)) {
+            $this->phone = new Phone();
         }
 
-        return $this->phone;
+        return $this->phone->getAreaCode().$this->phone->getNumber();
     }
 
     /**
@@ -118,7 +127,7 @@ final class Customer
      */
     public function setTaxpayerId($taxpayerId)
     {
-        $this->taxpayerId = substr(Util\Number::getOnlyNumbers($taxpayerId), 0, 14);
+        $this->taxpayerId = substr($this->getNumberUtil()->getOnlyNumbers($taxpayerId), 0, 14);
 
         $this->setType();
 

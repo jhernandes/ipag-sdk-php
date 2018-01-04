@@ -2,8 +2,13 @@
 
 namespace Ipag\Classes;
 
-final class Address
+use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Traits\EmptiableTrait;
+
+final class Address extends BaseResource implements Emptiable
 {
+    use EmptiableTrait;
+
     /**
      * @var string
      */
@@ -43,13 +48,6 @@ final class Address
      * @var string
      */
     private $zipCode;
-
-    public function __construct()
-    {
-        $this->setCountry('BR');
-
-        return $this;
-    }
 
     /**
      * @return string
@@ -104,6 +102,10 @@ final class Address
      */
     public function getCountry()
     {
+        if (is_null($this->country)) {
+            $this->setCountry('BR');
+        }
+
         return $this->country;
     }
 
@@ -190,7 +192,7 @@ final class Address
      */
     public function setZipCode($zipCode)
     {
-        $this->zipCode = substr(Util\Number::getOnlyNumbers($zipCode), 0, 8);
+        $this->zipCode = substr($this->getNumberUtil()->getOnlyNumbers($zipCode), 0, 8);
 
         return $this;
     }

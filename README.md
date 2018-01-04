@@ -52,7 +52,7 @@ $ipag = new Ipag(new Authentication('my_id_ipag', 'my_ipag_key'), Endpoint::SAND
 ### Transação com Cartão de Crédito
 ```php
 try {
-    $order = $ipag->order()
+    $ipag->transaction()->getOrder()
         ->setOrderId($orderId)
         ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
         ->setAmount(10.00)
@@ -81,7 +81,7 @@ try {
         )
     );
 
-    $response = $ipag->transaction()->setOrder($order)->execute();
+    $response = $ipag->transaction()->execute();
 } catch(\Exception $e) {
     print_r($e->__toString());
 }
@@ -89,7 +89,7 @@ try {
 ### Transação com Boleto
 ```php
 try {
-    $order = $ipag->order()
+    $ipag->transaction()->getOrder()
         ->setOrderId($orderId)
         ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
         ->setAmount(10.00)
@@ -112,7 +112,7 @@ try {
         )
     );
 
-    $response = $ipag->transaction()->setOrder($order)->execute();
+    $response = $ipag->transaction()->execute();
 } catch(\Exception $e) {
     print_r($e->__toString());
 }
@@ -121,24 +121,18 @@ try {
 ### Consulta
 
 ```php
-$order = $ipag->order()->setCallbackUrl('https://minha_loja.com.br/ipag/callback');
-
-$response = $ipag->transaction()->setOrder($order)->setTid('123456789')->consult();
+$response = $ipag->transaction()->setTid('123456789')->consult();
 ```
 ### Captura
 
 ```php
-$order = $ipag->order()->setCallbackUrl('https://minha_loja.com.br/ipag/callback');
-
-$response = $ipag->transaction()->setOrder($order)->setTid('123456789')->capture();
+$response = $ipag->transaction()->setTid('123456789')->capture();
 ```
 
 ### Cancelamento
 
 ```php
-$order = $ipag->order()->setCallbackUrl('https://minha_loja.com.br/ipag/callback');
-
-$response = $ipag->transaction()->setOrder($order)->setTid('123456789')->cancel();
+$response = $ipag->transaction()->setTid('123456789')->cancel();
 ```
 
 ## Transação com Token (One Click Buy)
@@ -147,7 +141,7 @@ $response = $ipag->transaction()->setOrder($order)->setTid('123456789')->cancel(
 
 ```php
 try {
-    $order = $ipag->order()
+    $ipag->transaction()->getOrder()
         ->setOrderId($orderId)
         ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
         ->setAmount(10.00)
@@ -177,7 +171,7 @@ try {
         )
     );
 
-    $response = $ipag->transaction()->setOrder($order)->execute();
+    $response = $ipag->transaction()->execute();
 } catch(\Exception $e) {
     print_r($e->__toString());
 }
@@ -187,7 +181,7 @@ try {
 
 ```php
 try {
-    $order = $ipag->order()
+    $ipag->transaction()->getOrder()
         ->setOrderId($orderId)
         ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
         ->setAmount(10.00)
@@ -212,7 +206,7 @@ try {
         )
     );
 
-    $response = $ipag->transaction()->setOrder($order)->execute();
+    $response = $ipag->transaction()->execute();
 } catch(\Exception $e) {
     print_r($e->__toString());
 }
@@ -224,7 +218,7 @@ try {
 
 ```php
 try {
-    $order = $ipag->order()
+    $ipag->transaction()->getOrder()
         ->setOrderId($orderId)
         ->setCallbackUrl(getenv('CALLBACK_URL'))
         ->setAmount(10.00)
@@ -258,7 +252,7 @@ try {
         ->setStart('10/10/2018')
     );
 
-    $response = $ipag->transaction()->setOrder($order)->execute();
+    $response = $ipag->transaction()->execute();
 } catch(\Exception $e) {
     print_r($e->__toString());
 }

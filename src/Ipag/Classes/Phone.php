@@ -2,8 +2,13 @@
 
 namespace Ipag\Classes;
 
-final class Phone
+use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Traits\EmptiableTrait;
+
+final class Phone extends BaseResource implements Emptiable
 {
+    use EmptiableTrait;
+
     /**
      * @var string
      */
@@ -35,7 +40,7 @@ final class Phone
      */
     public function setAreaCode($areaCode)
     {
-        $this->areaCode = substr(Util\Number::getOnlyNumbers($areaCode), 0, 2);
+        $this->areaCode = substr($this->getNumberUtil()->getOnlyNumbers($areaCode), 0, 2);
 
         return $this;
     }
@@ -45,7 +50,7 @@ final class Phone
      */
     public function setNumber($number)
     {
-        $this->number = Util\Number::getOnlyNumbers($number);
+        $this->number = $this->getNumberUtil()->getOnlyNumbers($number);
 
         return $this;
     }

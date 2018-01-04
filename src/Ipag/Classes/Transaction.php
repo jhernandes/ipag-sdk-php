@@ -2,7 +2,6 @@
 
 namespace Ipag\Classes;
 
-use Ipag\Classes\Util\ObjectUtil;
 use stdClass;
 
 final class Transaction extends IpagResource
@@ -40,6 +39,10 @@ final class Transaction extends IpagResource
      */
     public function getOrder()
     {
+        if (is_null($this->order)) {
+            $this->order = new Order();
+        }
+
         return $this->order;
     }
 
@@ -55,30 +58,31 @@ final class Transaction extends IpagResource
 
     protected function populate(stdClass $response)
     {
-        $transaction = new stdClass();
-        $transaction->tid = ObjectUtil::getProperty($response, 'id_transacao');
-        $transaction->acquirer = ObjectUtil::getProperty($response, 'operadora');
-        $transaction->acquirerMessage = ObjectUtil::getProperty($response, 'operadora_mensagem');
-        $transaction->urlAthentication = ObjectUtil::getProperty($response, 'url_autenticacao');
-        $transaction->payment = new stdClass();
-        $transaction->payment->status = ObjectUtil::getProperty($response, 'status_pagamento');
-        $transaction->payment->message = ObjectUtil::getProperty($response, 'mensagem_transacao');
+        $objectUtil                    = $this->getObjectUtil();
+        $transaction                   = new stdClass();
+        $transaction->tid              = $objectUtil->getProperty($response, 'id_transacao');
+        $transaction->acquirer         = $objectUtil->getProperty($response, 'operadora');
+        $transaction->acquirerMessage  = $objectUtil->getProperty($response, 'operadora_mensagem');
+        $transaction->urlAthentication = $objectUtil->getProperty($response, 'url_autenticacao');
+        $transaction->payment          = new stdClass();
+        $transaction->payment->status  = $objectUtil->getProperty($response, 'status_pagamento');
+        $transaction->payment->message = $objectUtil->getProperty($response, 'mensagem_transacao');
 
-        $transaction->order = new stdClass();
-        $transaction->order->orderId = ObjectUtil::getProperty($response, 'num_pedido');
+        $transaction->order          = new stdClass();
+        $transaction->order->orderId = $objectUtil->getProperty($response, 'num_pedido');
 
         if (isset($response->token)) {
-            $transaction->creditCard = new stdClass();
-            $transaction->creditCard->token = ObjectUtil::getProperty($response, 'token');
-            $transaction->creditCard->last4 = ObjectUtil::getProperty($response, 'last4');
-            $transaction->creditCard->expiryMonth = ObjectUtil::getProperty($response, 'mes');
-            $transaction->creditCard->expiryYear = ObjectUtil::getProperty($response, 'ano');
+            $transaction->creditCard              = new stdClass();
+            $transaction->creditCard->token       = $objectUtil->getProperty($response, 'token');
+            $transaction->creditCard->last4       = $objectUtil->getProperty($response, 'last4');
+            $transaction->creditCard->expiryMonth = $objectUtil->getProperty($response, 'mes');
+            $transaction->creditCard->expiryYear  = $objectUtil->getProperty($response, 'ano');
         }
 
         if (isset($response->id_assinatura)) {
-            $transaction->subscription = new stdClass();
-            $transaction->subscription->id = ObjectUtil::getProperty($response, 'id_assinatura');
-            $transaction->subscription->profileId = ObjectUtil::getProperty($response, 'profile_id');
+            $transaction->subscription            = new stdClass();
+            $transaction->subscription->id        = $objectUtil->getProperty($response, 'id_assinatura');
+            $transaction->subscription->profileId = $objectUtil->getProperty($response, 'profile_id');
         }
 
         return $transaction;
@@ -86,10 +90,6 @@ final class Transaction extends IpagResource
 
     public function execute()
     {
-        if ($this->getOrder() == null) {
-            throw new \Exception('É necessário inicializar o pedido (Order).');
-        }
-
         $this->getOrder()->setOperation(Enum\Operation::PAYMENT);
 
         $serializer = new Serializer\PaymentSerializer($this);

@@ -2,8 +2,13 @@
 
 namespace Ipag\Classes;
 
-final class Order
+use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Traits\EmptiableTrait;
+
+final class Order extends BaseResource implements Emptiable
 {
+    use EmptiableTrait;
+
     /**
      * @var string
      */
@@ -27,7 +32,7 @@ final class Order
     /**
      * @var int
      */
-    private $installments = 1;
+    private $installments;
 
     /**
      * @var string
@@ -134,7 +139,7 @@ final class Order
      */
     public function setAmount($amount)
     {
-        $this->amount = Util\Number::convertToDouble($amount);
+        $this->amount = $this->getNumberUtil()->convertToDouble($amount);
 
         return $this;
     }
@@ -219,6 +224,10 @@ final class Order
      */
     public function getPayment()
     {
+        if (is_null($this->payment)) {
+            $this->payment = new Payment();
+        }
+
         return $this->payment;
     }
 
@@ -237,6 +246,10 @@ final class Order
      */
     public function getCart()
     {
+        if (is_null($this->cart)) {
+            $this->cart = new Cart();
+        }
+
         return $this->cart;
     }
 
@@ -255,6 +268,10 @@ final class Order
      */
     public function getCustomer()
     {
+        if (is_null($this->customer)) {
+            $this->customer = new Customer();
+        }
+
         return $this->customer;
     }
 
@@ -273,6 +290,10 @@ final class Order
      */
     public function getSubscription()
     {
+        if (is_null($this->subscription)) {
+            $this->subscription = new Subscription();
+        }
+
         return $this->subscription;
     }
 

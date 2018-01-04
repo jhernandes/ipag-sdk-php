@@ -2,8 +2,13 @@
 
 namespace Ipag\Classes;
 
-final class CreditCard
+use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Traits\EmptiableTrait;
+
+final class CreditCard extends BaseResource implements Emptiable
 {
+    use EmptiableTrait;
+
     /**
      * @var string
      */
@@ -92,7 +97,7 @@ final class CreditCard
      */
     public function setNumber($number)
     {
-        $this->number = Util\Number::getOnlyNumbers($number);
+        $this->number = $this->getNumberUtil()->getOnlyNumbers($number);
 
         return $this;
     }

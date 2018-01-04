@@ -2,9 +2,9 @@
 
 namespace Ipag\Classes\Services;
 
-class XmlService
+final class XmlService
 {
-    public static function validate($message)
+    public function validate($message)
     {
         libxml_use_internal_errors(true);
         $response = simplexml_load_string($message, 'SimpleXMLElement', LIBXML_NOCDATA);

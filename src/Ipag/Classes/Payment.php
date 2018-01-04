@@ -2,8 +2,13 @@
 
 namespace Ipag\Classes;
 
-final class Payment
+use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Traits\EmptiableTrait;
+
+final class Payment implements Emptiable
 {
+    use EmptiableTrait;
+
     /**
      * @var string
      */
@@ -37,6 +42,10 @@ final class Payment
      */
     public function getCreditCard()
     {
+        if (is_null($this->creditCard)) {
+            $this->creditCard = new CreditCard();
+        }
+
         return $this->creditCard;
     }
 

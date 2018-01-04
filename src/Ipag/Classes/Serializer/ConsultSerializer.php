@@ -21,7 +21,6 @@ final class ConsultSerializer implements Serializer
         return [
             'identificacao' => urlencode($this->transaction->getIpag()->getAuthentication()->getIdentification()),
             'transId'       => urlencode($this->transaction->getTid()),
-            'url_retorno'   => urlencode($this->transaction->getOrder()->getCallbackUrl()),
             'retorno_tipo'  => urlencode('xml'),
         ];
     }

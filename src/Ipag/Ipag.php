@@ -17,10 +17,10 @@ class Ipag
      */
     private $authentication;
 
-    public function __construct(Authentication $authentication, $endpoint = null)
+    public function __construct(Authentication $authentication, $url = null)
     {
         $this->authentication = $authentication;
-        $this->endpoint = new Classes\Endpoint($endpoint);
+        $this->endpoint       = new Classes\Endpoint($url);
     }
 
     public function transaction()

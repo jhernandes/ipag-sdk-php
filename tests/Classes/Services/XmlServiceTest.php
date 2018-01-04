@@ -7,6 +7,14 @@ use PHPUnit\Framework\TestCase;
 
 class XmlServiceTest extends TestCase
 {
+    private $xmlService;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->xmlService = new XmlService();
+    }
+
     public function testValidateSuccessfully()
     {
         $xml = '<?xml version="1.0" encoding="utf-8" ?>
@@ -26,12 +34,12 @@ class XmlServiceTest extends TestCase
                 <num_parcela>2</num_parcela>
             </retorno>';
 
-        $this->assertInstanceOf(\SimpleXMLElement::class, XmlService::validate($xml));
+        $this->assertInstanceOf(\SimpleXMLElement::class, $this->xmlService->validate($xml));
     }
 
     public function testValidateShouldReturnFalse()
     {
         $xml = 'error';
-        $this->assertFalse(XmlService::validate($xml));
+        $this->assertFalse($this->xmlService->validate($xml));
     }
 }

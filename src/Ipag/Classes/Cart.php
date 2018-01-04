@@ -2,8 +2,13 @@
 
 namespace Ipag\Classes;
 
-final class Cart
+use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Traits\EmptiableTrait;
+
+final class Cart implements Emptiable
 {
+    use EmptiableTrait;
+
     /**
      * @var array of Product
      */
@@ -14,6 +19,10 @@ final class Cart
      */
     public function getProducts()
     {
+        if (empty($this->products)) {
+            return [];
+        }
+
         return $this->products;
     }
 
