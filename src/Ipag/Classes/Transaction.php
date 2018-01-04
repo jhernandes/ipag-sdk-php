@@ -68,7 +68,7 @@ final class Transaction extends IpagResource
         $transaction->payment->status = $objectUtil->getProperty($response, 'status_pagamento');
         $transaction->payment->message = $objectUtil->getProperty($response, 'mensagem_transacao');
 
-        $transaction->order= new stdClass();
+        $transaction->order = new stdClass();
         $transaction->order->orderId = $objectUtil->getProperty($response, 'num_pedido');
 
         if (isset($response->token)) {
@@ -76,7 +76,7 @@ final class Transaction extends IpagResource
             $transaction->creditCard->token = $objectUtil->getProperty($response, 'token');
             $transaction->creditCard->last4 = $objectUtil->getProperty($response, 'last4');
             $transaction->creditCard->expiryMonth = $objectUtil->getProperty($response, 'mes');
-            $transaction->creditCard->expiryYear  = $objectUtil->getProperty($response, 'ano');
+            $transaction->creditCard->expiryYear = $objectUtil->getProperty($response, 'ano');
         }
 
         if (isset($response->id_assinatura)) {
