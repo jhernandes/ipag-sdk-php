@@ -10,7 +10,7 @@ final class Customer extends BaseResource implements Emptiable
     use EmptiableTrait;
 
     const INDIVIDUAL = 'f';
-    const BUSINESS   = 'j';
+    const BUSINESS = 'j';
 
     /**
      * @var string
@@ -87,7 +87,7 @@ final class Customer extends BaseResource implements Emptiable
     }
 
     /**
-     * @return Phone
+     * @return string
      */
     public function getPhone()
     {
@@ -108,9 +108,6 @@ final class Customer extends BaseResource implements Emptiable
         return $this;
     }
 
-    /**
-     * @param string $type
-     */
     private function setType()
     {
         if ($this->isIndividual()) {
@@ -145,7 +142,8 @@ final class Customer extends BaseResource implements Emptiable
     }
 
     /**
-     * @param Phone $phone
+     * @param string $areaCode
+     * @param string $number
      */
     public function setPhone($areaCode, $number)
     {

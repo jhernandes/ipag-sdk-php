@@ -13,17 +13,14 @@ class ConsultTest extends TestCase
     {
         $ipag = new Ipag(new Authentication($identification), Endpoint::SANDBOX);
 
-        $order = $ipag->order()
-            ->setCallbackUrl(getenv('CALLBACK_URL'));
-
-        return $ipag->transaction()->setOrder($order)->setTid($tid)->consult();
+        return $ipag->transaction()->setTid($tid)->consult();
     }
 
     public function testConsultPaymentSuccessfully()
     {
         $identification = getenv('ID_IPAG');
         $paymentTest = new PaymentTest();
-        $transaction = $paymentTest->doPayment($identification);
+        $transaction = $paymentTest->doPayment();
 
         $consultedTransaction = $this->doConsult($identification, $transaction->tid);
 

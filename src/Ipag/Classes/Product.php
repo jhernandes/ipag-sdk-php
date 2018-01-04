@@ -10,7 +10,7 @@ final class Product extends BaseResource implements Emptiable
     use EmptiableTrait;
 
     /**
-     * @var stirng
+     * @var string
      */
     private $name;
 
@@ -39,8 +39,6 @@ final class Product extends BaseResource implements Emptiable
 
     /**
      * @param string $name
-     *
-     * @return self
      */
     public function setName($name)
     {

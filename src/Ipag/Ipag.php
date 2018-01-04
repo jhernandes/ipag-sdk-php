@@ -20,7 +20,7 @@ class Ipag
     public function __construct(Authentication $authentication, $url = null)
     {
         $this->authentication = $authentication;
-        $this->endpoint       = new Classes\Endpoint($url);
+        $this->endpoint = new Classes\Endpoint($url);
     }
 
     public function transaction()
@@ -77,7 +77,7 @@ class Ipag
     }
 
     /**
-     * @param Authentication $authetication
+     * @param Authentication $authentication
      */
     public function setAuthentication(Authentication $authentication)
     {

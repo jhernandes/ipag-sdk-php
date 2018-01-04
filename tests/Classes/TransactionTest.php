@@ -25,6 +25,6 @@ class TransactionTest extends TestCase
                     ->setMethod(Method::BANKSLIP_ITAU)
             );
 
-        $response = $ipag->transaction()->setOrder($order)->execute();
+        $ipag->transaction()->setOrder($order)->execute();
     }
 }

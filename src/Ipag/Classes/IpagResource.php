@@ -48,7 +48,7 @@ abstract class IpagResource extends BaseResource
     protected function sendHttpRequest($endpoint, $parameters)
     {
         $onlyPostClient = $this->getOnlyPostClient();
-        $xmlResponse    = $onlyPostClient(
+        $xmlResponse = $onlyPostClient(
             $endpoint,
             $this->getIpagHeaders(),
             $parameters
@@ -60,7 +60,7 @@ abstract class IpagResource extends BaseResource
     private function checkIfIsValidXmlAndReturnStdClass($xmlResponse)
     {
         $xmlService = new Services\XmlService();
-        $xmlObject  = $xmlService->validate($xmlResponse);
+        $xmlObject = $xmlService->validate($xmlResponse);
         if (!$xmlObject) {
             throw new \Exception('Não foi possível identificar o XML de retorno.');
         }

@@ -15,6 +15,11 @@ abstract class BaseResource
     private $objectUtil;
 
     /**
+     * @var Util\DateUtil
+     */
+    private $dateUtil;
+
+    /**
      * @return Util\NumberUtil
      */
     public function getNumberUtil()
@@ -36,5 +41,17 @@ abstract class BaseResource
         }
 
         return $this->objectUtil;
+    }
+
+    /**
+     * @return Util\DateUtil
+     */
+    public function getDateUtil()
+    {
+        if (is_null($this->dateUtil)) {
+            $this->dateUtil = new Util\DateUtil();
+        }
+
+        return $this->dateUtil;
     }
 }

@@ -6,6 +6,7 @@ final class NumberUtil
 {
     /**
      * @param mixed $number
+     *
      * @return float
      */
     public function convertToDouble($number)
@@ -21,6 +22,7 @@ final class NumberUtil
 
     /**
      * @param string $string
+     *
      * @return string
      */
     public function getOnlyNumbers($string)

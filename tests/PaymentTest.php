@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Ipag\Classes\Authentication;
+use Ipag\Classes\Subscription;
 use Ipag\Classes\Endpoint;
 use Ipag\Classes\Enum\Method;
 use Ipag\Ipag;
@@ -10,16 +11,27 @@ use PHPUnit\Framework\TestCase;
 
 class PaymentTest extends TestCase
 {
-    public function doPayment($identification, $orderId = null)
+    private $transaction;
+
+    public function __construct()
     {
-        if ($orderId == null) {
-            $orderId = date('mdHis');
-        }
+        parent::__construct();
+        $this->init();
+    }
 
-        $ipag = new Ipag(new Authentication($identification), Endpoint::SANDBOX);
+    public function setUp()
+    {
+        parent::setUp();
+        $this->init();
+    }
 
-        $order = $ipag->order()
-            ->setOrderId($orderId)
+    public function init()
+    {
+        $ipag = new Ipag(new Authentication(getenv('ID_IPAG')), Endpoint::SANDBOX);
+
+        $this->transaction = $ipag->transaction();
+        $this->transaction->getOrder()
+            ->setOrderId(date('mdHis'))
             ->setCallbackUrl(getenv('CALLBACK_URL'))
             ->setAmount(10.00)
             ->setInstallments(1)
@@ -46,16 +58,34 @@ class PaymentTest extends TestCase
                         ->setZipCode('01156-060')
                 )
         );
+    }
 
-        return $ipag->transaction()->setOrder($order)->execute();
+    public function doPayment()
+    {
+        return $this->transaction->execute();
     }
 
     public function testExecutePaymentSuccessfully()
     {
-        $orderId = date('mdHis');
-        $transaction = $this->doPayment(getenv('ID_IPAG'), $orderId);
+        $transaction = $this->doPayment();
 
         $this->assertEquals(getenv('APPROVED'), $transaction->payment->status);
-        $this->assertEquals($orderId, $transaction->order->orderId);
+    }
+
+    public function testExecuteSubscribePaymentSuccessfully()
+    {
+        $subscription = new Subscription();
+
+        $subscription->setProfileId(time())
+                ->setFrequency(1)
+                ->setInterval('month')
+                ->setStart(date('d/m/Y'));
+
+        $this->transaction->getOrder()->setSubscription($subscription);
+
+        $response = $this->doPayment();
+
+        $this->assertEquals(getenv('APPROVED'), $response->payment->status);
+        $this->assertNotEmpty($response->creditCard->token);
     }
 }

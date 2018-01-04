@@ -27,7 +27,7 @@ final class Authentication implements Emptiable
     public function __construct($identification, $apiKey = null)
     {
         $this->identification = $identification;
-        $this->apiKey         = $apiKey;
+        $this->apiKey = $apiKey;
     }
 
     /**

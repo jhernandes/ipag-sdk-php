@@ -167,7 +167,7 @@ final class Order extends BaseResource implements Emptiable
      */
     public function setExpiry($expiry)
     {
-        if (!$this->isValidExpiryFormatDate($expiry)) {
+        if (!$this->getDateUtil()->isValid($expiry)) {
             throw new \UnexpectedValueException(
                 'A data de vencimento não é valida ou está em formato incorreto, deve ser informada utilizando o formato dd/mm/aaaa'
             );
@@ -206,17 +206,6 @@ final class Order extends BaseResource implements Emptiable
         }
 
         return (int) $installments;
-    }
-
-    private function isValidExpiryFormatDate($date)
-    {
-        if (preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/", $date, $matches)) {
-            if (checkdate($matches[2], $matches[1], $matches[3])) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

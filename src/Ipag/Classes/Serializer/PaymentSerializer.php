@@ -23,7 +23,7 @@ final class PaymentSerializer implements Serializer
             'boleto_tipo'  => urlencode('xml'),
         ];
 
-        $serializedUser  = $this->serializeUser($this->transaction->getIpag()->getAuthentication());
+        $serializedUser = $this->serializeUser($this->transaction->getIpag()->getAuthentication());
         $serializedOrder = $this->serializeOrder($this->transaction->getOrder());
 
         return array_merge($serializedReturnType, $serializedUser, $serializedOrder);
@@ -59,9 +59,9 @@ final class PaymentSerializer implements Serializer
             'stelo_fingerprint' => urlencode($order->getFingerprint()),
         ];
 
-        $serializedPayment      = $this->serializePayment($order->getPayment());
-        $serializedCart         = $this->serializeCart($order->getCart());
-        $serializedCustomer     = $this->serializeCustomer($order->getCustomer());
+        $serializedPayment = $this->serializePayment($order->getPayment());
+        $serializedCart = $this->serializeCart($order->getCart());
+        $serializedCustomer = $this->serializeCustomer($order->getCustomer());
         $serializedSubscription = $this->serializeSubscription($order->getSubscription());
 
         return array_merge(
@@ -173,7 +173,7 @@ final class PaymentSerializer implements Serializer
     private function serializeProducts($products)
     {
         $serializedProducts = [];
-        $i                  = 1;
+        $i = 1;
 
         foreach ($products as $product) {
             $serializedProducts[$i++] = [

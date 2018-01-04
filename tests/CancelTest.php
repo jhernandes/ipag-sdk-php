@@ -19,8 +19,8 @@ class CancelTest extends TestCase
     public function testCancelPaymentSuccessfully()
     {
         $identification = getenv('ID_IPAG');
-        $paymentTest    = new PaymentTest();
-        $transaction    = $paymentTest->doPayment($identification);
+        $paymentTest = new PaymentTest();
+        $transaction = $paymentTest->doPayment();
 
         $canceledTransaction = $this->doCancel($identification, $transaction->tid);
 

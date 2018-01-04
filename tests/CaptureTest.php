@@ -13,17 +13,14 @@ class CaptureTest extends TestCase
     {
         $ipag = new Ipag(new Authentication($identification), Endpoint::SANDBOX);
 
-        $order = $ipag->order()
-            ->setCallbackUrl(getenv('CALLBACK_URL'));
-
-        return $ipag->transaction()->setOrder($order)->setTid($tid)->capture();
+        return $ipag->transaction()->setTid($tid)->capture();
     }
 
     public function testCancelPaymentSuccessfully()
     {
         $identification = getenv('ID_IPAG');
         $paymentTest = new PaymentTest();
-        $transaction = $paymentTest->doPayment($identification);
+        $transaction = $paymentTest->doPayment();
 
         $this->assertEquals(getenv('APPROVED'), $transaction->payment->status);
 

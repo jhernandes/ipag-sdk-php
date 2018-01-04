@@ -3,9 +3,7 @@
 namespace Tests\Classes\Services;
 
 use Ipag\Classes\Authentication;
-use Ipag\Classes\Order;
 use Ipag\Classes\Serializer\CancelSerializer;
-use Ipag\Classes\Transaction;
 use Ipag\Ipag;
 use PHPUnit\Framework\TestCase;
 

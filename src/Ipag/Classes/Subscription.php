@@ -167,7 +167,7 @@ final class Subscription extends BaseResource implements Emptiable
      */
     public function setStart($start)
     {
-        if (!$this->isValidStartFormatDate($start)) {
+        if (!$this->getDateUtil()->isValid($start)) {
             throw new \UnexpectedValueException(
                 'A data de início não é valida ou está em formato incorreto, deve ser informada utilizando o formato dd/mm/aaaa'
             );
@@ -291,20 +291,6 @@ final class Subscription extends BaseResource implements Emptiable
             default:
                 return false;
         }
-
-        return false;
-    }
-
-    private function isValidStartFormatDate($date)
-    {
-        /* dd/mm/yyyy */
-        if (preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/", $date, $matches)) {
-            if (checkdate($matches[2], $matches[1], $matches[3])) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private function isValidCycle($cycle)
