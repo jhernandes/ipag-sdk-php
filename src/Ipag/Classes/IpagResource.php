@@ -19,7 +19,7 @@ abstract class IpagResource extends BaseResource
      */
     protected $onlyPostClient;
 
-    abstract protected function populate(stdClass $response);
+    abstract public function populate(stdClass $response);
 
     public function __construct(Ipag $ipag)
     {

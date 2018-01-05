@@ -28,6 +28,7 @@
         <env name="APPROVED_CAPTURED" value="8" />
         <env name="CANCELED" value="3" />
         <env name="ID_IPAG" value="ipag@test.com" />
+        <env name="API_KEY" value="6B27-B9818402-84D71CEA-57C5CC67-EB56" />
         <env name="CALLBACK_URL" value="https://minhaloja.com.br/retorno" />
     </php>
 </phpunit>

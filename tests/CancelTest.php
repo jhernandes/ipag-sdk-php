@@ -9,20 +9,19 @@ use PHPUnit\Framework\TestCase;
 
 class CancelTest extends TestCase
 {
-    public function doCancel($identification, $tid)
+    public function doCancel($tid)
     {
-        $ipag = new Ipag(new Authentication($identification), Endpoint::SANDBOX);
+        $ipag = new Ipag(new Authentication(getenv('ID_IPAG'), getenv('API_KEY')), Endpoint::SANDBOX);
 
         return $ipag->transaction()->setTid($tid)->cancel();
     }
 
     public function testCancelPaymentSuccessfully()
     {
-        $identification = getenv('ID_IPAG');
         $paymentTest = new PaymentTest();
         $transaction = $paymentTest->doPayment();
 
-        $canceledTransaction = $this->doCancel($identification, $transaction->tid);
+        $canceledTransaction = $this->doCancel($transaction->tid);
 
         $this->assertEquals(getenv('CANCELED'), $canceledTransaction->payment->status);
         $this->assertEquals($transaction->tid, $canceledTransaction->tid);

@@ -27,7 +27,7 @@ class PaymentTest extends TestCase
 
     public function init()
     {
-        $ipag = new Ipag(new Authentication(getenv('ID_IPAG')), Endpoint::SANDBOX);
+        $ipag = new Ipag(new Authentication(getenv('ID_IPAG'), getenv('API_KEY')), Endpoint::SANDBOX);
 
         $this->transaction = $ipag->transaction();
         $this->transaction->getOrder()
@@ -77,9 +77,9 @@ class PaymentTest extends TestCase
         $subscription = new Subscription();
 
         $subscription->setProfileId(time())
-                ->setFrequency(1)
-                ->setInterval('month')
-                ->setStart(date('d/m/Y'));
+            ->setFrequency(1)
+            ->setInterval('month')
+            ->setStart(date('d/m/Y'));
 
         $this->transaction->getOrder()->setSubscription($subscription);
 

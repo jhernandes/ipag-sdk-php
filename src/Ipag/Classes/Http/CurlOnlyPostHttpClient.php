@@ -10,6 +10,16 @@ final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
     private $httpPostFields;
     private $userAgent;
 
+    /**
+     * @var string
+     */
+    private $user;
+
+    /**
+     * @var string
+     */
+    private $password;
+
     public function __invoke($endpoint, array $headers = [], array $fields = [])
     {
         $this->httpHeaders = $this->formatToHttpHeaders($headers);
@@ -23,6 +33,7 @@ final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $endpoint);
+        curl_setopt($curl, CURLOPT_USERPWD, "{$this->user}:{$this->password}");
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->httpHeaders);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $this->httpPostFields);
         curl_setopt($curl, CURLOPT_POST, true);
@@ -69,5 +80,41 @@ final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
         if (curl_errno($curl)) {
             throw new \Exception('Curl error: '.curl_error($curl));
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param string $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
     }
 }

@@ -9,20 +9,19 @@ use PHPUnit\Framework\TestCase;
 
 class ConsultTest extends TestCase
 {
-    public function doConsult($identification, $tid)
+    public function doConsult($tid)
     {
-        $ipag = new Ipag(new Authentication($identification), Endpoint::SANDBOX);
+        $ipag = new Ipag(new Authentication(getenv('ID_IPAG'), getenv('API_KEY')), Endpoint::SANDBOX);
 
         return $ipag->transaction()->setTid($tid)->consult();
     }
 
     public function testConsultPaymentSuccessfully()
     {
-        $identification = getenv('ID_IPAG');
         $paymentTest = new PaymentTest();
         $transaction = $paymentTest->doPayment();
 
-        $consultedTransaction = $this->doConsult($identification, $transaction->tid);
+        $consultedTransaction = $this->doConsult($transaction->tid);
 
         $this->assertEquals(getenv('APPROVED'), $consultedTransaction->payment->status);
         $this->assertEquals($transaction->tid, $consultedTransaction->tid);

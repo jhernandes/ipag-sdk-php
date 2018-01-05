@@ -6,10 +6,10 @@ final class Endpoint
 {
     const PRODUCTION = 'https://www.librepag.com.br';
     const SANDBOX = 'https://sandbox.ipag.com.br';
-    const PAYMENT = '/pagamento';
-    const CONSULT = '/consulta';
-    const CAPTURE = '/captura';
-    const CANCEL = '/cancela';
+    const PAYMENT = '/service/payment';
+    const CONSULT = '/service/consult';
+    const CAPTURE = '/service/capture';
+    const CANCEL = '/service/cancel';
 
     /**
      * @var string

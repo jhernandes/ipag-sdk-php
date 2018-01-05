@@ -2,6 +2,10 @@
 
 namespace Ipag\Classes;
 
+use Ipag\Classes\Serializer\CancelSerializer;
+use Ipag\Classes\Serializer\CaptureSerializer;
+use Ipag\Classes\Serializer\ConsultSerializer;
+use Ipag\Classes\Serializer\Serializer;
 use stdClass;
 
 final class Transaction extends IpagResource
@@ -56,79 +60,45 @@ final class Transaction extends IpagResource
         return $this;
     }
 
-    protected function populate(stdClass $response)
+    public function populate(stdClass $response)
     {
-        $objectUtil = $this->getObjectUtil();
-        $transaction = new stdClass();
-        $transaction->tid = $objectUtil->getProperty($response, 'id_transacao');
-        $transaction->acquirer = $objectUtil->getProperty($response, 'operadora');
-        $transaction->acquirerMessage = $objectUtil->getProperty($response, 'operadora_mensagem');
-        $transaction->urlAthentication = $objectUtil->getProperty($response, 'url_autenticacao');
-        $transaction->payment = new stdClass();
-        $transaction->payment->status = $objectUtil->getProperty($response, 'status_pagamento');
-        $transaction->payment->message = $objectUtil->getProperty($response, 'mensagem_transacao');
-
-        $transaction->order = new stdClass();
-        $transaction->order->orderId = $objectUtil->getProperty($response, 'num_pedido');
-
-        if (isset($response->token)) {
-            $transaction->creditCard = new stdClass();
-            $transaction->creditCard->token = $objectUtil->getProperty($response, 'token');
-            $transaction->creditCard->last4 = $objectUtil->getProperty($response, 'last4');
-            $transaction->creditCard->expiryMonth = $objectUtil->getProperty($response, 'mes');
-            $transaction->creditCard->expiryYear = $objectUtil->getProperty($response, 'ano');
-        }
-
-        if (isset($response->id_assinatura)) {
-            $transaction->subscription = new stdClass();
-            $transaction->subscription->id = $objectUtil->getProperty($response, 'id_assinatura');
-            $transaction->subscription->profileId = $objectUtil->getProperty($response, 'profile_id');
-        }
-
-        return $transaction;
+        return (new Services\TransactionResponseService())->populate($response);
     }
 
     public function execute()
     {
-        $this->getOrder()->setOperation(Enum\Operation::PAYMENT);
-
-        $serializer = new Serializer\PaymentSerializer($this);
-
-        $response = $this->sendHttpRequest($this->getIpag()->getEndpoint()->payment(), $serializer->serialize());
-
-        return $this->populate($response);
+        return (new Services\PaymentService($this))->execute();
     }
 
     public function consult()
     {
-        $this->getOrder()->setOperation(Enum\Operation::CONSULT);
-
-        $serializer = new Serializer\ConsultSerializer($this);
-
-        $response = $this->sendHttpRequest($this->getIpag()->getEndpoint()->consult(), $serializer->serialize());
-
-        return $this->populate($response);
+        return (new Services\ConsultService($this))->execute();
     }
 
     public function cancel()
     {
-        $this->getOrder()->setOperation(Enum\Operation::CANCEL);
-
-        $serializer = new Serializer\CancelSerializer($this);
-
-        $response = $this->sendHttpRequest($this->getIpag()->getEndpoint()->cancel(), $serializer->serialize());
-
-        return $this->populate($response);
+        return (new Services\CancelService($this))->execute();
     }
 
     public function capture()
     {
-        $this->getOrder()->setOperation(Enum\Operation::CAPTURE);
+        return (new Services\CaptureService($this))->execute();
+    }
 
-        $serializer = new Serializer\CaptureSerializer($this);
+    private function authenticate()
+    {
+        $authentication = $this->getIpag()->getAuthentication();
+        $this->getOnlyPostClient()
+            ->setUser($authentication->getIdentification())
+            ->setPassword($authentication->getApiKey());
 
-        $response = $this->sendHttpRequest($this->getIpag()->getEndpoint()->capture(), $serializer->serialize());
+        return $this;
+    }
 
-        return $this->populate($response);
+    final public function sendHttpRequest($endpoint, $parameters)
+    {
+        $this->authenticate();
+
+        return parent::sendHttpRequest($endpoint, $parameters);
     }
 }
