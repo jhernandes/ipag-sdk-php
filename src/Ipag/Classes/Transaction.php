@@ -2,10 +2,6 @@
 
 namespace Ipag\Classes;
 
-use Ipag\Classes\Serializer\CancelSerializer;
-use Ipag\Classes\Serializer\CaptureSerializer;
-use Ipag\Classes\Serializer\ConsultSerializer;
-use Ipag\Classes\Serializer\Serializer;
 use stdClass;
 
 final class Transaction extends IpagResource
