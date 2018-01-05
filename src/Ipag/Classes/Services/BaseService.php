@@ -2,7 +2,7 @@
 
 namespace Ipag\Classes\Services;
 
-use Ipag\Classes\Serializer\Serializer;
+use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Transaction;
 
 abstract class BaseService
@@ -47,17 +47,9 @@ abstract class BaseService
     }
 
     /**
-     * @return Serializer
+     * @param Serializable $serializer
      */
-    public function getSerializer()
-    {
-        return $this->serializer;
-    }
-
-    /**
-     * @param Serializer $serializer
-     */
-    public function setSerializer(Serializer $serializer)
+    public function setSerializer(Serializable $serializer)
     {
         $this->serializer = $serializer;
 
@@ -70,16 +62,6 @@ abstract class BaseService
     public function getTransaction()
     {
         return $this->transaction;
-    }
-
-    /**
-     * @param Transaction $transaction
-     */
-    public function setTransaction(Transaction $transaction)
-    {
-        $this->transaction = $transaction;
-
-        return $this;
     }
 
     /**

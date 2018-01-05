@@ -3,9 +3,10 @@
 namespace Ipag\Classes;
 
 use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Traits\EmptiableTrait;
 
-final class Payment implements Emptiable
+final class Payment implements Emptiable, Serializable
 {
     use EmptiableTrait;
 
@@ -110,5 +111,51 @@ final class Payment implements Emptiable
     private function instructionsAreNotFull()
     {
         return (bool) (count($this->instructions) < 3);
+    }
+
+    public function serialize()
+    {
+        if ($this->isEmpty()) {
+            throw new \Exception('É necessário informar os dados do Pagamento (Payment)');
+        }
+
+        $_method = [
+            'metodo' => urlencode($this->getMethod()),
+        ];
+
+        $_instructions = $this->serializeInstructions();
+
+        $_softDescriptor = $this->serializeSoftDescriptor();
+
+        $_creditCard = $this->getCreditCard()->serialize();
+
+        return array_merge(
+            $_method,
+            $_instructions,
+            $_softDescriptor,
+            $_creditCard
+        );
+    }
+
+    private function serializeInstructions()
+    {
+        $_instructions = [];
+        foreach ($this->getInstructions() as $key => $instruction) {
+            $_instructions["instrucoes[{$key}]"] = urlencode($instruction);
+        }
+
+        return $_instructions;
+    }
+
+    private function serializeSoftDescriptor()
+    {
+        $_softDescriptor = [];
+        $softDescriptor = $this->getSoftDescriptor();
+
+        if (!empty($softDescriptor)) {
+            $_softDescriptor['softdescriptor'] = urlencode($softDescriptor);
+        }
+
+        return $_softDescriptor;
     }
 }

@@ -83,14 +83,6 @@ final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
     }
 
     /**
-     * @return string
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * @param string $user
      */
     public function setUser($user)
@@ -98,14 +90,6 @@ final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
         $this->user = $user;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**

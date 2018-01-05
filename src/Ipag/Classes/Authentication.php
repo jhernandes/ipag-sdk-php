@@ -3,9 +3,10 @@
 namespace Ipag\Classes;
 
 use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Traits\EmptiableTrait;
 
-final class Authentication implements Emptiable
+final class Authentication implements Emptiable, Serializable
 {
     use EmptiableTrait;
 
@@ -82,5 +83,19 @@ final class Authentication implements Emptiable
         $this->apiKey = $apiKey;
 
         return $this;
+    }
+
+    public function serialize()
+    {
+        $_user = [
+            'identificacao' => urlencode($this->getIdentification()),
+        ];
+
+        $parceiro = $this->getIdentification2();
+        if (!empty($parceiro)) {
+            $_user['identificacao2'] = urlencode($parceiro);
+        }
+
+        return $_user;
     }
 }

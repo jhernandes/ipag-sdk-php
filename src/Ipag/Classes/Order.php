@@ -3,9 +3,10 @@
 namespace Ipag\Classes;
 
 use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Traits\EmptiableTrait;
 
-final class Order extends BaseResource implements Emptiable
+final class Order extends BaseResource implements Emptiable, Serializable
 {
     use EmptiableTrait;
 
@@ -294,5 +295,35 @@ final class Order extends BaseResource implements Emptiable
         $this->subscription = $subscription;
 
         return $this;
+    }
+
+    public function serialize()
+    {
+        if ($this->isEmpty()) {
+            throw new \Exception('É necessário informar os dados do Pedido (Order)');
+        }
+
+        $_order = [
+            'pedido'            => urlencode($this->getOrderId()),
+            'operacao'          => urlencode($this->getOperation()),
+            'url_retorno'       => urlencode($this->getCallbackUrl()),
+            'valor'             => urlencode($this->getAmount()),
+            'parcelas'          => urlencode($this->getInstallments()),
+            'vencto'            => urlencode($this->getExpiry()),
+            'stelo_fingerprint' => urlencode($this->getFingerprint()),
+        ];
+
+        $_payment = $this->getPayment()->serialize();
+        $_cart = $this->getCart()->serialize();
+        $_customer = $this->getCustomer()->serialize();
+        $_subscription = $this->getSubscription()->serialize();
+
+        return array_merge(
+            $_order,
+            $_payment,
+            $_cart,
+            $_customer,
+            $_subscription
+        );
     }
 }

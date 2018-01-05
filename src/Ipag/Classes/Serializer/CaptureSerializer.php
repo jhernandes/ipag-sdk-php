@@ -2,9 +2,10 @@
 
 namespace Ipag\Classes\Serializer;
 
+use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Transaction;
 
-final class CaptureSerializer implements Serializer
+final class CaptureSerializer implements Serializable
 {
     /**
      * @var Transaction

@@ -3,9 +3,10 @@
 namespace Ipag\Classes;
 
 use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Traits\EmptiableTrait;
 
-final class Customer extends BaseResource implements Emptiable
+final class Customer extends BaseResource implements Emptiable, Serializable
 {
     use EmptiableTrait;
 
@@ -112,9 +113,11 @@ final class Customer extends BaseResource implements Emptiable
     {
         if ($this->isIndividual()) {
             $this->type = self::INDIVIDUAL;
-        } else {
-            $this->type = self::BUSINESS;
+
+            return $this;
         }
+
+        $this->type = self::BUSINESS;
 
         return $this;
     }
@@ -168,5 +171,23 @@ final class Customer extends BaseResource implements Emptiable
     private function isIndividual()
     {
         return (bool) (strlen($this->taxpayerId) <= 11);
+    }
+
+    public function serialize()
+    {
+        if ($this->isEmpty()) {
+            return [];
+        }
+
+        $_customer = [
+            'nome'  => urlencode($this->getName()),
+            'email' => urlencode($this->getEmail()),
+            'doc'   => urlencode($this->getTaxpayerId()),
+            'fone'  => urlencode($this->getPhone()),
+        ];
+
+        $_address = $this->getAddress()->serialize();
+
+        return array_merge($_customer, $_address);
     }
 }

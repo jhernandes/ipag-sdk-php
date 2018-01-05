@@ -3,9 +3,10 @@
 namespace Ipag\Classes;
 
 use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Traits\EmptiableTrait;
 
-final class CreditCard extends BaseResource implements Emptiable
+final class CreditCard extends BaseResource implements Emptiable, Serializable
 {
     use EmptiableTrait;
 
@@ -170,7 +171,7 @@ final class CreditCard extends BaseResource implements Emptiable
     /**
      * @return bool
      */
-    public function getSave()
+    public function hasSave()
     {
         return (bool) $this->save;
     }
@@ -224,5 +225,45 @@ final class CreditCard extends BaseResource implements Emptiable
     public function hideCvc()
     {
         $this->cvc = preg_replace('/\d/', '*', $this->cvc);
+    }
+
+    public function serialize()
+    {
+        if ($this->isEmpty()) {
+            return [];
+        }
+
+        if ($this->hasToken()) {
+            return $this->serializeCreditCardWithToken();
+        }
+
+        return $this->serializeCreditCardWithNumber();
+    }
+
+    private function serializeCreditCardWithNumber()
+    {
+        $_creditCard = [
+            'num_cartao'  => urlencode($this->getNumber()),
+            'nome_cartao' => urlencode($this->getHolder()),
+            'mes_cartao'  => urlencode($this->getExpiryMonth()),
+            'ano_cartao'  => urlencode($this->getExpiryYear()),
+        ];
+
+        if ($this->hasCvc()) {
+            $_creditCard['cvv_cartao'] = urlencode($this->getCvc());
+        }
+
+        if ($this->hasSave()) {
+            $_creditCard['gera_token_cartao'] = urlencode($this->hasSave());
+        }
+
+        return $_creditCard;
+    }
+
+    private function serializeCreditCardWithToken()
+    {
+        return [
+            'token_cartao' => urlencode($this->getToken()),
+        ];
     }
 }

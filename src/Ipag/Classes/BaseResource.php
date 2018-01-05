@@ -10,11 +10,6 @@ abstract class BaseResource
     private $numberUtil;
 
     /**
-     * @var Util\ObjectUtil
-     */
-    private $objectUtil;
-
-    /**
      * @var Util\DateUtil
      */
     private $dateUtil;
@@ -29,18 +24,6 @@ abstract class BaseResource
         }
 
         return $this->numberUtil;
-    }
-
-    /**
-     * @return Util\ObjectUtil
-     */
-    public function getObjectUtil()
-    {
-        if (is_null($this->objectUtil)) {
-            $this->objectUtil = new Util\ObjectUtil();
-        }
-
-        return $this->objectUtil;
     }
 
     /**

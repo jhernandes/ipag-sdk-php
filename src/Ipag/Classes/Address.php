@@ -3,9 +3,10 @@
 namespace Ipag\Classes;
 
 use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Traits\EmptiableTrait;
 
-final class Address extends BaseResource implements Emptiable
+final class Address extends BaseResource implements Emptiable, Serializable
 {
     use EmptiableTrait;
 
@@ -195,5 +196,23 @@ final class Address extends BaseResource implements Emptiable
         $this->zipCode = substr($this->getNumberUtil()->getOnlyNumbers($zipCode), 0, 8);
 
         return $this;
+    }
+
+    public function serialize()
+    {
+        if ($this->isEmpty()) {
+            return [];
+        }
+
+        return [
+            'endereco'        => urlencode($this->getStreet()),
+            'numero_endereco' => urlencode($this->getNumber()),
+            'complemento'     => urlencode($this->getComplement()),
+            'bairro'          => urlencode($this->getNeighborhood()),
+            'cidade'          => urlencode($this->getCity()),
+            'estado'          => urlencode($this->getState()),
+            'pais'            => urlencode($this->getCountry()),
+            'cep'             => urlencode($this->getZipCode()),
+        ];
     }
 }

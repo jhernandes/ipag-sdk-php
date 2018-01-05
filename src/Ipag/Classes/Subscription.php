@@ -3,9 +3,10 @@
 namespace Ipag\Classes;
 
 use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Traits\EmptiableTrait;
 
-final class Subscription extends BaseResource implements Emptiable
+final class Subscription extends BaseResource implements Emptiable, Serializable
 {
     use EmptiableTrait;
 
@@ -301,5 +302,25 @@ final class Subscription extends BaseResource implements Emptiable
     private function isValidProfileId($profileId)
     {
         return (bool) (is_numeric($profileId) && strlen($profileId) <= 32);
+    }
+
+    public function serialize()
+    {
+        if ($this->isEmpty()) {
+            return [];
+        }
+
+        return [
+            'profile_id'       => urlencode($this->getProfileId()),
+            'frequencia'       => urlencode($this->getFrequency()),
+            'intervalo'        => urlencode($this->getInterval()),
+            'inicio'           => urlencode($this->getStart()),
+            'ciclos'           => urlencode($this->getCycle()),
+            'valor_rec'        => urlencode($this->getAmount()),
+            'trial'            => urlencode($this->isTrial()),
+            'trial_ciclos'     => urlencode($this->getTrialCycle()),
+            'trial_frequencia' => urlencode($this->getTrialFrequency()),
+            'trial_valor'      => urlencode($this->getTrialAmount()),
+        ];
     }
 }

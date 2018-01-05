@@ -31,7 +31,7 @@ class CreditCardTest extends TestCase
         $this->assertEquals($this->card->getExpiryMonth(), '05');
         $this->assertEquals($this->card->getExpiryYear(), '2022');
         $this->assertEquals($this->card->getCvc(), '123');
-        $this->assertEquals($this->card->getSave(), false);
+        $this->assertEquals($this->card->hasSave(), false);
     }
 
     public function testSetExpiryMonthThrowUnexpectedValueException()

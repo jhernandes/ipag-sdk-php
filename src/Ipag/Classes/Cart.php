@@ -3,9 +3,10 @@
 namespace Ipag\Classes;
 
 use Ipag\Classes\Contracts\Emptiable;
+use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Traits\EmptiableTrait;
 
-final class Cart implements Emptiable
+final class Cart implements Emptiable, Serializable
 {
     use EmptiableTrait;
 
@@ -46,5 +47,33 @@ final class Cart implements Emptiable
         }
 
         return $this;
+    }
+
+    public function serialize()
+    {
+        if ($this->isEmpty()) {
+            return [];
+        }
+
+        return [
+            'descricao_pedido' => urlencode(json_encode($this->serializeProducts())),
+        ];
+    }
+
+    private function serializeProducts()
+    {
+        $_products = [];
+        $productId = 1;
+
+        foreach ($this->getProducts() as $product) {
+            $_products[$productId++] = [
+                'descr' => $product->getName(),
+                'valor' => $product->getUnitPrice(),
+                'quant' => $product->getQuantity(),
+                'id'    => $product->getSku(),
+            ];
+        }
+
+        return $_products;
     }
 }
