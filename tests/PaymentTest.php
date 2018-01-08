@@ -43,6 +43,7 @@ class PaymentTest extends TestCase
                             ->setExpiryMonth('10')
                             ->setExpiryYear('2025')
                             ->setCvc('123')
+                            ->setSave(true)
                     )
             )->setCustomer($ipag->customer()
                 ->setName('Fulano da Silva')
@@ -70,6 +71,7 @@ class PaymentTest extends TestCase
         $transaction = $this->doPayment();
 
         $this->assertEquals(getenv('APPROVED'), $transaction->payment->status);
+        $this->assertEquals(36, strlen($transaction->creditCard->token));
     }
 
     public function testExecuteSubscribePaymentSuccessfully()

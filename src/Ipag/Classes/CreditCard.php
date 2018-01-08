@@ -244,7 +244,7 @@ final class CreditCard extends BaseResource implements Emptiable, ObjectSerializ
         }
 
         if ($this->hasSave()) {
-            $_creditCard['gera_token_cartao'] = urlencode(true);
+            $_creditCard['gera_token_cartao'] = $this->hasSave();
         }
 
         return $_creditCard;
