@@ -25,7 +25,7 @@ final class ApiActionService implements Operationable
     /**
      * @param Serializable $serializer
      *
-     * @return stdClass
+     * @return \stdClass
      */
     public function execute(Serializable $serializer)
     {

@@ -2,7 +2,7 @@
 
 namespace Ipag\Classes\Http;
 
-final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface
+final class CurlOnlyPostHttpClient implements OnlyPostHttpClientInterface, AuthenticableHttpInterface
 {
     const CLIENT = 'IpagSdkPhp';
 

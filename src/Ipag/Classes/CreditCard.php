@@ -3,10 +3,10 @@
 namespace Ipag\Classes;
 
 use Ipag\Classes\Contracts\Emptiable;
-use Ipag\Classes\Contracts\Serializable;
+use Ipag\Classes\Contracts\ObjectSerializable;
 use Ipag\Classes\Traits\EmptiableTrait;
 
-final class CreditCard extends BaseResource implements Emptiable, Serializable
+final class CreditCard extends BaseResource implements Emptiable, ObjectSerializable
 {
     use EmptiableTrait;
 
@@ -94,7 +94,7 @@ final class CreditCard extends BaseResource implements Emptiable, Serializable
     }
 
     /**
-     * @param string number
+     * @param string $number
      */
     public function setNumber($number)
     {
@@ -104,7 +104,7 @@ final class CreditCard extends BaseResource implements Emptiable, Serializable
     }
 
     /**
-     * @param string holder
+     * @param string $holder
      */
     public function setHolder($holder)
     {
@@ -114,7 +114,7 @@ final class CreditCard extends BaseResource implements Emptiable, Serializable
     }
 
     /**
-     * @param string expiryMonth
+     * @param string $expiryMonth
      */
     public function setExpiryMonth($expiryMonth)
     {
@@ -129,7 +129,7 @@ final class CreditCard extends BaseResource implements Emptiable, Serializable
     }
 
     /**
-     * @param string expiryYear
+     * @param string $expiryYear
      */
     public function setExpiryYear($expiryYear)
     {
@@ -144,7 +144,7 @@ final class CreditCard extends BaseResource implements Emptiable, Serializable
     }
 
     /**
-     * @param string cvc
+     * @param string $cvc
      */
     public function setCvc($cvc)
     {
@@ -159,7 +159,7 @@ final class CreditCard extends BaseResource implements Emptiable, Serializable
     }
 
     /**
-     * @param string token
+     * @param string $token
      */
     public function setToken($token)
     {
@@ -244,7 +244,7 @@ final class CreditCard extends BaseResource implements Emptiable, Serializable
         }
 
         if ($this->hasSave()) {
-            $_creditCard['gera_token_cartao'] = urlencode($this->hasSave());
+            $_creditCard['gera_token_cartao'] = urlencode(true);
         }
 
         return $_creditCard;

@@ -3,7 +3,6 @@
 namespace Ipag\Classes\Serializer;
 
 use Ipag\Classes\Contracts\Serializable;
-use Ipag\Classes\Transaction;
 
 final class PaymentSerializer extends Serializer implements Serializable
 {

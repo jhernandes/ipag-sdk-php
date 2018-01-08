@@ -3,10 +3,10 @@
 namespace Ipag\Classes;
 
 use Ipag\Classes\Contracts\Emptiable;
-use Ipag\Classes\Contracts\Serializable;
+use Ipag\Classes\Contracts\ObjectSerializable;
 use Ipag\Classes\Traits\EmptiableTrait;
 
-final class Customer extends BaseResource implements Emptiable, Serializable
+final class Customer extends BaseResource implements Emptiable, ObjectSerializable
 {
     use EmptiableTrait;
 

@@ -24,7 +24,7 @@ final class Transaction extends IpagResource
     public function __construct(Ipag $ipag)
     {
         parent::__construct($ipag);
-        $this->apiService = new Services\ApiActionService($this);
+        $this->apiService = new Services\ApiActionService();
     }
 
     /**
