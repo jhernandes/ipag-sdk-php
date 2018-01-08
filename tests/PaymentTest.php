@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 class PaymentTest extends TestCase
 {
     private $transaction;
+    private $ipag;
 
     public function __construct()
     {
@@ -27,38 +28,46 @@ class PaymentTest extends TestCase
 
     public function init()
     {
-        $ipag = new Ipag(new Authentication(getenv('ID_IPAG'), getenv('API_KEY')), Endpoint::SANDBOX);
+        $this->ipag = new Ipag(new Authentication(getenv('ID_IPAG'), getenv('API_KEY')), Endpoint::SANDBOX);
 
-        $this->transaction = $ipag->transaction();
+        $this->transaction = $this->ipag->transaction();
         $this->transaction->getOrder()
             ->setOrderId(date('mdHis'))
             ->setCallbackUrl(getenv('CALLBACK_URL'))
             ->setAmount(10.00)
             ->setInstallments(1)
-            ->setPayment($ipag->payment()
+            ->setPayment($this->ipag->payment()
                     ->setMethod(Method::VISA)
-                    ->setCreditCard($ipag->creditCard()
-                            ->setNumber('4066553613548107')
-                            ->setHolder('FULANO')
-                            ->setExpiryMonth('10')
-                            ->setExpiryYear('2025')
-                            ->setCvc('123')
-                            ->setSave(true)
-                    )
-            )->setCustomer($ipag->customer()
-                ->setName('Fulano da Silva')
-                ->setTaxpayerId('799.993.388-01')
-                ->setPhone('11', '98888-3333')
-                ->setEmail('fulanodasilva@gmail.com')
-                ->setAddress($ipag->address()
-                        ->setStreet('Rua Júlio Gonzalez')
-                        ->setNumber('1000')
-                        ->setNeighborhood('Barra Funda')
-                        ->setCity('São Paulo')
-                        ->setState('SP')
-                        ->setZipCode('01156-060')
-                )
-        );
+                    ->setCreditCard($this->initCard())
+            )->setCustomer($this->initCustomer());
+    }
+
+    public function initCustomer()
+    {
+        return $this->ipag->customer()
+            ->setName('Fulano da Silva')
+            ->setTaxpayerId('799.993.388-01')
+            ->setPhone('11', '98888-3333')
+            ->setEmail('fulanodasilva@gmail.com')
+            ->setAddress($this->ipag->address()
+                    ->setStreet('Rua Júlio Gonzalez')
+                    ->setNumber('1000')
+                    ->setNeighborhood('Barra Funda')
+                    ->setCity('São Paulo')
+                    ->setState('SP')
+                    ->setZipCode('01156-060')
+            );
+    }
+
+    public function initCard()
+    {
+        return $this->ipag->creditCard()
+            ->setNumber('4066553613548107')
+            ->setHolder('FULANO')
+            ->setExpiryMonth('10')
+            ->setExpiryYear('2025')
+            ->setCvc('123')
+            ->setSave(true);
     }
 
     public function doPayment()
@@ -89,5 +98,26 @@ class PaymentTest extends TestCase
 
         $this->assertEquals(getenv('APPROVED'), $response->payment->status);
         $this->assertNotEmpty($response->creditCard->token);
+    }
+
+    public function testReturnResponseErrorUnauthorized()
+    {
+        $this->ipag = new Ipag(new Authentication('no_login_error', '123'), Endpoint::SANDBOX);
+
+        $transaction = $this->ipag->transaction();
+        $this->order = $transaction->getOrder()
+            ->setOrderId(date('mdHis'))
+            ->setCallbackUrl(getenv('CALLBACK_URL'))
+            ->setAmount(10.00)
+            ->setInstallments(1);
+
+        $this->order->setPayment($this->ipag->payment()
+                ->setMethod(Method::VISA)
+        );
+
+        $response = $transaction->execute();
+
+        $this->assertEquals('099', $response->error);
+        $this->assertEquals('Unauthorized', $response->errorMessage);
     }
 }

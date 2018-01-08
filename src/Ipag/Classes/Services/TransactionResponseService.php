@@ -42,6 +42,9 @@ final class TransactionResponseService implements Populable
             $transaction->subscription->profileId = $objectUtil->getProperty($response, 'profile_id');
         }
 
+        $transaction->error = $objectUtil->getProperty($response, 'code');
+        $transaction->errorMessage = $objectUtil->getProperty($response, 'message');
+
         return $transaction;
     }
 }
