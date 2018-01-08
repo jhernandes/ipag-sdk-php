@@ -5,18 +5,8 @@ namespace Ipag\Classes\Serializer;
 use Ipag\Classes\Contracts\Serializable;
 use Ipag\Classes\Transaction;
 
-final class PaymentSerializer implements Serializable
+final class PaymentSerializer extends Serializer implements Serializable
 {
-    /**
-     * @var Transaction
-     */
-    private $transaction;
-
-    public function __construct(Transaction $transaction)
-    {
-        $this->transaction = $transaction;
-    }
-
     public function serialize()
     {
         $_returnType = [

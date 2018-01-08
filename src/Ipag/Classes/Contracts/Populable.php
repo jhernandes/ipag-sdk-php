@@ -7,7 +7,7 @@ use stdClass;
 interface Populable
 {
     /**
-     * @param stdClass $object
+     * @param stdClass $response
      *
      * @return stdClass
      */

@@ -3,11 +3,13 @@
 namespace Tests\Classes\Services;
 
 use Ipag\Classes\Authentication;
-use Ipag\Classes\Serializer\CaptureSerializer;
+use Ipag\Classes\Enum\Action;
+use Ipag\Classes\Enum\Operation;
+use Ipag\Classes\Serializer\Serializer;
 use Ipag\Ipag;
 use PHPUnit\Framework\TestCase;
 
-class CaptureSerializerTest extends TestCase
+class SerializerTest extends TestCase
 {
     public function testSerialize()
     {
@@ -15,9 +17,9 @@ class CaptureSerializerTest extends TestCase
 
         $transaction = $ipag->transaction()->setTid('123456789');
 
-        $captureSerializer = new CaptureSerializer($transaction);
+        $cancelSerializer = new Serializer($transaction, Action::CONSULT, Operation::CONSULT);
 
-        $response = $captureSerializer->serialize();
+        $response = $cancelSerializer->serialize();
 
         $expected = [
             'identificacao' => urlencode('app@test.com'),

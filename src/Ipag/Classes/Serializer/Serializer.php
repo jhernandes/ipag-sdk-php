@@ -1,0 +1,64 @@
+<?php
+
+namespace Ipag\Classes\Serializer;
+
+use Ipag\Classes\Contracts\Serializable;
+use Ipag\Classes\Transaction;
+
+class Serializer implements Serializable
+{
+    /**
+     * @var Transaction
+     */
+    protected $transaction;
+
+    /**
+     * @var string
+     */
+    protected $action;
+
+    /**
+     * @var string
+     */
+    protected $operation;
+
+    public function __construct(Transaction $transaction, $action, $operation)
+    {
+        $this->transaction = $transaction;
+        $this->action = $action;
+        $this->operation = $operation;
+    }
+
+    public function serialize()
+    {
+        return [
+            'identificacao' => urlencode($this->transaction->getIpag()->getAuthentication()->getIdentification()),
+            'transId'       => urlencode($this->transaction->getTid()),
+            'retorno_tipo'  => urlencode('xml'),
+        ];
+    }
+
+    /**
+     * @return Transaction
+     */
+    public function getTransaction()
+    {
+        return $this->transaction;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOperation()
+    {
+        return $this->operation;
+    }
+}

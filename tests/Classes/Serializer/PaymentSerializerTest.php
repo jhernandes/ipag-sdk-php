@@ -3,7 +3,9 @@
 namespace Tests\Classes\Services;
 
 use Ipag\Classes\Authentication;
+use Ipag\Classes\Enum\Action;
 use Ipag\Classes\Enum\Method;
+use Ipag\Classes\Enum\Operation;
 use Ipag\Classes\Serializer\PaymentSerializer;
 use Ipag\Ipag;
 use PHPUnit\Framework\TestCase;
@@ -69,7 +71,7 @@ class PaymentSerializerTest extends TestCase
                     )
             );
 
-        $paymentSerializer = new PaymentSerializer($transaction);
+        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
 
         $response = $paymentSerializer->serialize();
 
@@ -129,7 +131,7 @@ class PaymentSerializerTest extends TestCase
                     )
             )->setCustomer($this->customer);
 
-        $paymentSerializer = new PaymentSerializer($transaction);
+        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
 
         $response = $paymentSerializer->serialize();
 
@@ -178,7 +180,7 @@ class PaymentSerializerTest extends TestCase
                     )
             );
 
-        $paymentSerializer = new PaymentSerializer($transaction);
+        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
 
         $response = $paymentSerializer->serialize();
 
@@ -219,7 +221,7 @@ class PaymentSerializerTest extends TestCase
                 ->setPhone('11', '98888-3333')
                 ->setEmail('fulanodasilva@gmail.com'));
 
-        $paymentSerializer = new PaymentSerializer($transaction);
+        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
 
         $response = $paymentSerializer->serialize();
 
@@ -249,7 +251,7 @@ class PaymentSerializerTest extends TestCase
     {
         $this->expectException(\Exception::class);
 
-        $paymentSerializer = new PaymentSerializer($this->ipag->transaction());
+        $paymentSerializer = new PaymentSerializer($this->ipag->transaction(), Action::PAYMENT, Operation::PAYMENT);
 
         $paymentSerializer->serialize();
     }
@@ -265,7 +267,7 @@ class PaymentSerializerTest extends TestCase
             ->setAmount(10.00)
             ->setInstallments(1);
 
-        $paymentSerializer = new PaymentSerializer($transaction);
+        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
 
         $paymentSerializer->serialize();
     }
@@ -282,7 +284,7 @@ class PaymentSerializerTest extends TestCase
                     ->setMethod(Method::BANKSLIP_ITAU)
             )->setCustomer($this->customer);
 
-        $paymentSerializer = new PaymentSerializer($transaction);
+        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
 
         $response = $paymentSerializer->serialize();
 
@@ -334,7 +336,7 @@ class PaymentSerializerTest extends TestCase
                     ->setInterval('month')
             );
 
-        $paymentSerializer = new PaymentSerializer($transaction);
+        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
 
         $response = $paymentSerializer->serialize();
 
@@ -385,7 +387,7 @@ class PaymentSerializerTest extends TestCase
 
         $transaction = $this->ipag->transaction();
 
-        $paymentSerializer = new PaymentSerializer($transaction);
+        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
 
         $paymentSerializer->serialize();
     }

@@ -8,6 +8,11 @@ use stdClass;
 
 final class TransactionResponseService implements Populable
 {
+    /**
+     * @param stdClass $response
+     *
+     * @return stdClass
+     */
     public function populate(stdClass $response)
     {
         $objectUtil = new ObjectUtil();

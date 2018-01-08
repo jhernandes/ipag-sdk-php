@@ -2,6 +2,11 @@
 
 namespace Ipag\Classes;
 
+use Ipag\Classes\Enum\Action;
+use Ipag\Classes\Enum\Operation;
+use Ipag\Classes\Serializer\PaymentSerializer;
+use Ipag\Classes\Serializer\Serializer;
+use Ipag\Ipag;
 use stdClass;
 
 final class Transaction extends IpagResource
@@ -15,6 +20,12 @@ final class Transaction extends IpagResource
      * @var string
      */
     private $tid;
+
+    public function __construct(Ipag $ipag)
+    {
+        parent::__construct($ipag);
+        $this->apiService = new Services\ApiActionService($this);
+    }
 
     /**
      * @return string
@@ -63,22 +74,26 @@ final class Transaction extends IpagResource
 
     public function execute()
     {
-        return (new Services\PaymentService($this))->execute();
+        return $this->apiService
+            ->execute(new PaymentSerializer($this, Action::PAYMENT, Operation::PAYMENT));
     }
 
     public function consult()
     {
-        return (new Services\ConsultService($this))->execute();
+        return $this->apiService
+            ->execute(new Serializer($this, Action::CONSULT, Operation::CONSULT));
     }
 
     public function cancel()
     {
-        return (new Services\CancelService($this))->execute();
+        return $this->apiService
+            ->execute(new Serializer($this, Action::CANCEL, Operation::CANCEL));
     }
 
     public function capture()
     {
-        return (new Services\CaptureService($this))->execute();
+        return $this->apiService
+            ->execute(new Serializer($this, Action::CAPTURE, Operation::CAPTURE));
     }
 
     private function authenticate()
@@ -91,7 +106,7 @@ final class Transaction extends IpagResource
         return $this;
     }
 
-    final public function sendHttpRequest($endpoint, $parameters)
+    public function sendHttpRequest($endpoint, $parameters)
     {
         $this->authenticate();
 
