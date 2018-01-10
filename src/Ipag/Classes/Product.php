@@ -74,9 +74,7 @@ final class Product extends BaseResource implements Emptiable
     }
 
     /**
-     * @param float $unitPrice
-     *
-     * @return self
+     * @param mixed $unitPrice
      */
     public function setUnitPrice($unitPrice)
     {

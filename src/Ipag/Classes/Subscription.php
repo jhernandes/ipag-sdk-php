@@ -162,7 +162,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
     }
 
     /**
-     * Sets the value of interval.
+     * @param string $interval
      */
     public function setInterval($interval)
     {
@@ -178,7 +178,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
     }
 
     /**
-     * @param string $start the start
+     * @param string $start
      */
     public function setStart($start)
     {
