@@ -8,6 +8,8 @@ use stdClass;
 
 class CallbackServiceTest extends TestCase
 {
+    private $callbackService;
+
     public function setUp()
     {
         parent::setUp();

@@ -71,7 +71,7 @@ class PaymentSerializerTest extends TestCase
             );
     }
 
-    private function serializePayment($transaction, $action, $operation)
+    private function serializePayment($transaction)
     {
         return (new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT))->serialize();
     }
@@ -131,7 +131,7 @@ class PaymentSerializerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $this->serializePayment($this->transaction, Action::PAYMENT, Operation::PAYMENT)
+            $this->serializePayment($this->transaction)
         );
     }
 
@@ -174,7 +174,7 @@ class PaymentSerializerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $this->serializePayment($this->transaction, Action::PAYMENT, Operation::PAYMENT)
+            $this->serializePayment($this->transaction)
         );
     }
 
@@ -205,7 +205,7 @@ class PaymentSerializerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $this->serializePayment($this->transaction, Action::PAYMENT, Operation::PAYMENT)
+            $this->serializePayment($this->transaction)
         );
     }
 
@@ -244,7 +244,7 @@ class PaymentSerializerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $this->serializePayment($this->transaction, Action::PAYMENT, Operation::PAYMENT)
+            $this->serializePayment($this->transaction)
         );
     }
 
@@ -252,14 +252,14 @@ class PaymentSerializerTest extends TestCase
     {
         $this->expectException(\Exception::class);
 
-        $this->serializePayment($this->ipag->transaction(), Action::PAYMENT, Operation::PAYMENT);
+        $this->serializePayment($this->ipag->transaction());
     }
 
     public function testSerializeWithoutPaymentShouldThrowException()
     {
         $this->expectException(\Exception::class);
 
-        $this->serializePayment($this->transaction, Action::PAYMENT, Operation::PAYMENT);
+        $this->serializePayment($this->transaction);
     }
 
     public function testSerializeBoletoPayment()
@@ -297,7 +297,7 @@ class PaymentSerializerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $this->serializePayment($this->transaction, Action::PAYMENT, Operation::PAYMENT)
+            $this->serializePayment($this->transaction)
         );
     }
 
@@ -354,7 +354,7 @@ class PaymentSerializerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $this->serializePayment($this->transaction, Action::PAYMENT, Operation::PAYMENT)
+            $this->serializePayment($this->transaction)
         );
     }
 
@@ -363,6 +363,6 @@ class PaymentSerializerTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('É necessário informar os dados do Pedido (Order)');
 
-        $this->serializePayment($this->ipag->transaction(), Action::PAYMENT, Operation::PAYMENT);
+        $this->serializePayment($this->ipag->transaction());
     }
 }
