@@ -31,6 +31,7 @@ class PaymentTest extends TestCase
         $this->ipag = new Ipag(new Authentication(getenv('ID_IPAG'), getenv('API_KEY')), Endpoint::SANDBOX);
 
         $this->transaction = $this->ipag->transaction();
+
         $this->transaction->getOrder()
             ->setOrderId(date('mdHis'))
             ->setCallbackUrl(getenv('CALLBACK_URL'))
@@ -105,15 +106,14 @@ class PaymentTest extends TestCase
         $this->ipag = new Ipag(new Authentication('no_login_error', '123'), Endpoint::SANDBOX);
 
         $transaction = $this->ipag->transaction();
-        $this->order = $transaction->getOrder()
+        $transaction->getOrder()
             ->setOrderId(date('mdHis'))
             ->setCallbackUrl(getenv('CALLBACK_URL'))
             ->setAmount(10.00)
-            ->setInstallments(1);
-
-        $this->order->setPayment($this->ipag->payment()
-                ->setMethod(Method::VISA)
-        );
+            ->setInstallments(1)
+            ->setPayment($this->ipag->payment()
+                    ->setMethod(Method::VISA)
+            );
 
         $response = $transaction->execute();
 

@@ -18,7 +18,7 @@ final class Authentication implements Emptiable, ObjectSerializable
     /**
      * @var string
      */
-    private $identification2;
+    private $partner;
 
     /**
      * @var string
@@ -52,17 +52,17 @@ final class Authentication implements Emptiable, ObjectSerializable
     /**
      * @return string
      */
-    public function getIdentification2()
+    public function getPartner()
     {
-        return $this->identification2;
+        return $this->partner;
     }
 
     /**
-     * @param string $identification2 the identification2
+     * @param string $partner the partner
      */
-    public function setIdentification2($identification2)
+    public function setPartner($partner)
     {
-        $this->identification2 = substr((string) $identification2, 0, 50);
+        $this->partner = substr((string) $partner, 0, 50);
 
         return $this;
     }
@@ -91,9 +91,9 @@ final class Authentication implements Emptiable, ObjectSerializable
             'identificacao' => urlencode($this->getIdentification()),
         ];
 
-        $parceiro = $this->getIdentification2();
-        if (!empty($parceiro)) {
-            $_user['identificacao2'] = urlencode($parceiro);
+        $partner = $this->getPartner();
+        if (!empty($partner)) {
+            $_user['identificacao2'] = urlencode($partner);
         }
 
         return $_user;

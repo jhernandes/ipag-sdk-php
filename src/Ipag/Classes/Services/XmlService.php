@@ -10,9 +10,14 @@ final class XmlService
         $response = simplexml_load_string($message, 'SimpleXMLElement', LIBXML_NOCDATA);
 
         if ($response === false) {
-            return false;
+            throw new \Exception('Não foi possível identificar o XML de retorno.');
         }
 
         return $response;
+    }
+
+    public function xmlToStdClass($xml)
+    {
+        return json_decode(json_encode((array) $xml));
     }
 }
