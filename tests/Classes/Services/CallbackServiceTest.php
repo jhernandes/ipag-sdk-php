@@ -8,18 +8,16 @@ use stdClass;
 
 class CallbackServiceTest extends TestCase
 {
-    public function testGetResponse()
+    public function setUp()
     {
-        $expected = new stdClass();
-        $expected->tid = '123456789';
-        $expected->amount = 10.00;
+        parent::setUp();
 
-        $expected->payment = new stdClass();
-        $expected->payment->status = '8';
+        $this->callbackService = new CallbackService();
+    }
 
-        $service = new CallbackService();
-
-        $xml = '<?xml version="1.0" encoding="utf-8" ?>
+    private function xmlDummyResponse()
+    {
+        return '<?xml version="1.0" encoding="utf-8" ?>
             <retorno>
                 <id_transacao>123456789</id_transacao>
                 <valor>10.00</valor>
@@ -34,8 +32,18 @@ class CallbackServiceTest extends TestCase
                 <redirect>false</redirect>
                 <url_autenticacao>https://minhaloja.com.br/ipag/retorno</url_autenticacao>
             </retorno>';
+    }
 
-        $response = $service->getResponse($xml);
+    public function testGetResponse()
+    {
+        $expected = new stdClass();
+        $expected->tid = '123456789';
+        $expected->amount = 10.00;
+
+        $expected->payment = new stdClass();
+        $expected->payment->status = '8';
+
+        $response = $this->callbackService->getResponse($this->xmlDummyResponse());
 
         $this->assertInstanceOf('stdClass', $response);
         $this->assertEquals($expected->tid, $response->tid);

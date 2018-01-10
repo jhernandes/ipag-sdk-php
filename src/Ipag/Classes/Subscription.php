@@ -21,7 +21,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
     private $frequency;
 
     /**
-     * @var int
+     * @var string
      */
     private $interval;
 

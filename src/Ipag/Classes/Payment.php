@@ -119,21 +119,13 @@ final class Payment implements Emptiable, ObjectSerializable
             throw new \Exception('É necessário informar os dados do Pagamento (Payment)');
         }
 
-        $_method = [
-            'metodo' => urlencode($this->getMethod()),
-        ];
-
-        $_instructions = $this->serializeInstructions();
-
-        $_softDescriptor = $this->serializeSoftDescriptor();
-
-        $_creditCard = $this->getCreditCard()->serialize();
-
         return array_merge(
-            $_method,
-            $_instructions,
-            $_softDescriptor,
-            $_creditCard
+            [
+                'metodo' => urlencode($this->getMethod()),
+            ],
+            $this->serializeInstructions(),
+            $this->serializeSoftDescriptor(),
+            $this->getCreditCard()->serialize()
         );
     }
 

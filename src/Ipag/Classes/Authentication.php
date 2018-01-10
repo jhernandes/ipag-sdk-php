@@ -85,15 +85,22 @@ final class Authentication implements Emptiable, ObjectSerializable
         return $this;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasPartner()
+    {
+        return (bool) !empty($this->partner);
+    }
+
     public function serialize()
     {
         $_user = [
             'identificacao' => urlencode($this->getIdentification()),
         ];
 
-        $partner = $this->getPartner();
-        if (!empty($partner)) {
-            $_user['identificacao2'] = urlencode($partner);
+        if ($this->hasPartner()) {
+            $_user['identificacao2'] = urlencode($this->getPartner());
         }
 
         return $_user;

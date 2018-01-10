@@ -313,17 +313,12 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
             'stelo_fingerprint' => urlencode($this->getFingerprint()),
         ];
 
-        $_payment = $this->getPayment()->serialize();
-        $_cart = $this->getCart()->serialize();
-        $_customer = $this->getCustomer()->serialize();
-        $_subscription = $this->getSubscription()->serialize();
-
         return array_merge(
             $_order,
-            $_payment,
-            $_cart,
-            $_customer,
-            $_subscription
+            $this->getPayment()->serialize(),
+            $this->getCart()->serialize(),
+            $this->getCustomer()->serialize(),
+            $this->getSubscription()->serialize()
         );
     }
 }
