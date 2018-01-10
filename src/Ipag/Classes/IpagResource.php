@@ -50,27 +50,25 @@ abstract class IpagResource extends BaseResource
         return $this;
     }
 
-    protected function sendHttpRequest($endpoint, $parameters)
+    public function sendHttpRequest($endpoint, $parameters)
     {
         $onlyPostClient = $this->getOnlyPostClient();
-        $xmlResponse = $onlyPostClient(
+        $response = $onlyPostClient(
             $endpoint,
             $this->getIpagHeaders(),
             $parameters
         );
 
-        return $this->checkIfIsValidXmlAndReturnStdClass($xmlResponse);
+        return $this->checkIfIsValidXmlAndReturnStdClass($response);
     }
 
-    private function checkIfIsValidXmlAndReturnStdClass($xmlResponse)
+    private function checkIfIsValidXmlAndReturnStdClass($response)
     {
         $xmlService = new Services\XmlService();
-        $xmlObject = $xmlService->validate($xmlResponse);
-        if (!$xmlObject) {
-            throw new \Exception('Não foi possível identificar o XML de retorno.');
-        }
 
-        return json_decode(json_encode((array) $xmlObject));
+        $simpleXmlObject = $xmlService->validate($response);
+
+        return $xmlService->xmlToStdClass($simpleXmlObject);
     }
 
     private function getIpagHeaders()

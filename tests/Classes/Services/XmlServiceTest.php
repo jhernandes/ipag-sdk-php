@@ -37,9 +37,12 @@ class XmlServiceTest extends TestCase
         $this->assertInstanceOf(\SimpleXMLElement::class, $this->xmlService->validate($xml));
     }
 
-    public function testValidateShouldReturnFalse()
+    public function testValidateShouldThrowException()
     {
+        $this->expectException(\Exception::class);
+
         $xml = 'error';
-        $this->assertFalse($this->xmlService->validate($xml));
+
+        $this->xmlService->validate($xml);
     }
 }

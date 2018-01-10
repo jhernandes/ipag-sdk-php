@@ -31,6 +31,7 @@
 - [Assinatura](#assinatura)
     - [Criando uma Assinatura](#criando-uma-assinatura)
 - [Exemplo de Transação Completa](#exemplo-de-transação-completa)
+- [Exemplo de Página de Callback](#exemplo-de-página-de-callback)
 - [Testes](#testes)
 - [Licença](#licença)
 - [Documentação](#documentação)
@@ -38,10 +39,10 @@
 
 ## Dependências
 require
-    * PHP >= 5.6
+    - PHP >= 5.6
 require-dev
-    * phpunit/phpunit
-    * codacy/coverage
+    - phpunit/phpunit
+    - codacy/coverage
 
 ## Instalação
 
@@ -244,6 +245,34 @@ try {
     }
 } catch(\Exception $e) {
     print_r($e->__toString());
+}
+```
+## Exemplo de Página de Callback
+
+```php
+<?php
+
+require_once 'vendor/autoload.php';
+
+use Ipag\Classes\Services\CallbackService;
+
+$postContent = file_get_contents('php://input');
+
+$callbackService = new CallbackService();
+
+// $response conterá os dados de retorno do iPag
+// $postContent deverá conter o XML enviado pelo iPag
+$response = $callbackService->getResponse($postContent);
+
+// Verificar se o retorno tem erro
+if (!empty($response->error)) {
+    echo "Contem erro! {$response->error} - {$response->errorMessage}";
+}
+
+// Verificar se a transação foi aprovada e capturada:
+if ($response->payment->status == '8') {
+    echo 'Transação Aprovada e Capturada';
+    // Atualize minha base de dados ...
 }
 ```
 

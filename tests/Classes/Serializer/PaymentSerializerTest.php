@@ -40,7 +40,7 @@ class PaymentSerializerTest extends TestCase
 
     public function testSerializeWithFullCreditCard()
     {
-        $this->ipag->getAuthentication()->setIdentification2('partner@test.com');
+        $this->ipag->getAuthentication()->setPartner('partner@test.com');
 
         $transaction = $this->ipag->transaction();
         $transaction->getOrder()

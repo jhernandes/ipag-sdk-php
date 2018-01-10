@@ -96,20 +96,14 @@ final class Transaction extends IpagResource
             ->execute(new Serializer($this, Action::CAPTURE, Operation::CAPTURE));
     }
 
-    private function authenticate()
+    public function authenticate()
     {
         $authentication = $this->getIpag()->getAuthentication();
+
         $this->getOnlyPostClient()
             ->setUser($authentication->getIdentification())
             ->setPassword($authentication->getApiKey());
 
         return $this;
-    }
-
-    public function sendHttpRequest($endpoint, $parameters)
-    {
-        $this->authenticate();
-
-        return parent::sendHttpRequest($endpoint, $parameters);
     }
 }

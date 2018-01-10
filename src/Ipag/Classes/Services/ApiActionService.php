@@ -40,6 +40,8 @@ final class ApiActionService implements Operationable
 
         $action = $this->serializer->getAction();
 
+        $transaction->authenticate();
+
         $response = $transaction->sendHttpRequest(
             $transaction->getIpag()->getEndpoint()->$action(),
             $this->serializer->serialize()
