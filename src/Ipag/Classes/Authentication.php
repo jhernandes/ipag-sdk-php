@@ -58,7 +58,7 @@ final class Authentication implements Emptiable, ObjectSerializable
     }
 
     /**
-     * @param string $partner the partner
+     * @param string $partner
      */
     public function setPartner($partner)
     {

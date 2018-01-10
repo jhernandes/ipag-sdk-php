@@ -2,8 +2,8 @@
 
 namespace Ipag\Classes;
 
+use Ipag\Classes\Http\AuthenticableHttpInterface;
 use Ipag\Classes\Http\CurlOnlyPostHttpClient;
-use Ipag\Classes\Http\OnlyPostHttpClientInterface;
 use Ipag\Ipag;
 use stdClass;
 
@@ -15,7 +15,7 @@ abstract class IpagResource extends BaseResource
     protected $ipag;
 
     /**
-     * @var OnlyPostHttpClientInterface
+     * @var AuthenticableHttpInterface
      */
     protected $onlyPostClient;
 
@@ -33,7 +33,7 @@ abstract class IpagResource extends BaseResource
     }
 
     /**
-     * @return OnlyPostHttpClientInterface
+     * @return AuthenticableHttpInterface
      */
     public function getOnlyPostClient()
     {
@@ -41,9 +41,9 @@ abstract class IpagResource extends BaseResource
     }
 
     /**
-     * @param OnlyPostHttpClientInterface $onlyPostClient
+     * @param AuthenticableHttpInterface $onlyPostClient
      */
-    public function setOnlyPostClient(OnlyPostHttpClientInterface $onlyPostClient)
+    public function setOnlyPostClient(AuthenticableHttpInterface $onlyPostClient)
     {
         $this->onlyPostClient = $onlyPostClient;
 
