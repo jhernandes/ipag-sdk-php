@@ -83,7 +83,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getInterval()
     {
