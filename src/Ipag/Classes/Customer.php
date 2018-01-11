@@ -179,15 +179,14 @@ final class Customer extends BaseResource implements Emptiable, ObjectSerializab
             return [];
         }
 
-        $_customer = [
-            'nome'  => urlencode($this->getName()),
-            'email' => urlencode($this->getEmail()),
-            'doc'   => urlencode($this->getTaxpayerId()),
-            'fone'  => urlencode($this->getPhone()),
-        ];
-
-        $_address = $this->getAddress()->serialize();
-
-        return array_merge($_customer, $_address);
+        return array_merge(
+            [
+                'nome'  => urlencode($this->getName()),
+                'email' => urlencode($this->getEmail()),
+                'doc'   => urlencode($this->getTaxpayerId()),
+                'fone'  => urlencode($this->getPhone()),
+            ],
+            $this->getAddress()->serialize()
+        );
     }
 }

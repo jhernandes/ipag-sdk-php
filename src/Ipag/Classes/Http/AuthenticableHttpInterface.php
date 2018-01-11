@@ -2,7 +2,7 @@
 
 namespace Ipag\Classes\Http;
 
-interface AuthenticableHttpInterface
+interface AuthenticableHttpInterface extends OnlyPostHttpClientInterface
 {
     public function setUser($user);
 

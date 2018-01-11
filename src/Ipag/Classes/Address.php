@@ -119,7 +119,7 @@ final class Address extends BaseResource implements Emptiable, ObjectSerializabl
     }
 
     /**
-     * @param string street
+     * @param string $street
      */
     public function setStreet($street)
     {
@@ -129,7 +129,7 @@ final class Address extends BaseResource implements Emptiable, ObjectSerializabl
     }
 
     /**
-     * @param string number
+     * @param string $number
      */
     public function setNumber($number)
     {
@@ -139,7 +139,7 @@ final class Address extends BaseResource implements Emptiable, ObjectSerializabl
     }
 
     /**
-     * @param string complement
+     * @param string $complement
      */
     public function setComplement($complement)
     {
@@ -149,7 +149,7 @@ final class Address extends BaseResource implements Emptiable, ObjectSerializabl
     }
 
     /**
-     * @param string neighborhood
+     * @param string $neighborhood
      */
     public function setNeighborhood($neighborhood)
     {
@@ -159,7 +159,7 @@ final class Address extends BaseResource implements Emptiable, ObjectSerializabl
     }
 
     /**
-     * @param string city
+     * @param string $city
      */
     public function setCity($city)
     {
@@ -169,7 +169,7 @@ final class Address extends BaseResource implements Emptiable, ObjectSerializabl
     }
 
     /**
-     * @param string state
+     * @param string $state
      */
     public function setState($state)
     {
@@ -179,7 +179,7 @@ final class Address extends BaseResource implements Emptiable, ObjectSerializabl
     }
 
     /**
-     * @param string country
+     * @param string $country
      */
     public function setCountry($country)
     {
@@ -189,7 +189,7 @@ final class Address extends BaseResource implements Emptiable, ObjectSerializabl
     }
 
     /**
-     * @param string zipCode
+     * @param string $zipCode
      */
     public function setZipCode($zipCode)
     {

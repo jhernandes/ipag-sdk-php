@@ -21,7 +21,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
     private $frequency;
 
     /**
-     * @var int
+     * @var string
      */
     private $interval;
 
@@ -61,6 +61,20 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
     private $trialAmount;
 
     /**
+     * @var Validators\SubscriptionValidator
+     */
+    private $validator;
+
+    private function validator()
+    {
+        if (is_null($this->validator)) {
+            $this->validator = new Validators\SubscriptionValidator();
+        }
+
+        return $this->validator;
+    }
+
+    /**
      * @return int
      */
     public function getFrequency()
@@ -69,7 +83,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getInterval()
     {
@@ -137,7 +151,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
      */
     public function setFrequency($frequency)
     {
-        if (!$this->isValidFrequency($frequency)) {
+        if (!$this->validator()->isValidFrequency($frequency)) {
             throw new \UnexpectedValueException(
                 'A frequencia não é válida ou não tem entre 1 e 2 caracteres'
             );
@@ -148,11 +162,11 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
     }
 
     /**
-     * Sets the value of interval.
+     * @param string $interval
      */
     public function setInterval($interval)
     {
-        if (!$this->isValidInterval($interval)) {
+        if (!$this->validator()->isValidInterval($interval)) {
             throw new \UnexpectedValueException(
                 'O intervalo (interval) não é válido'
             );
@@ -164,7 +178,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
     }
 
     /**
-     * @param string $start the start
+     * @param string $start
      */
     public function setStart($start)
     {
@@ -184,7 +198,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
      */
     public function setCycle($cycle)
     {
-        if (!$this->isValidCycle($cycle)) {
+        if (!$this->validator()->isValidCycle($cycle)) {
             throw new \UnexpectedValueException(
                 'O ciclo deve ser númerico e ter entre 1 e 3 caracteres.'
             );
@@ -219,7 +233,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
      */
     public function setTrialCycle($trialCycle)
     {
-        if (!$this->isValidCycle($trialCycle)) {
+        if (!$this->validator()->isValidCycle($trialCycle)) {
             throw new \UnexpectedValueException(
                 'O ciclo trial deve ser númerico e ter entre 1 e 3 caracteres.'
             );
@@ -234,7 +248,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
      */
     public function setTrialFrequency($trialFrequency)
     {
-        if (!$this->isValidFrequency($trialFrequency)) {
+        if (!$this->validator()->isValidFrequency($trialFrequency)) {
             throw new \UnexpectedValueException(
                 'A frequencia trial não é válida ou não tem entre 1 e 2 caracteres'
             );
@@ -267,7 +281,7 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
      */
     public function setProfileId($profileId)
     {
-        if (!$this->isValidProfileId($profileId)) {
+        if (!$this->validator()->isValidProfileId($profileId)) {
             throw new \UnexpectedValueException(
                 'Profile ID deve ser somente númerico e ter no máximo 32 caracteres.'
             );
@@ -275,33 +289,6 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
         $this->profileId = $profileId;
 
         return $this;
-    }
-
-    private function isValidFrequency($frequency)
-    {
-        return (bool) (is_numeric($frequency) && strlen($frequency) >= 1 && strlen($frequency) <= 2);
-    }
-
-    private function isValidInterval($interval)
-    {
-        switch ($interval) {
-            case Enum\Interval::DAY:
-            case Enum\Interval::WEEK:
-            case Enum\Interval::MONTH:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    private function isValidCycle($cycle)
-    {
-        return (bool) (is_numeric($cycle) && strlen($cycle) >= 1 && strlen($cycle) <= 3);
-    }
-
-    private function isValidProfileId($profileId)
-    {
-        return (bool) (is_numeric($profileId) && strlen($profileId) <= 32);
     }
 
     public function serialize()

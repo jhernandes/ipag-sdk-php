@@ -11,12 +11,12 @@ final class Cart implements Emptiable, ObjectSerializable
     use EmptiableTrait;
 
     /**
-     * @var array of Product
+     * @var array
      */
     private $products = [];
 
     /**
-     * @return array of Product
+     * @return array
      */
     public function getProducts()
     {
@@ -38,7 +38,7 @@ final class Cart implements Emptiable, ObjectSerializable
     }
 
     /**
-     * @param array of Product $products
+     * @param array
      */
     public function addProducts(array $products)
     {

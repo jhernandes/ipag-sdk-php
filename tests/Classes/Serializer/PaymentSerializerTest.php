@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 class PaymentSerializerTest extends TestCase
 {
     private $ipag;
-    private $customer;
+    private $transaction;
 
     public function setUp()
     {
@@ -23,7 +23,40 @@ class PaymentSerializerTest extends TestCase
 
         $this->ipag = new Ipag($authentication);
 
-        $this->customer = $this->ipag->customer()
+        $this->transaction = $this->ipag->transaction();
+
+        $this->transaction->getOrder()
+            ->setOrderId('10000')
+            ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
+            ->setAmount(10.00)
+            ->setInstallments(1);
+    }
+
+    private function creditCard()
+    {
+        return $this->ipag->creditCard()
+            ->setNumber('4066553613548107')
+            ->setHolder('FULANO')
+            ->setExpiryMonth('10')
+            ->setExpiryYear('2025')
+            ->setCvc('123')
+            ->setSave(true);
+    }
+
+    private function cart()
+    {
+        return $this->ipag->cart()
+            ->addProduct($this->ipag->product()
+                    ->setName('Produto 1')
+                    ->setQuantity(2)
+                    ->setUnitPrice(1.00)
+                    ->setSku('G9F07GSD96FA8')
+            );
+    }
+
+    private function customer()
+    {
+        return $this->ipag->customer()
             ->setName('Fulano da Silva')
             ->setTaxpayerId('799.993.388-01')
             ->setPhone('11', '98888-3333')
@@ -38,42 +71,25 @@ class PaymentSerializerTest extends TestCase
             );
     }
 
+    private function serializePayment($transaction)
+    {
+        return (new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT))->serialize();
+    }
+
     public function testSerializeWithFullCreditCard()
     {
         $this->ipag->getAuthentication()->setPartner('partner@test.com');
 
-        $transaction = $this->ipag->transaction();
-        $transaction->getOrder()
-            ->setOrderId('10000')
-            ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
-            ->setAmount(10.00)
-            ->setInstallments(1)
+        $this->transaction->getOrder()
             ->setPayment($this->ipag->payment()
                     ->setMethod(Method::VISA)
-                    ->setCreditCard($this->ipag->creditCard()
-                            ->setNumber('4066553613548107')
-                            ->setHolder('FULANO')
-                            ->setExpiryMonth('10')
-                            ->setExpiryYear('2025')
-                            ->setCvc('123')
-                            ->setSave(true)
+                    ->setCreditCard($this->creditCard()
                     )->setInstructions('Instrução 1')
                     ->setInstructions('Instrução 2')
                     ->setInstructions('Instrução 3')
                     ->setSoftDescriptor('EMPRESA')
-            )->setCustomer($this->customer)
-            ->setCart($this->ipag->cart()
-                    ->addProduct($this->ipag->product()
-                            ->setName('Produto 1')
-                            ->setQuantity(2)
-                            ->setUnitPrice(1.00)
-                            ->setSku('G9F07GSD96FA8')
-                    )
-            );
-
-        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
-
-        $response = $paymentSerializer->serialize();
+            )->setCustomer($this->customer())
+            ->setCart($this->cart());
 
         $expected = [
             'identificacao'     => 'app%40test.com',
@@ -113,27 +129,21 @@ class PaymentSerializerTest extends TestCase
             'descricao_pedido'  => '%7B%221%22%3A%7B%22descr%22%3A%22Produto+1%22%2C%22valor%22%3A1%2C%22quant%22%3A2%2C%22id%22%3A%22G9F07GSD96FA8%22%7D%7D',
         ];
 
-        $this->assertEquals($expected, $response);
+        $this->assertEquals(
+            $expected,
+            $this->serializePayment($this->transaction)
+        );
     }
 
     public function testSerializeWithCreditCardToken()
     {
-        $transaction = $this->ipag->transaction();
-        $transaction->getOrder()
-            ->setOrderId('10000')
-            ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
-            ->setAmount(10.00)
-            ->setInstallments(1)
+        $this->transaction->getOrder()
             ->setPayment($this->ipag->payment()
                     ->setMethod(Method::VISA)
                     ->setCreditCard($this->ipag->creditCard()
                             ->setToken('123456789')
                     )
-            )->setCustomer($this->customer);
-
-        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
-
-        $response = $paymentSerializer->serialize();
+            )->setCustomer($this->customer());
 
         $expected = [
             'identificacao'     => 'app%40test.com',
@@ -162,27 +172,21 @@ class PaymentSerializerTest extends TestCase
             'cep'               => '01156060',
         ];
 
-        $this->assertEquals($expected, $response);
+        $this->assertEquals(
+            $expected,
+            $this->serializePayment($this->transaction)
+        );
     }
 
     public function testSerializeWithoutCustomer()
     {
-        $transaction = $this->ipag->transaction();
-        $transaction->getOrder()
-            ->setOrderId('10000')
-            ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
-            ->setAmount(10.00)
-            ->setInstallments(1)
+        $this->transaction->getOrder()
             ->setPayment($this->ipag->payment()
                     ->setMethod(Method::VISA)
                     ->setCreditCard($this->ipag->creditCard()
                             ->setToken('123456789')
                     )
             );
-
-        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
-
-        $response = $paymentSerializer->serialize();
 
         $expected = [
             'identificacao'     => 'app%40test.com',
@@ -199,17 +203,15 @@ class PaymentSerializerTest extends TestCase
             'token_cartao'      => '123456789',
         ];
 
-        $this->assertEquals($expected, $response);
+        $this->assertEquals(
+            $expected,
+            $this->serializePayment($this->transaction)
+        );
     }
 
     public function testSerializeWithoutCustomerAddress()
     {
-        $transaction = $this->ipag->transaction();
-        $transaction->getOrder()
-            ->setOrderId('10000')
-            ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
-            ->setAmount(10.00)
-            ->setInstallments(1)
+        $this->transaction->getOrder()
             ->setPayment($this->ipag->payment()
                     ->setMethod(Method::VISA)
                     ->setCreditCard($this->ipag->creditCard()
@@ -220,10 +222,6 @@ class PaymentSerializerTest extends TestCase
                 ->setTaxpayerId('799.993.388-01')
                 ->setPhone('11', '98888-3333')
                 ->setEmail('fulanodasilva@gmail.com'));
-
-        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
-
-        $response = $paymentSerializer->serialize();
 
         $expected = [
             'identificacao'     => 'app%40test.com',
@@ -244,49 +242,32 @@ class PaymentSerializerTest extends TestCase
             'fone'              => '11988883333',
         ];
 
-        $this->assertEquals($expected, $response);
+        $this->assertEquals(
+            $expected,
+            $this->serializePayment($this->transaction)
+        );
     }
 
     public function testSerializeWithoutOrderShouldThrowException()
     {
         $this->expectException(\Exception::class);
 
-        $paymentSerializer = new PaymentSerializer($this->ipag->transaction(), Action::PAYMENT, Operation::PAYMENT);
-
-        $paymentSerializer->serialize();
+        $this->serializePayment($this->ipag->transaction());
     }
 
     public function testSerializeWithoutPaymentShouldThrowException()
     {
         $this->expectException(\Exception::class);
 
-        $transaction = $this->ipag->transaction();
-        $transaction->getOrder()
-            ->setOrderId('10000')
-            ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
-            ->setAmount(10.00)
-            ->setInstallments(1);
-
-        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
-
-        $paymentSerializer->serialize();
+        $this->serializePayment($this->transaction);
     }
 
     public function testSerializeBoletoPayment()
     {
-        $transaction = $this->ipag->transaction();
-        $transaction->getOrder()
-            ->setOrderId('10000')
-            ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
-            ->setAmount(10.00)
-            ->setInstallments(1)
+        $this->transaction->getOrder()
             ->setPayment($this->ipag->payment()
                     ->setMethod(Method::BANKSLIP_ITAU)
-            )->setCustomer($this->customer);
-
-        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
-
-        $response = $paymentSerializer->serialize();
+            )->setCustomer($this->customer());
 
         $expected = [
             'identificacao'     => 'app%40test.com',
@@ -314,31 +295,25 @@ class PaymentSerializerTest extends TestCase
             'cep'               => '01156060',
         ];
 
-        $this->assertEquals($expected, $response);
+        $this->assertEquals(
+            $expected,
+            $this->serializePayment($this->transaction)
+        );
     }
 
     public function testSerializeWithSubscription()
     {
-        $transaction = $this->ipag->transaction();
-        $transaction->getOrder()
-            ->setOrderId('10000')
-            ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
-            ->setAmount(10.00)
-            ->setInstallments(1)
+        $this->transaction->getOrder()
             ->setPayment($this->ipag->payment()
                     ->setMethod(Method::VISA)
                     ->setCreditCard($this->ipag->creditCard()
                             ->setToken('123456789')
                     )
-            )->setCustomer($this->customer)
+            )->setCustomer($this->customer())
             ->setSubscription($this->ipag->subscription()
                     ->setFrequency(1)
                     ->setInterval('month')
             );
-
-        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
-
-        $response = $paymentSerializer->serialize();
 
         $expected = [
             'identificacao'     => 'app%40test.com',
@@ -377,7 +352,10 @@ class PaymentSerializerTest extends TestCase
             'trial_valor'       => '',
         ];
 
-        $this->assertEquals($expected, $response);
+        $this->assertEquals(
+            $expected,
+            $this->serializePayment($this->transaction)
+        );
     }
 
     public function testSerializePaymentWithEmptyOrder()
@@ -385,10 +363,6 @@ class PaymentSerializerTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('É necessário informar os dados do Pedido (Order)');
 
-        $transaction = $this->ipag->transaction();
-
-        $paymentSerializer = new PaymentSerializer($transaction, Action::PAYMENT, Operation::PAYMENT);
-
-        $paymentSerializer->serialize();
+        $this->serializePayment($this->ipag->transaction());
     }
 }

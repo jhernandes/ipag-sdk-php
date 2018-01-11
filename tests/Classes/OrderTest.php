@@ -13,12 +13,7 @@ class OrderTest extends TestCase
     {
         parent::setUp();
 
-        $this->order = new Order();
-    }
-
-    public function testCreateAndSetOrder()
-    {
-        $this->order
+        $this->order = (new Order())
             ->setOrderId('123456')
             ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
             ->setAmount(10.85)
@@ -30,7 +25,10 @@ class OrderTest extends TestCase
             ->setCustomer(new \Ipag\Classes\Customer())
             ->setCart(new \Ipag\Classes\Cart())
             ->setSubscription(new \Ipag\Classes\Subscription());
+    }
 
+    public function testCreateAndSetOrder()
+    {
         $this->assertEquals('123456', $this->order->getOrderId());
         $this->assertEquals('https://minha_loja.com.br/ipag/callback', $this->order->getCallbackUrl());
         $this->assertEquals(10.85, $this->order->getAmount());

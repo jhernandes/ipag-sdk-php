@@ -46,6 +46,20 @@ final class CreditCard extends BaseResource implements Emptiable, ObjectSerializ
     private $save;
 
     /**
+     * @var Validators\CreditCardValidator
+     */
+    private $validator;
+
+    private function validator()
+    {
+        if (is_null($this->validator)) {
+            $this->validator = new Validators\CreditCardValidator();
+        }
+
+        return $this->validator;
+    }
+
+    /**
      * @return string
      */
     public function getNumber()
@@ -118,7 +132,7 @@ final class CreditCard extends BaseResource implements Emptiable, ObjectSerializ
      */
     public function setExpiryMonth($expiryMonth)
     {
-        if (!$this->isValidMonth($expiryMonth)) {
+        if (!$this->validator()->isValidMonth($expiryMonth)) {
             throw new \UnexpectedValueException(
                 'O mês de expiração do cartão deve ser um número entre 1 e 12'
             );
@@ -133,7 +147,7 @@ final class CreditCard extends BaseResource implements Emptiable, ObjectSerializ
      */
     public function setExpiryYear($expiryYear)
     {
-        if (!$this->isValidYear($expiryYear)) {
+        if (!$this->validator()->isValidYear($expiryYear)) {
             throw new \UnexpectedValueException(
                 'O ano de expiração do cartão deve ser um número de 2 ou 4 dígitos'
             );
@@ -148,7 +162,7 @@ final class CreditCard extends BaseResource implements Emptiable, ObjectSerializ
      */
     public function setCvc($cvc)
     {
-        if (!$this->isValidCvc($cvc)) {
+        if (!$this->validator()->isValidCvc($cvc)) {
             throw new \UnexpectedValueException(
                 'O código de segurança deve ser um número e deve ter 3 ou 4 dígitos'
             );
@@ -186,29 +200,20 @@ final class CreditCard extends BaseResource implements Emptiable, ObjectSerializ
         return $this;
     }
 
-    private function isValidMonth($month)
-    {
-        return (bool) (is_numeric($month) && $month >= 1 && $month <= 12);
-    }
-
-    private function isValidYear($year)
-    {
-        return (bool) (is_numeric($year) && strlen($year) >= 2 && strlen($year) <= 4);
-    }
-
-    private function isValidCvc($cvc)
-    {
-        return (bool) (is_numeric($cvc) && (strlen($cvc) == 3 || strlen($cvc) == 4));
-    }
-
+    /**
+     * @return bool
+     */
     public function hasToken()
     {
-        return !empty($this->token);
+        return (bool) !empty($this->token);
     }
 
+    /**
+     * @return bool
+     */
     public function hasCvc()
     {
-        return !empty($this->cvc);
+        return (bool) !empty($this->cvc);
     }
 
     public function hide()
