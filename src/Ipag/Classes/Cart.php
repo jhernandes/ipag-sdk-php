@@ -15,7 +15,7 @@ final class Cart implements Emptiable, ObjectSerializable
      */
     private $products = [];
 
-    public function __construct(array...$products)
+    public function __construct(array ...$products)
     {
         $this->addProducts(...$products);
     }
@@ -45,7 +45,7 @@ final class Cart implements Emptiable, ObjectSerializable
     /**
      * @param array
      */
-    public function addProducts(array...$products)
+    public function addProducts(array ...$products)
     {
         foreach ($products as $product) {
             if (!empty($product)) {
