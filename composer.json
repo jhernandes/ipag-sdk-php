@@ -23,6 +23,6 @@
     "minimum-stability": "dev",
     "require-dev": {
         "phpunit/phpunit": "^7.0@dev",
-        "codacy/coverage": "dev-master"
+        "codacy/coverage": "^1.4.1"
     }
 }
