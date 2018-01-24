@@ -1,0 +1,16 @@
+# .travis.yml
+language: php
+
+php:
+  - 7.0
+  - 7.1
+
+before_script:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install -n
+
+script:
+  - php vendor/bin/phpunit --coverage-clover build/coverage/xml
+
+after_script:
+  - php vendor/bin/codacycoverage clover build/coverage/xml

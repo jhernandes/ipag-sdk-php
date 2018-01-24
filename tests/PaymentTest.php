@@ -32,6 +32,13 @@ class PaymentTest extends TestCase
 
         $this->transaction = $this->ipag->transaction();
 
+        $cart = $this->ipag->cart(
+            ['Produto 1', 5.00, 1, 'ABDC1'],
+            ['Produto 2', 3.50, 2, 'ABDC2'],
+            ['Produto 3', 5.50, 1, 'ABDC3'],
+            ['Produto 4', 8.50, 5, 'ABDC4']
+        );
+
         $this->transaction->getOrder()
             ->setOrderId(date('mdHis'))
             ->setCallbackUrl(getenv('CALLBACK_URL'))
@@ -40,7 +47,8 @@ class PaymentTest extends TestCase
             ->setPayment($this->ipag->payment()
                     ->setMethod(Method::VISA)
                     ->setCreditCard($this->initCard())
-            )->setCustomer($this->initCustomer());
+            )->setCustomer($this->initCustomer())
+            ->setCart($cart);
     }
 
     public function initCustomer()
