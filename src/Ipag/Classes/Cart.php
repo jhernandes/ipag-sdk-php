@@ -15,6 +15,11 @@ final class Cart implements Emptiable, ObjectSerializable
      */
     private $products = [];
 
+    public function __construct(array ...$products)
+    {
+        $this->addProducts(...$products);
+    }
+
     /**
      * @return array
      */
@@ -40,10 +45,17 @@ final class Cart implements Emptiable, ObjectSerializable
     /**
      * @param array
      */
-    public function addProducts(array $products)
+    public function addProducts(array ...$products)
     {
         foreach ($products as $product) {
-            $this->addProduct($product);
+            if (!empty($product)) {
+                $this->addProduct((new Product())
+                        ->setName(isset($product[0]) ? $product[0] : '')
+                        ->setUnitPrice(isset($product[1]) ? $product[1] : 0)
+                        ->setQuantity(isset($product[2]) ? $product[2] : 1)
+                        ->setSku(isset($product[3]) ? $product[3] : '')
+                );
+            }
         }
 
         return $this;

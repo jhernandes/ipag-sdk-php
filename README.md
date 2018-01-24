@@ -21,6 +21,8 @@
     - [Dados do Cliente](#dados-do-cliente)
 - [Cartão de Crédito/Débito](#cartão-de-crédito/débito)
     - [Dados do Cartão de Crédito/Débito](#dados-do-cartão-de-crédito/débito)
+- [Carrinho](#carrinho)
+    - [Adicionando Produtos](#adicionando-produtos)
 - [Transação](#transação)
     - [Com Cartão de Crédito](#transação-com-cartão-de-crédito)
     - [Com Token de Cartão de Crédito](#transação-com-token-de-cartão-de-crédito)
@@ -38,11 +40,13 @@
 - [Dúvidas & Sugestões](#duvidas-&-sugestões)
 
 ## Dependências
-require
-    - PHP >= 5.6
-require-dev
-    - phpunit/phpunit
-    - codacy/coverage
+
+**require**
+ - [PHP >= 5.6]
+
+**require-dev**
+ - [phpunit/phpunit]
+ - [codacy/coverage]
 
 ## Instalação
 
@@ -92,6 +96,23 @@ $creditCard = $ipag->creditCard()
     ->setExpiryYear('2025')
     ->setCvc('123')
     ->setSave(true); //True para gerar o token do cartão (one-click-buy)
+```
+
+## Carrinho
+### Adicionando Produtos
+
+```php
+// ...
+
+$cart = $ipag->cart(
+    // Nome do Produto, Valor Unitário, Quantidade, SKU (Código do Produto)
+    ['Produto 1', 5.00, 1, 'ABDC1'],
+    ['Produto 2', 3.50, 2, 'ABDC2'],
+    ['Produto 3', 5.50, 1, 'ABDC3'],
+    ['Produto 4', 8.50, 5, 'ABDC4']
+);
+
+// ...
 ```
 ## Transação (Pagamento)
 ### Transação com Cartão de Crédito
@@ -213,6 +234,11 @@ try {
             ->setZipCode('01156-060')
     );
 
+    $cart = $ipag->cart(
+        ['Produto 1', 5.00, 1, 'ABDC1'],
+        ['Produto 2', 2.50, 2, 'ABDC2']
+    );
+
     $creditCard = $ipag->creditCard()
         ->setNumber('4066553613548107')
         ->setHolder('FULANO')
@@ -229,7 +255,8 @@ try {
             ->setMethod(Method::VISA)
             ->setCreditCard($creditCard)
         )
-        ->setCustomer($customer);
+        ->setCustomer($customer)
+        ->setCart($cart);
 
     $response = $ipag->transaction()->execute();
 

@@ -34,13 +34,11 @@ class CartTest extends TestCase
     {
         $cart = new Cart();
 
-        $products = [
-            $this->product,
-            $this->product,
-            $this->product,
-        ];
-
-        $cart->addProducts($products);
+        $cart->addProducts(
+            ['Produto 1', 5.00, 1, 'ABCD98827'],
+            ['Produto 2', 10.00, 6, 'ABCD98828'],
+            ['Produto 3', 1.00, 2, 'ABCD98829']
+        );
 
         $this->assertEquals(count($cart->getProducts()), 3);
     }

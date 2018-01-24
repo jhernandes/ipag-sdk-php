@@ -48,9 +48,9 @@ class Ipag
         return new Classes\Address();
     }
 
-    public function cart()
+    public function cart(array ...$products)
     {
-        return new Classes\Cart();
+        return new Classes\Cart(...$products);
     }
 
     public function product()
