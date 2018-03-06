@@ -110,6 +110,7 @@ class PaymentSerializerTest extends TestCase
             'ano_cartao'        => '2025',
             'cvv_cartao'        => '123',
             'gera_token_cartao' => '1',
+            'ip'                => '',
             'nome'              => 'Fulano+da+Silva',
             'email'             => 'fulanodasilva%40gmail.com',
             'doc'               => '79999338801',
@@ -157,6 +158,7 @@ class PaymentSerializerTest extends TestCase
             'vencto'            => '',
             'stelo_fingerprint' => '',
             'metodo'            => 'visa',
+            'ip'                => '',
             'token_cartao'      => '123456789',
             'nome'              => 'Fulano+da+Silva',
             'email'             => 'fulanodasilva%40gmail.com',
@@ -201,6 +203,7 @@ class PaymentSerializerTest extends TestCase
             'stelo_fingerprint' => '',
             'metodo'            => 'visa',
             'token_cartao'      => '123456789',
+            'ip'                => '',
         ];
 
         $this->assertEquals(
@@ -240,6 +243,7 @@ class PaymentSerializerTest extends TestCase
             'email'             => 'fulanodasilva%40gmail.com',
             'doc'               => '79999338801',
             'fone'              => '11988883333',
+            'ip'                => '',
         ];
 
         $this->assertEquals(
@@ -293,6 +297,7 @@ class PaymentSerializerTest extends TestCase
             'estado'            => 'SP',
             'pais'              => 'BR',
             'cep'               => '01156060',
+            'ip'                => '',
         ];
 
         $this->assertEquals(
@@ -326,6 +331,7 @@ class PaymentSerializerTest extends TestCase
             'parcelas'          => '1',
             'vencto'            => '',
             'stelo_fingerprint' => '',
+            'ip'                => '',
             'metodo'            => 'visa',
             'token_cartao'      => '123456789',
             'nome'              => 'Fulano+da+Silva',

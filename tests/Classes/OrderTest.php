@@ -19,6 +19,7 @@ class OrderTest extends TestCase
             ->setAmount(10.85)
             ->setInstallments(12)
             ->setExpiry('10/10/2018')
+            ->setIp('192.168.0.100')
             ->setFingerPrint('ABCD123456789')
             ->setOperation(\Ipag\Classes\Enum\Operation::PAYMENT)
             ->setPayment(new \Ipag\Classes\Payment())

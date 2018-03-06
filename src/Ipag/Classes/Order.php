@@ -48,7 +48,7 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     /**
      * @var string
      */
-    private $ip;
+    private $internetProtocol;
 
     /**
      * @var Payment
@@ -206,16 +206,16 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
      */
     public function getIp()
     {
-        return $this->ip;
+        return $this->internetProtocol;
     }
 
     /**
-     * @param string $ip
+     * @param string $internetProtocol
      */
-    public function setIp($ip)
+    public function setIp($internetProtocol)
     {
-        if (filter_var(trim($ip), FILTER_VALIDATE_IP)) {
-            $this->ip = trim($ip);
+        if (filter_var(trim($internetProtocol), FILTER_VALIDATE_IP)) {
+            $this->internetProtocol = trim($internetProtocol);
         }
 
         return $this;

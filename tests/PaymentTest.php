@@ -125,7 +125,7 @@ class PaymentTest extends TestCase
 
         $response = $transaction->execute();
 
-        $this->assertEquals('099', $response->error);
+        $this->assertEquals('401', $response->error);
         $this->assertEquals('Unauthorized', $response->errorMessage);
     }
 }
