@@ -46,6 +46,11 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     private $fingerprint;
 
     /**
+     * @var string
+     */
+    private $ip;
+
+    /**
      * @var Payment
      */
     private $payment;
@@ -196,6 +201,26 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * @param string $ip
+     */
+    public function setIp($ip)
+    {
+        if (filter_var(trim($ip), FILTER_VALIDATE_IP)) {
+            $this->ip = trim($ip);
+        }
+
+        return $this;
+    }
+
     private function checkIfInstallmentsIsValidAndReturn($installments)
     {
         if (empty($installments) || $installments < 1) {
@@ -311,6 +336,7 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
             'parcelas'          => urlencode($this->getInstallments()),
             'vencto'            => urlencode($this->getExpiry()),
             'stelo_fingerprint' => urlencode($this->getFingerprint()),
+            'ip'                => urlencode($this->getIp()),
         ];
 
         return array_merge(
