@@ -117,7 +117,9 @@ $cart = $ipag->cart(
 ## Transação (Pagamento)
 ### Transação com Cartão de Crédito
 ```php
-$ipag->transaction()->getOrder()
+$transaction = $ipag->transaction();
+
+$transaction->getOrder()
     ->setOrderId($orderId)
     ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
     ->setAmount(10.00)
@@ -128,12 +130,14 @@ $ipag->transaction()->getOrder()
     )->setCustomer($customer)
 );
 
-$response = $ipag->transaction()->execute();
+$response = $transaction->execute();
 ```
 
 ### Transação com Token de Cartão de Crédito
 ```php
-$ipag->transaction()->getOrder()
+$transaction = $ipag->transaction();
+
+$transaction->getOrder()
     ->setOrderId($orderId)
     ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
     ->setAmount(10.00)
@@ -146,12 +150,14 @@ $ipag->transaction()->getOrder()
     )->setCustomer($customer)
 );
 
-$response = $ipag->transaction()->execute();
+$response = $transaction->execute();
 ```
 
 ### Transação com Boleto
 ```php
-$ipag->transaction()->getOrder()
+$transaction = $ipag->transaction();
+
+$transaction->getOrder()
     ->setOrderId($orderId)
     ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
     ->setAmount(10.00)
@@ -162,7 +168,7 @@ $ipag->transaction()->getOrder()
     )->setCustomer($customer)
 );
 
-$response = $ipag->transaction()->execute();
+$response = $transaction->execute();
 ```
 
 ### Consulta
@@ -186,7 +192,9 @@ $response = $ipag->transaction()->setTid('123456789')->cancel();
 ### Criando uma Assinatura
 
 ```php
-$ipag->transaction()->getOrder()
+$transaction = $ipag->transaction();
+
+$transaction->getOrder()
     ->setOrderId($orderId)
     ->setCallbackUrl(getenv('CALLBACK_URL'))
     ->setAmount(10.00)
@@ -202,7 +210,7 @@ $ipag->transaction()->getOrder()
     ->setStart('10/10/2018')
 );
 
-$response = $ipag->transaction()->execute();
+$response = $transaction->execute();
 ```
 
 ## Exemplo de Transação Completa
@@ -246,7 +254,9 @@ try {
         ->setExpiryYear('2025')
         ->setCvc('123');
 
-    $ipag->transaction()->getOrder()
+    $transaction = $ipag->transaction();
+
+    $transaction->getOrder()
         ->setOrderId($orderId)
         ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
         ->setAmount(10.00)
@@ -258,7 +268,7 @@ try {
         ->setCustomer($customer)
         ->setCart($cart);
 
-    $response = $ipag->transaction()->execute();
+    $response = $transaction->execute();
 
     //Retornou algum erro?
     if (!empty($response->error)) {
