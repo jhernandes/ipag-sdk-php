@@ -50,7 +50,7 @@ final class Cart implements Emptiable, ObjectSerializable
         foreach ($products as $product) {
             if (!empty($product)) {
                 $this->addProduct((new Product())
-                        ->setName(isset($product[0]) ? $product[0] : '')
+                        ->setName(isset($product[0]) ? preg_replace('/[^0-9a-zA-Z ]/', '', $product[0]) : '')
                         ->setUnitPrice(isset($product[1]) ? $product[1] : 0)
                         ->setQuantity(isset($product[2]) ? $product[2] : 1)
                         ->setSku(isset($product[3]) ? $product[3] : '')

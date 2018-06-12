@@ -33,10 +33,44 @@ class PaymentTest extends TestCase
         $this->transaction = $this->ipag->transaction();
 
         $cart = $this->ipag->cart(
-            ['Produto 1', 5.00, 1, 'ABDC1'],
-            ['Produto 2', 3.50, 2, 'ABDC2'],
-            ['Produto 3', 5.50, 1, 'ABDC3'],
-            ['Produto 4', 8.50, 5, 'ABDC4']
+            ["APC Flotador Universal Perol 5 Litros", 55.9, 2, "000347"],
+            ["Aplicador de gel para pneus Cadillac", 10, 2, "001567"],
+            ["Escova Azul para Furo de Rodas Mandala", 35.9, 2, "E01"],
+            ["Polidor de Corte LPD Hi Cut + Lincoln 1K (nova fórmula)", 148.9, 1, "002053"],
+            ["Lava Auto Shampoo Super Concentrado 1:300 Monster Cadillac 2L", 37.05, 2, "001646"],
+            ["Balde com Protetor de Areia Ultimate Filter GF", 60.9, 1, "001549"],
+            ["Balde com Protetor de Areia Ultimate Filter GF", 60.9, 1, "001549"],
+            ["Removedor de Piche Tar Remover Sonax 300ml", 54, 1, "000586"],
+            ["Boina de Espuma Super Macia Preta Waffle Mills 7.8\"", 60, 1, "001004"],
+            ["Cera de Carnaúba Cleaner Wax Cadillac 300gr", 79.9, 1, "000312"],
+            ["Cera de Carnaúba Lincoln 200g", 72.5, 1, "001051"],
+            ["Vonixx Cera de Carnaúba Super Protetora", 52, 1, "001455"],
+            ["Vonixx Revitalizador de Pneus 500ml", 32, 1, "001479"],
+            ["Boina de Espuma Médio Agressiva Dune Alcance 5\" ", 41.5, 1, "002333"],
+            ["Boina Lã S/Interface Corte Lincoln 6\" (listra Colorida)", 39, 1, "001891"],
+            ["Desinfetante BAC 500 Perol 5L", 66.9, 1, "001286"],
+            ["Escova Caixa de Roda Cadillac", 39.9, 1, "000544"],
+            ["Escova para Estofados (cerdas de silicone) Cadillac", 36.9, 1, "001488"],
+            ["Lavagem a Seco Affix Perol 5L", 216.9, 1, "000499"],
+            ["POLIDOR DE METAIS METAL-LAC CADILLAC 150G", 37.9, 1, "831676"],
+            ["Vonixx Restaurax 500ml", 32.9, 1, "001478"],
+            ["Revitalizador de Plásticos Doctor Shine Cadillac 500ml", 34.1, 1, "002020"],
+            ["Menzerna Selante Power Lock Ultimate Protection 1L", 251.9, 1, "001423"],
+            ["Pneu Visco Cadillac 5L", 43.6, 1, "000265"],
+            ["Metal Polish Optimum 227g", 83, 1, "001910"],
+            ["Nano Pro (Profiline) Perfect Finish Sonax - 400g", 109.9, 1, "000427"],
+            ["OXICLEAN – REMOVEDOR DE CHUVA ÁCIDA", 45.9, 1, "001513"],
+            ["Pasta Abrasiva 3M Cleaner Clay + Brinde Limpeza Final 3M 500ml", 86.9, 1, "000279"],
+            ["Shampoo automotivo Espumacar Cadillac 5L", 28, 1, "000266"],
+            ["Suporte c/ Velcro Ventilado 5\" p/ Roto 21 - Cadillac ou Kers", 56.9, 1, "001547"],
+            ["Toalha de Microfibra Cadillac 40x40 cm", 9.9, 1, "001554"],
+            ["Boina de Espuma Agressiva Azul Spider Scholl 6.5\"", 113.5, 1, "BSA165"],
+            ["Ironlac Descontaminante de Superfícies Cadillac 5L", 113.9, 1, "001824"],
+            ["Lustrador Alto Brilho 2x1 Lincoln", 39.9, 1, "000086"],
+            ["Meguiars Espuma Aplicadora", 11.23, 1, "000558"],
+            ["Melamina Kers - Esponja Mágica", 11.9, 1, "001406"],
+            ["Escova Pneus Cadillac", 40.9, 1, "000573"],
+            ["Mini Politriz Roto Orbital Yes GFX-5802 220V + Kit Pincel Kers", 1100, 1, "002165"]
         );
 
         $this->transaction->getOrder()
