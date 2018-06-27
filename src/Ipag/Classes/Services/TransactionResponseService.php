@@ -52,6 +52,7 @@ final class TransactionResponseService implements Populable
         $transaction->urlAuthentication = $this->getObjectUtil()->getProperty($response, 'url_autenticacao');
         $transaction->payment = $this->payment($response);
         $transaction->order = $this->order($response);
+        $transaction->antifraud = $this->antifraud($response);
 
         $transaction->error = $this->getObjectUtil()->getProperty($response, 'code');
         $transaction->errorMessage = $this->getObjectUtil()->getProperty($response, 'message');
@@ -94,5 +95,16 @@ final class TransactionResponseService implements Populable
         $subscription->profileId = $this->getObjectUtil()->getProperty($response, 'profile_id');
 
         return $subscription;
+    }
+
+    private function antifraud(stdClass $response)
+    {
+        $antifraud = new stdClass();
+        $antifraud->id = $this->getObjectUtil()->getProperty($response, 'af_id');
+        $antifraud->score = $this->getObjectUtil()->getProperty($response, 'af_score');
+        $antifraud->status = $this->getObjectUtil()->getProperty($response, 'af_status');
+        $antifraud->message = $this->getObjectUtil()->getProperty($response, 'af_message');
+
+        return $antifraud;
     }
 }

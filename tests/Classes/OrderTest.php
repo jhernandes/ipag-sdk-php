@@ -21,6 +21,7 @@ class OrderTest extends TestCase
             ->setExpiry('10/10/2018')
             ->setIp('192.168.0.100')
             ->setFingerPrint('ABCD123456789')
+            ->setAntifraud(0)
             ->setOperation(\Ipag\Classes\Enum\Operation::PAYMENT)
             ->setPayment(new \Ipag\Classes\Payment())
             ->setCustomer(new \Ipag\Classes\Customer())

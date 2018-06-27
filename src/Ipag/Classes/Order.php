@@ -51,6 +51,11 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     private $internetProtocol;
 
     /**
+     * @var bool
+     */
+    private $antifraud;
+
+    /**
      * @var Payment
      */
     private $payment;
@@ -337,6 +342,7 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
             'vencto'            => urlencode($this->getExpiry()),
             'stelo_fingerprint' => urlencode($this->getFingerprint()),
             'ip'                => urlencode($this->getIp()),
+            'antifraude'        => urlencode($this->getAntifraud()),
         ];
 
         return array_merge(
@@ -346,5 +352,25 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
             $this->getCustomer()->serialize(),
             $this->getSubscription()->serialize()
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getAntifraud()
+    {
+        return $this->antifraud;
+    }
+
+    /**
+     * @param bool $antifraud
+     *
+     * @return self
+     */
+    public function setAntifraud($antifraud)
+    {
+        $this->antifraud = (bool) $antifraud;
+
+        return $this;
     }
 }
