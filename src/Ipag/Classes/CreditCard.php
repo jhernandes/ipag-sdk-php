@@ -257,8 +257,14 @@ final class CreditCard extends BaseResource implements Emptiable, ObjectSerializ
 
     private function serializeCreditCardWithToken()
     {
-        return [
+        $_creditCard = [
             'token_cartao' => urlencode($this->getToken()),
         ];
+
+        if ($this->hasCvc()) {
+            $_creditCard['cvv_cartao'] = urlencode($this->getCvc());
+        }
+
+        return $_creditCard;
     }
 }
