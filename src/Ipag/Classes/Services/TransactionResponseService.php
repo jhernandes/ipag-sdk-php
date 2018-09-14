@@ -22,9 +22,7 @@ final class TransactionResponseService implements Populable
     {
         $transaction = $this->transaction($response);
 
-        if (isset($response->token)) {
-            $transaction->creditCard = $this->creditCard($response);
-        }
+        $transaction->creditCard = $this->creditCard($response);
 
         if (isset($response->id_assinatura)) {
             $transaction->subscription = $this->subscription($response);
@@ -46,6 +44,7 @@ final class TransactionResponseService implements Populable
     {
         $transaction = new stdClass();
         $transaction->tid = $this->getObjectUtil()->getProperty($response, 'id_transacao');
+        $transaction->authId = $this->getObjectUtil()->getProperty($response, 'autorizacao_id');
         $transaction->amount = $this->getObjectUtil()->getProperty($response, 'valor');
         $transaction->acquirer = $this->getObjectUtil()->getProperty($response, 'operadora');
         $transaction->acquirerMessage = $this->getObjectUtil()->getProperty($response, 'operadora_mensagem');
@@ -80,10 +79,20 @@ final class TransactionResponseService implements Populable
     private function creditCard(stdClass $response)
     {
         $creditCard = new stdClass();
-        $creditCard->token = $this->getObjectUtil()->getProperty($response, 'token');
-        $creditCard->last4 = $this->getObjectUtil()->getProperty($response, 'last4');
-        $creditCard->expiryMonth = $this->getObjectUtil()->getProperty($response, 'mes');
-        $creditCard->expiryYear = $this->getObjectUtil()->getProperty($response, 'ano');
+        if (isset($response->token)) {
+            $creditCard->token = $this->getObjectUtil()->getProperty($response, 'token');
+            $creditCard->last4 = $this->getObjectUtil()->getProperty($response, 'last4');
+            $creditCard->expiryMonth = $this->getObjectUtil()->getProperty($response, 'mes');
+            $creditCard->expiryYear = $this->getObjectUtil()->getProperty($response, 'ano');
+        }
+
+        $card = property_exists($response, 'cartao') ? $response->cartao : null;
+        if (!empty($card)) {
+            $creditCard->holder = $this->getObjectUtil()->getProperty($card, 'titular');
+            $creditCard->number = $this->getObjectUtil()->getProperty($card, 'numero');
+            $creditCard->expiry = $this->getObjectUtil()->getProperty($card, 'vencimento');
+            $creditCard->brand = $this->getObjectUtil()->getProperty($card, 'bandeira');
+        }
 
         return $creditCard;
     }
