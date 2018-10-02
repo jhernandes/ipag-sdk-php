@@ -5,6 +5,7 @@ namespace Tests;
 use Ipag\Classes\Authentication;
 use Ipag\Classes\Endpoint;
 use Ipag\Classes\Enum\Method;
+use Ipag\Classes\SplitRule;
 use Ipag\Classes\Subscription;
 use Ipag\Ipag;
 use PHPUnit\Framework\TestCase;
@@ -78,6 +79,7 @@ class PaymentTest extends TestCase
             ->setCallbackUrl(getenv('CALLBACK_URL'))
             ->setAmount(10.00)
             ->setInstallments(1)
+            ->setVisitorId('9as7d8s9a7da9sd7sa9889a')
             ->setPayment($this->ipag->payment()
                     ->setMethod(Method::VISA)
                     ->setCreditCard($this->initCard())
@@ -141,6 +143,57 @@ class PaymentTest extends TestCase
 
         $this->assertEquals(getenv('APPROVED'), $response->payment->status);
         $this->assertNotEmpty($response->creditCard->token);
+    }
+
+    public function testSplitRuleWithPaymentInPercentage()
+    {
+        $payment = $this->transaction->getOrder()->getPayment();
+
+        $payment->addSplitRule(
+            $this->ipag->splitRule()
+                ->setSellerId('c66fabf44786459e81e3c65e339a4fc9')
+                ->setPercentage(10)
+                ->setChargeProcessingFee(0)
+                ->setLiable(1)
+        );
+        $payment->addSplitRule(
+            $this->ipag->splitRule()
+                ->setSellerId('c66fabf44786459e81e3c65e339a4fc9')
+                ->setPercentage(15)
+                ->setChargeProcessingFee(0)
+                ->setLiable(1)
+        );
+
+        $response = $this->doPayment();
+
+        $this->assertEquals(getenv('APPROVED'), $response->payment->status);
+        $this->assertNotEmpty($response->splitRules);
+        $this->assertEquals(2, count($response->splitRules));
+    }
+
+    public function testSplitRuleWithPaymentInAmount()
+    {
+        $payment = $this->transaction->getOrder()->getPayment();
+        $payment->addSplitRule(
+            $this->ipag->splitRule()
+                ->setSellerId('c66fabf44786459e81e3c65e339a4fc9')
+                ->setAmount(1.00)
+                ->setChargeProcessingFee(0)
+                ->setLiable(1)
+        );
+        $payment->addSplitRule(
+            $this->ipag->splitRule()
+                ->setSellerId('c66fabf44786459e81e3c65e339a4fc9')
+                ->setPercentage(15)
+                ->setChargeProcessingFee(1)
+                ->setLiable(1)
+        );
+
+        $response = $this->doPayment();
+
+        $this->assertEquals(getenv('APPROVED'), $response->payment->status);
+        $this->assertNotEmpty($response->splitRules);
+        $this->assertEquals(2, count($response->splitRules));
     }
 
     public function testReturnResponseErrorUnauthorized()

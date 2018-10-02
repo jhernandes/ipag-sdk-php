@@ -48,7 +48,7 @@ class Ipag
         return new Classes\Address();
     }
 
-    public function cart(array ...$products)
+    public function cart(array...$products)
     {
         return new Classes\Cart(...$products);
     }
@@ -66,6 +66,11 @@ class Ipag
     public function subscription()
     {
         return new Classes\Subscription();
+    }
+
+    public function splitRule()
+    {
+        return new Classes\SplitRule();
     }
 
     /**

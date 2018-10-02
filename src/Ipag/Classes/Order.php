@@ -48,6 +48,11 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     /**
      * @var string
      */
+    private $visitorId;
+
+    /**
+     * @var string
+     */
     private $internetProtocol;
 
     /**
@@ -343,6 +348,7 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
             'stelo_fingerprint' => urlencode($this->getFingerprint()),
             'ip'                => urlencode($this->getIp()),
             'antifraude'        => urlencode($this->getAntifraud()),
+            'visitorId'         => urlencode($this->getVisitorId()),
         ];
 
         return array_merge(
@@ -370,6 +376,26 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     public function setAntifraud($antifraud)
     {
         $this->antifraud = (bool) $antifraud;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVisitorId()
+    {
+        return $this->visitorId;
+    }
+
+    /**
+     * @param string $visitorId
+     *
+     * @return self
+     */
+    public function setVisitorId($visitorId)
+    {
+        $this->visitorId = trim($visitorId);
 
         return $this;
     }

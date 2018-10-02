@@ -129,6 +129,7 @@ class PaymentSerializerTest extends TestCase
             'instrucoes[2]'     => 'Instru%C3%A7%C3%A3o+3',
             'softdescriptor'    => 'EMPRESA',
             'descricao_pedido'  => '%7B%221%22%3A%7B%22descr%22%3A%22Produto+1%22%2C%22valor%22%3A1%2C%22quant%22%3A2%2C%22id%22%3A%22G9F07GSD96FA8%22%7D%7D',
+            'visitorId'         => '',
         ];
 
         $this->assertEquals(
@@ -174,6 +175,7 @@ class PaymentSerializerTest extends TestCase
             'estado'            => 'SP',
             'pais'              => 'BR',
             'cep'               => '01156060',
+            'visitorId'         => '',
         ];
 
         $this->assertEquals(
@@ -207,6 +209,7 @@ class PaymentSerializerTest extends TestCase
             'metodo'            => 'visa',
             'token_cartao'      => '123456789',
             'ip'                => '',
+            'visitorId'         => '',
         ];
 
         $this->assertEquals(
@@ -248,6 +251,7 @@ class PaymentSerializerTest extends TestCase
             'doc'               => '79999338801',
             'fone'              => '11988883333',
             'ip'                => '',
+            'visitorId'         => '',
         ];
 
         $this->assertEquals(
@@ -303,6 +307,7 @@ class PaymentSerializerTest extends TestCase
             'pais'              => 'BR',
             'cep'               => '01156060',
             'ip'                => '',
+            'visitorId'         => '',
         ];
 
         $this->assertEquals(
@@ -362,6 +367,7 @@ class PaymentSerializerTest extends TestCase
             'trial_ciclos'      => '',
             'trial_frequencia'  => '',
             'trial_valor'       => '',
+            'visitorId'         => '',
         ];
 
         $this->assertEquals(

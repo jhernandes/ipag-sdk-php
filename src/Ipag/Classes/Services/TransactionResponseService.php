@@ -52,6 +52,7 @@ final class TransactionResponseService implements Populable
         $transaction->payment = $this->payment($response);
         $transaction->order = $this->order($response);
         $transaction->antifraud = $this->antifraud($response);
+        $transaction->splitRules = $this->splitRules($response);
 
         $transaction->error = $this->getObjectUtil()->getProperty($response, 'code');
         $transaction->errorMessage = $this->getObjectUtil()->getProperty($response, 'message');
@@ -74,6 +75,27 @@ final class TransactionResponseService implements Populable
         $order->orderId = $this->getObjectUtil()->getProperty($response, 'num_pedido');
 
         return $order;
+    }
+
+    private function splitRules(stdClass $response)
+    {
+        $splitRules = [];
+        $split_rules = property_exists($response, 'split_rules') ? $response->split_rules : null;
+        if (!empty($split_rules)) {
+            foreach ($split_rules as $split_rule) {
+                $splitRule = new stdClass();
+                $splitRule->rule = $this->getObjectUtil()->getProperty($split_rule, 'rule');
+                $splitRule->seller_id = $this->getObjectUtil()->getProperty($split_rule, 'recipient');
+                $splitRule->ipag_id = $this->getObjectUtil()->getProperty($split_rule, 'ipag_id');
+                $splitRule->amount = $this->getObjectUtil()->getProperty($split_rule, 'amount');
+                $splitRule->percentage = $this->getObjectUtil()->getProperty($split_rule, 'percentage');
+                $splitRule->liable = $this->getObjectUtil()->getProperty($split_rule, 'liable');
+                $splitRule->charge_processing_fee = $this->getObjectUtil()->getProperty($split_rule, 'charge_processing_fee');
+                $splitRules[] = $splitRule;
+            }
+        }
+
+        return $splitRules;
     }
 
     private function creditCard(stdClass $response)

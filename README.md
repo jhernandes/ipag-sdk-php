@@ -33,6 +33,7 @@
 - [Assinatura](#assinatura)
     - [Criando uma Assinatura](#criando-uma-assinatura)
 - [Exemplo de Transação Completa](#exemplo-de-transação-completa)
+- [Exemplo de Transação com Regra de Split](#exemplo-de-transacao-com-regra-de-split)
 - [Exemplo de Página de Callback](#exemplo-de-página-de-callback)
 - [Testes](#testes)
 - [Licença](#licença)
@@ -284,6 +285,93 @@ try {
     print_r($e->__toString());
 }
 ```
+
+## Exemplo de Transação com Regra de Split
+### Exemplo via Cartão de Crédito
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use Ipag\Ipag;
+use Ipag\Classes\Authentication;
+use Ipag\Classes\Endpoint;
+
+try {
+    $ipag = new Ipag(new Authentication('my_id_ipag', 'my_ipag_key'), Endpoint::SANDBOX);
+
+    $customer = $ipag->customer()
+        ->setName('Fulano da Silva')
+        ->setTaxpayerId('799.993.388-01')
+        ->setPhone('11', '98888-3333')
+        ->setEmail('fulanodasilva@gmail.com')
+        ->setAddress($ipag->address()
+            ->setStreet('Rua Júlio Gonzalez')
+            ->setNumber('1000')
+            ->setNeighborhood('Barra Funda')
+            ->setCity('São Paulo')
+            ->setState('SP')
+            ->setZipCode('01156-060')
+    );
+
+    $cart = $ipag->cart(
+        ['Produto 1', 5.00, 1, 'ABDC1'],
+        ['Produto 2', 2.50, 2, 'ABDC2']
+    );
+
+    $creditCard = $ipag->creditCard()
+        ->setNumber('4066553613548107')
+        ->setHolder('FULANO')
+        ->setExpiryMonth('10')
+        ->setExpiryYear('2025')
+        ->setCvc('123');
+
+    $payment = $ipag->payment()
+            ->setMethod(Method::VISA)
+            ->setCreditCard($creditCard);
+
+    //Regra de Split 1 (com porcentagem %)
+    $payment->addSplitRule($ipag->splitRule()
+        ->setSellerId('c66fabf44786459e81e3c65e339a4fc9')
+        ->setPercentage(15)
+        ->setLiable(1)
+    );
+
+    //Regra de Split 2 (com valor absoluto R$)
+    $payment->addSplitRule($ipag->splitRule()
+        ->setSellerId('c66fabf44786459e81e3c65e339a4fc9')
+        ->setAmount(5.00)
+        ->setLiable(1)
+    );
+
+    $transaction = $ipag->transaction();
+    $transaction->getOrder()
+        ->setOrderId($orderId)
+        ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
+        ->setAmount(10.00)
+        ->setInstallments(1)
+        ->setPayment($payment)
+        ->setCustomer($customer)
+        ->setCart($cart);
+
+    $response = $transaction->execute();
+
+    //Retornou algum erro?
+    if (!empty($response->error)) {
+        throw new \Exception($response->errorMessage);
+    }
+
+    //Pagamento Aprovado (5) ou Aprovado e Capturado(8) ?
+    if ($response->payment->status == '5' || $response->payment->status == '8') {
+        //Faz alguma coisa...
+        return $response;
+    }
+} catch(\Exception $e) {
+    print_r($e->__toString());
+}
+```
+
 ## Exemplo de Página de Callback
 
 ```php

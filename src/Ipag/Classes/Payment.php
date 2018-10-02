@@ -26,6 +26,11 @@ final class Payment implements Emptiable, ObjectSerializable
     private $instructions = [];
 
     /**
+     * @var array
+     */
+    private $splitRules = [];
+
+    /**
      * @var string
      */
     private $softDescriptor;
@@ -108,6 +113,26 @@ final class Payment implements Emptiable, ObjectSerializable
         return $this;
     }
 
+    /**
+     * @return array
+     */
+    public function getSplitRules()
+    {
+        return $this->splitRules;
+    }
+
+    /**
+     * @param array $splitRule
+     *
+     * @return self
+     */
+    public function addSplitRule(SplitRule $splitRule)
+    {
+        $this->splitRules[] = $splitRule;
+
+        return $this;
+    }
+
     private function instructionsAreNotFull()
     {
         return (bool) (count($this->instructions) < 3);
@@ -125,8 +150,23 @@ final class Payment implements Emptiable, ObjectSerializable
             ],
             $this->serializeInstructions(),
             $this->serializeSoftDescriptor(),
+            $this->serializeSplitRules(),
             $this->getCreditCard()->serialize()
         );
+    }
+
+    private function serializeSplitRules()
+    {
+        $_splitRules = [];
+        foreach ($this->getSplitRules() as $key => $splitRule) {
+            $_splitRules["split[{$key}][seller_id]"] = urlencode($splitRule->getSellerId());
+            $_splitRules["split[{$key}][percentage]"] = urlencode($splitRule->getPercentage());
+            $_splitRules["split[{$key}][amount]"] = urlencode($splitRule->getAmount());
+            $_splitRules["split[{$key}][liable]"] = urlencode($splitRule->getLiable());
+            $_splitRules["split[{$key}][charge_processing_fee]"] = urlencode($splitRule->getChargeProcessingFee());
+        }
+
+        return $_splitRules;
     }
 
     private function serializeInstructions()

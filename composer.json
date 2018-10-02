@@ -22,7 +22,7 @@
     },
     "minimum-stability": "dev",
     "require-dev": {
-        "phpunit/phpunit": "^6.0",
+        "phpunit/phpunit": "^5.0",
         "codacy/coverage": "^1.4.1"
     }
 }
