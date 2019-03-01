@@ -14,7 +14,6 @@ class DateUtilTest extends TestCase
         parent::setUp();
 
         $this->dateUtil = new DateUtil();
-
     }
 
     public function testIsValidDate()

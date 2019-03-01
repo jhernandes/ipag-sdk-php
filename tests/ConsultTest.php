@@ -37,9 +37,9 @@ class ConsultTest extends TestCase
         $this->assertNotEmpty($consultedTransaction->id);
         $this->assertNotEmpty($consultedTransaction->urlCallback);
         $this->assertNotEmpty($consultedTransaction->createAt);
-        $this->assertEquals($consultedTransaction->customer->name, "Fulano da Silva");
+        $this->assertEquals($consultedTransaction->customer->name, 'Fulano da Silva');
         $this->assertEquals($consultedTransaction->customer->email, 'fulanodasilva@gmail.com');
-        $this->assertEquals($consultedTransaction->customer->phone, "11988883333");
+        $this->assertEquals($consultedTransaction->customer->phone, '11988883333');
         $this->assertEquals($consultedTransaction->customer->address->street, 'RUA JULIO GONZALEZ');
         $this->assertEquals($consultedTransaction->customer->address->number, '1000');
         $this->assertEquals($consultedTransaction->customer->address->complement, '');

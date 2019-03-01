@@ -5,7 +5,6 @@ namespace Tests;
 use Ipag\Classes\Authentication;
 use Ipag\Classes\Endpoint;
 use Ipag\Classes\Enum\Method;
-use Ipag\Classes\SplitRule;
 use Ipag\Classes\Subscription;
 use Ipag\Ipag;
 use PHPUnit\Framework\TestCase;
