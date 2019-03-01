@@ -67,6 +67,16 @@ final class Transaction extends IpagResource
         return $this;
     }
 
+    /**
+     * @param float $amount
+     */
+    public function setAmount($amount)
+    {
+        $this->getOrder()->setAmount($amount);
+
+        return $this;
+    }
+
     public function populate(stdClass $response)
     {
         return (new Services\TransactionResponseService())->populate($response);

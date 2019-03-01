@@ -110,7 +110,7 @@ class PaymentSerializerTest extends TestCase
             'mes_cartao'        => '10',
             'ano_cartao'        => '2025',
             'cvv_cartao'        => '123',
-            'gera_token_cartao' => '1',
+            'gera_token_cartao' => true,
             'ip'                => '',
             'nome'              => 'Fulano+da+Silva',
             'email'             => 'fulanodasilva%40gmail.com',
@@ -130,6 +130,7 @@ class PaymentSerializerTest extends TestCase
             'softdescriptor'    => 'EMPRESA',
             'descricao_pedido'  => '%7B%221%22%3A%7B%22descr%22%3A%22Produto+1%22%2C%22valor%22%3A1%2C%22quant%22%3A2%2C%22id%22%3A%22G9F07GSD96FA8%22%7D%7D',
             'visitorId'         => '',
+            'captura'           => 'p',
         ];
 
         $this->assertEquals(
@@ -176,6 +177,7 @@ class PaymentSerializerTest extends TestCase
             'pais'              => 'BR',
             'cep'               => '01156060',
             'visitorId'         => '',
+            'captura'           => 'p',
         ];
 
         $this->assertEquals(
@@ -210,6 +212,7 @@ class PaymentSerializerTest extends TestCase
             'token_cartao'      => '123456789',
             'ip'                => '',
             'visitorId'         => '',
+            'captura'           => 'p',
         ];
 
         $this->assertEquals(
@@ -252,6 +255,7 @@ class PaymentSerializerTest extends TestCase
             'fone'              => '11988883333',
             'ip'                => '',
             'visitorId'         => '',
+            'captura'           => 'p',
         ];
 
         $this->assertEquals(
@@ -308,6 +312,7 @@ class PaymentSerializerTest extends TestCase
             'cep'               => '01156060',
             'ip'                => '',
             'visitorId'         => '',
+            'captura'           => 'p',
         ];
 
         $this->assertEquals(
@@ -368,6 +373,7 @@ class PaymentSerializerTest extends TestCase
             'trial_frequencia'  => '',
             'trial_valor'       => '',
             'visitorId'         => '',
+            'captura'           => 'p',
         ];
 
         $this->assertEquals(

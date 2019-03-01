@@ -115,8 +115,12 @@ class PaymentTest extends TestCase
             ->setSave(true);
     }
 
-    public function doPayment()
+    public function doPayment($capture = false)
     {
+        if ($capture) {
+            $this->transaction->getOrder()->setCapture('c');
+        }
+
         return $this->transaction->execute();
     }
 
@@ -125,6 +129,14 @@ class PaymentTest extends TestCase
         $transaction = $this->doPayment();
 
         $this->assertEquals(getenv('APPROVED'), $transaction->payment->status);
+        $this->assertEquals(36, strlen($transaction->creditCard->token));
+    }
+
+    public function testExecutePaymentWithCaptureSuccessfully()
+    {
+        $transaction = $this->doPayment(true);
+
+        $this->assertEquals(getenv('APPROVED_CAPTURED'), $transaction->payment->status);
         $this->assertEquals(36, strlen($transaction->creditCard->token));
     }
 

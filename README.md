@@ -29,12 +29,15 @@
     - [Com Boleto](#transacao-com-boleto)
     - [Consulta](#consulta)
     - [Captura](#captura)
+    - [Captura Parcial](#captura-parcial)
     - [Cancelamento](#cancelamento)
+    - [Cancelamento Parcial](#cancelamento-parcial)
 - [Assinatura](#assinatura)
     - [Criando uma Assinatura](#criando-uma-assinatura)
 - [Exemplo de Transação Completa](#exemplo-de-transação-completa)
 - [Exemplo de Transação com Regra de Split](#exemplo-de-transacao-com-regra-de-split)
 - [Exemplo de Página de Callback](#exemplo-de-página-de-callback)
+- [Resposta](#responta)
 - [Testes](#testes)
 - [Licença](#licença)
 - [Documentação](#documentação)
@@ -183,10 +186,22 @@ $response = $ipag->transaction()->setTid('123456789')->consult();
 $response = $ipag->transaction()->setTid('123456789')->capture();
 ```
 
+### Captura Parcial
+
+```php
+$response = $ipag->transaction()->setTid('123456789')->setAmount(1.00)->capture();
+```
+
 ### Cancelamento
 
 ```php
 $response = $ipag->transaction()->setTid('123456789')->cancel();
+```
+
+### Cancelamento Parcial
+
+```php
+$response = $ipag->transaction()->setTid('123456789')->setAmount(1.00)->cancel();
 ```
 
 ## Assinatura
@@ -400,6 +415,76 @@ if ($response->payment->status == '8') {
     // Atualize minha base de dados ...
 }
 ```
+
+## Resposta
+
+Estrutura do Transaction Response:
+
+- transaction
+    - id
+    - tid
+    - authId
+    - amount
+    - acquirer
+    - acquirerMessage
+    - urlAuthentication
+    - urlCallback
+    - createdAt
+    - creditCard
+        - holder
+        - number
+        - expiry
+        - brand
+        - token
+    - subscription
+        - id
+        - profileId
+    - payment
+        - status
+        - message
+    - order
+        - orderId
+    - customer
+        - name
+        - email
+        - phone
+        - cpfCnpj
+        - address
+            - street
+            - number
+            - district
+            - complement
+            - city
+            - state
+            - zipCode
+    - antifraud
+        - id
+        - score
+        - status
+        - message
+    - splitRules
+        - [0]
+            - rule
+            - seller_id
+            - ipag_id
+            - amount
+            - amount
+            - percentage
+            - liable
+            - charge_processing_fee
+    - error
+    - errorMessage
+    - history
+        - [0]
+            - amount
+            - operationType
+            - status
+            - responseCode
+            - responseMessage
+            - authorizationCode
+            - authorizationId
+            - authorizationNsu
+            - createdAt
 
 ## Testes
 

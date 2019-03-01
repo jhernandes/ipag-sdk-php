@@ -81,6 +81,11 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     private $subscription;
 
     /**
+     * @var string
+     */
+    private $capture;
+
+    /**
      * @return string
      */
     public function getOrderId()
@@ -349,6 +354,7 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
             'ip'                => urlencode($this->getIp()),
             'antifraude'        => urlencode($this->getAntifraud()),
             'visitorId'         => urlencode($this->getVisitorId()),
+            'captura'           => urlencode($this->getCapture()),
         ];
 
         return array_merge(
@@ -396,6 +402,40 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     public function setVisitorId($visitorId)
     {
         $this->visitorId = trim($visitorId);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCapture()
+    {
+        if (empty($this->capture)) {
+            $this->capture = 'p';
+        }
+
+        return $this->capture;
+    }
+
+    /**
+     * @param string $capture
+     *
+     * @return self
+     */
+    public function setCapture($capture)
+    {
+        switch ($capture) {
+            case 'c':
+                $this->capture = 'c';
+                break;
+            case 'a':
+                $this->capture = 'a';
+                break;
+            default:
+                $this->capture = 'p';
+                break;
+        }
 
         return $this;
     }

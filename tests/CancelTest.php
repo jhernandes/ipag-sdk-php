@@ -9,11 +9,16 @@ use PHPUnit\Framework\TestCase;
 
 class CancelTest extends TestCase
 {
+    private $ipag;
+
+    public function setUp()
+    {
+        $this->ipag = new Ipag(new Authentication(getenv('ID_IPAG'), getenv('API_KEY')), Endpoint::SANDBOX);
+    }
+
     public function doCancel($tid)
     {
-        $ipag = new Ipag(new Authentication(getenv('ID_IPAG'), getenv('API_KEY')), Endpoint::SANDBOX);
-
-        return $ipag->transaction()->setTid($tid)->cancel();
+        return $this->ipag->transaction()->setTid($tid)->cancel();
     }
 
     public function testCancelPaymentSuccessfully()
@@ -25,5 +30,23 @@ class CancelTest extends TestCase
 
         $this->assertEquals(getenv('CANCELED'), $canceledTransaction->payment->status);
         $this->assertEquals($transaction->tid, $canceledTransaction->tid);
+    }
+
+    public function testCancelPartialPaymentSuccessfully()
+    {
+        $paymentTest = new PaymentTest();
+        $transaction = $paymentTest->doPayment();
+
+        $canceledTransaction = $this->ipag
+            ->transaction()
+            ->setTid($transaction->tid)
+            ->setAmount('5.00')
+            ->cancel();
+
+        $this->assertEquals(getenv('APPROVED'), $canceledTransaction->payment->status);
+        $this->assertEquals($transaction->tid, $canceledTransaction->tid);
+        $this->assertEquals('voided', $canceledTransaction->history[2]->operationType);
+        $this->assertEquals('succeeded', $canceledTransaction->history[2]->status);
+        $this->assertEquals('5.00', $canceledTransaction->history[2]->amount);
     }
 }
