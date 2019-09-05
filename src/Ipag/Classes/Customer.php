@@ -34,6 +34,11 @@ final class Customer extends BaseResource implements Emptiable, ObjectSerializab
     private $email;
 
     /**
+     * @var string
+     */
+    private $birthdate;
+
+    /**
      * @var Phone
      */
     private $phone;
@@ -168,6 +173,26 @@ final class Customer extends BaseResource implements Emptiable, ObjectSerializab
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+    /**
+     * @param string $birthdate
+     *
+     * @return self
+     */
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
     private function isIndividual()
     {
         return (bool) (strlen($this->taxpayerId) <= 11);
@@ -181,10 +206,11 @@ final class Customer extends BaseResource implements Emptiable, ObjectSerializab
 
         return array_merge(
             [
-                'nome'  => urlencode($this->getName()),
-                'email' => urlencode($this->getEmail()),
-                'doc'   => urlencode($this->getTaxpayerId()),
-                'fone'  => urlencode($this->getPhone()),
+                'nome'      => urlencode($this->getName()),
+                'email'     => urlencode($this->getEmail()),
+                'doc'       => urlencode($this->getTaxpayerId()),
+                'fone'      => urlencode($this->getPhone()),
+                'birthdate' => urlencode($this->getBirthdate()),
             ],
             $this->getAddress()->serialize()
         );

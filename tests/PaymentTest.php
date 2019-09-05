@@ -93,6 +93,7 @@ class PaymentTest extends TestCase
             ->setTaxpayerId('799.993.388-01')
             ->setPhone('11', '98888-3333')
             ->setEmail('fulanodasilva@gmail.com')
+            ->setBirthdate('1989-03-28')
             ->setAddress($this->ipag->address()
                     ->setStreet('Rua Júlio Gonzalez')
                     ->setNumber('1000')
