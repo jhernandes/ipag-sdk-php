@@ -4,7 +4,7 @@ namespace Ipag\Classes;
 
 final class Endpoint
 {
-    const PRODUCTION = 'https://www.librepag.com.br';
+    const PRODUCTION = 'https://api.ipag.com.br';
     const SANDBOX = 'https://sandbox.ipag.com.br';
     const PAYMENT = '/service/payment';
     const CONSULT = '/service/consult';
