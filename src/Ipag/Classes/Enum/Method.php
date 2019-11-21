@@ -27,6 +27,8 @@ abstract class Method
     const BANKSLIP_STELO = 'boletostelo';
     const BANKSLIP_UNIPRIME = 'boleto_uniprime';
     const BANKSLIP_BRADESCO_SHOP_FACIL = 'boletoshopfacil';
+    const BANKSLIP_SICREDI = 'boletosicredi';
+    const BANKSLIP_SICOOB = 'boletosicoob';
 
     const BANK_ITAUSHOPLINE = 'itaushopline';
     const BANK_BB = 'bancobrasil';
