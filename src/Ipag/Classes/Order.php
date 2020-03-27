@@ -371,7 +371,7 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
      */
     public function getAntifraud()
     {
-        return $this->antifraud;
+        return $this->antifraud ? '1' : '0';
     }
 
     /**
