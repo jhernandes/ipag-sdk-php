@@ -10,7 +10,8 @@ final class XmlService
         $response = simplexml_load_string($message, 'SimpleXMLElement', LIBXML_NOCDATA);
 
         if ($response === false) {
-            throw new \Exception('Não foi possível identificar o XML de retorno.');
+            $unvalidatedMessage = is_string($message) ? $message : '';
+            throw new \Exception('Não foi possível identificar o XML de retorno.'.$unvalidatedMessage);
         }
 
         return $response;
