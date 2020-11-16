@@ -79,6 +79,7 @@ class PaymentTest extends TestCase
             ->setAmount(10.00)
             ->setInstallments(1)
             ->setVisitorId('9as7d8s9a7da9sd7sa9889a')
+            ->setAcquirerToken('1234567890')
             ->setPayment($this->ipag->payment()
                     ->setMethod(Method::VISA)
                     ->setCreditCard($this->initCard())
