@@ -48,6 +48,11 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     /**
      * @var string
      */
+    private $acquirerToken;
+
+    /**
+     * @var string
+     */
     private $visitorId;
 
     /**
@@ -216,6 +221,26 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
         return $this;
     }
 
+
+    /**
+     * @return string
+     */
+    public function getAcquirerToken()
+    {
+        return $this->acquirerToken;
+    }
+
+    /**
+     * @param string $acquirerToken
+     */
+    public function setAcquirerToken($acquirerToken)
+    {
+        $this->acquirerToken = substr((string) $acquirerToken, 0, 120);
+
+        return $this;
+    }
+
+
     /**
      * @return string
      */
@@ -351,6 +376,7 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
             'parcelas'          => urlencode($this->getInstallments()),
             'vencto'            => urlencode($this->getExpiry()),
             'stelo_fingerprint' => urlencode($this->getFingerprint()),
+            'acquirerToken'     => urlencode($this->getAcquirerToken()),
             'ip'                => urlencode($this->getIp()),
             'antifraude'        => urlencode($this->getAntifraud()),
             'visitorId'         => urlencode($this->getVisitorId()),

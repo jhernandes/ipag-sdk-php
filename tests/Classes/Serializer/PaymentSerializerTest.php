@@ -132,6 +132,7 @@ class PaymentSerializerTest extends TestCase
             'visitorId'         => '',
             'captura'           => 'p',
             'birthdate'         => '',
+            'acquirerToken'     => '',
         ];
 
         $this->assertEquals(
@@ -180,6 +181,7 @@ class PaymentSerializerTest extends TestCase
             'visitorId'         => '',
             'captura'           => 'p',
             'birthdate'         => '',
+            'acquirerToken'     => '',
         ];
 
         $this->assertEquals(
@@ -215,6 +217,7 @@ class PaymentSerializerTest extends TestCase
             'ip'                => '',
             'visitorId'         => '',
             'captura'           => 'p',
+            'acquirerToken'     => '',
         ];
 
         $this->assertEquals(
@@ -259,6 +262,7 @@ class PaymentSerializerTest extends TestCase
             'visitorId'         => '',
             'captura'           => 'p',
             'birthdate'         => '',
+            'acquirerToken'     => '',
         ];
 
         $this->assertEquals(
@@ -317,6 +321,7 @@ class PaymentSerializerTest extends TestCase
             'visitorId'         => '',
             'captura'           => 'p',
             'birthdate'         => '',
+            'acquirerToken'     => '',
         ];
 
         $this->assertEquals(
@@ -379,6 +384,7 @@ class PaymentSerializerTest extends TestCase
             'visitorId'         => '',
             'captura'           => 'p',
             'birthdate'         => '',
+            'acquirerToken'     => '',
         ];
 
         $this->assertEquals(

@@ -21,6 +21,7 @@ class OrderTest extends TestCase
             ->setExpiry('10/10/2018')
             ->setIp('192.168.0.100')
             ->setFingerPrint('ABCD123456789')
+            ->setAcquirerToken('QWERTY987654321')
             ->setAntifraud(0)
             ->setOperation(\Ipag\Classes\Enum\Operation::PAYMENT)
             ->setPayment(new \Ipag\Classes\Payment())
@@ -37,6 +38,7 @@ class OrderTest extends TestCase
         $this->assertEquals(12, $this->order->getInstallments());
         $this->assertEquals('10/10/2018', $this->order->getExpiry());
         $this->assertEquals('ABCD123456789', $this->order->getFingerPrint());
+        $this->assertEquals('QWERTY987654321', $this->order->getAcquirerToken());
         $this->assertEquals(\Ipag\Classes\Enum\Operation::PAYMENT, $this->order->getOperation());
         $this->assertInstanceOf(\Ipag\Classes\Payment::class, $this->order->getPayment());
         $this->assertInstanceOf(\Ipag\Classes\Customer::class, $this->order->getCustomer());
