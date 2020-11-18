@@ -91,6 +91,8 @@ class PaymentSerializerTest extends TestCase
             )->setCustomer($this->customer())
             ->setCart($this->cart());
 
+        $this->transaction->getOrder()->setAntifraud(false);
+
         $expected = [
             'identificacao'     => 'app%40test.com',
             'identificacao2'    => 'partner%40test.com',
@@ -151,6 +153,8 @@ class PaymentSerializerTest extends TestCase
                     )
             )->setCustomer($this->customer());
 
+        $this->transaction->getOrder()->setAntifraud(false);
+
         $expected = [
             'identificacao'     => 'app%40test.com',
             'url_retorno'       => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
@@ -199,6 +203,7 @@ class PaymentSerializerTest extends TestCase
                             ->setToken('123456789')
                     )
             );
+        $this->transaction->getOrder()->setAntifraud(false);
 
         $expected = [
             'identificacao'     => 'app%40test.com',
@@ -239,6 +244,8 @@ class PaymentSerializerTest extends TestCase
                 ->setTaxpayerId('799.993.388-01')
                 ->setPhone('11', '98888-3333')
                 ->setEmail('fulanodasilva@gmail.com'));
+
+        $this->transaction->getOrder()->setAntifraud(false);
 
         $expected = [
             'identificacao'     => 'app%40test.com',
@@ -292,6 +299,8 @@ class PaymentSerializerTest extends TestCase
                     ->setMethod(Method::BANKSLIP_ITAU)
             )->setCustomer($this->customer());
 
+        $this->transaction->getOrder()->setAntifraud(false);
+
         $expected = [
             'identificacao'     => 'app%40test.com',
             'url_retorno'       => 'https%3A%2F%2Fminha_loja.com.br%2Fipag%2Fcallback',
@@ -343,6 +352,8 @@ class PaymentSerializerTest extends TestCase
                     ->setFrequency(1)
                     ->setInterval('month')
             );
+
+        $this->transaction->getOrder()->setAntifraud(false);
 
         $expected = [
             'identificacao'     => 'app%40test.com',

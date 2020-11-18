@@ -63,7 +63,7 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     /**
      * @var bool
      */
-    private $antifraud;
+    private $antifraud = true;
 
     /**
      * @var Payment
@@ -221,7 +221,6 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -239,7 +238,6 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
 
         return $this;
     }
-
 
     /**
      * @return string
