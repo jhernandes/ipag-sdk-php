@@ -407,7 +407,7 @@ class PaymentSerializerTest extends TestCase
     public function testSerializePaymentWithEmptyOrder()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('É necessário informar os dados do Pedido (Order)');
+        $this->expectExceptionMessage('É necessário informar os dados do Pagamento (Payment)');
 
         $this->serializePayment($this->ipag->transaction());
     }

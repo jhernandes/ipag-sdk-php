@@ -186,10 +186,16 @@ final class TransactionResponseService implements Populable
     private function antifraud(stdClass $response)
     {
         $antifraud = new stdClass();
-        $antifraud->id = $this->getObjectUtil()->getProperty($response, 'af_id');
-        $antifraud->score = $this->getObjectUtil()->getProperty($response, 'af_score');
-        $antifraud->status = $this->getObjectUtil()->getProperty($response, 'af_status');
-        $antifraud->message = $this->getObjectUtil()->getProperty($response, 'af_message');
+        $antifraud->score = null;
+        $antifraud->status = null;
+        $antifraud->message = null;
+
+        $antifraude_params = property_exists($response, 'antifraude') ? $response->antifraude : null;
+        if (!empty($antifraude_params)) {
+            $antifraud->score = $this->getObjectUtil()->getProperty($antifraude_params, 'score');
+            $antifraud->status = $this->getObjectUtil()->getProperty($antifraude_params, 'status');
+            $antifraud->message = strip_tags((string) $this->getObjectUtil()->getProperty($antifraude_params, 'message'));
+        }
 
         return $antifraud;
     }

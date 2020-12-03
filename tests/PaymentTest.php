@@ -6,11 +6,15 @@ use Ipag\Classes\Authentication;
 use Ipag\Classes\Endpoint;
 use Ipag\Classes\Enum\Method;
 use Ipag\Classes\Subscription;
+use Ipag\Classes\Transaction;
 use Ipag\Ipag;
 use PHPUnit\Framework\TestCase;
 
 class PaymentTest extends TestCase
 {
+    /**
+     * @var Transaction
+     */
     private $transaction;
     private $ipag;
 
@@ -131,6 +135,15 @@ class PaymentTest extends TestCase
 
         $this->assertEquals(getenv('APPROVED'), $transaction->payment->status);
         $this->assertEquals(36, strlen($transaction->creditCard->token));
+    }
+
+    public function testExecutePaymentSuccessfullyWithAntifraud()
+    {
+        $this->transaction->getOrder()->setAntifraud(1);
+        $transaction = $this->transaction->execute();
+
+        $this->assertEquals(0.00, $transaction->antifraud->score);
+        $this->assertEquals('approved', $transaction->antifraud->status);
     }
 
     public function testExecutePaymentWithCaptureSuccessfully()

@@ -10,6 +10,6 @@ final class ObjectUtil
             return;
         }
 
-        return !empty($object->$property) && is_string($object->$property) ? $object->$property : null;
+        return isset($object->$property) && is_string($object->$property) ? $object->$property : null;
     }
 }
