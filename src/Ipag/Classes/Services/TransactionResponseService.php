@@ -57,6 +57,7 @@ final class TransactionResponseService implements Populable
         $transaction->customer = $this->customer($response);
         $transaction->antifraud = $this->antifraud($response);
         $transaction->splitRules = $this->splitRules($response);
+        $transaction->pix = $this->pix($response);
         $transaction->error = $this->getObjectUtil()->getProperty($response, 'code');
         $transaction->errorMessage = $this->getObjectUtil()->getProperty($response, 'message');
         $transaction->history = $this->history($response);
@@ -181,6 +182,21 @@ final class TransactionResponseService implements Populable
         $subscription->profileId = $this->getObjectUtil()->getProperty($response, 'profile_id');
 
         return $subscription;
+    }
+
+    private function pix(stdClass $response)
+    {
+        $pix = new stdClass();
+        $pix->link = null;
+        $pix->qrCode = null;
+
+        $pix_params = property_exists($response, 'pix') ? $response->pix : null;
+        if (!empty($pix_params)) {
+            $pix->link = $this->getObjectUtil()->getProperty($pix_params, 'link');
+            $pix->qrCode = $this->getObjectUtil()->getProperty($pix_params, 'qrcode');
+        }
+
+        return $pix;
     }
 
     private function antifraud(stdClass $response)

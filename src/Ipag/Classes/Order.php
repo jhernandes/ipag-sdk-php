@@ -76,6 +76,11 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     private $cart;
 
     /**
+     * @var Pix
+     */
+    private $pix;
+
+    /**
      * @var Customer
      */
     private $customer;
@@ -317,6 +322,28 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     }
 
     /**
+     * @return Pix
+     */
+    public function getPix()
+    {
+        if (is_null($this->pix)) {
+            $this->pix = new Pix();
+        }
+
+        return $this->pix;
+    }
+
+    /**
+     * @param Pix $pix
+     */
+    public function setPix(Pix $pix)
+    {
+        $this->pix = $pix;
+
+        return $this;
+    }
+
+    /**
      * @return Customer
      */
     public function getCustomer()
@@ -386,7 +413,8 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
             $this->getPayment()->serialize(),
             $this->getCart()->serialize(),
             $this->getCustomer()->serialize(),
-            $this->getSubscription()->serialize()
+            $this->getSubscription()->serialize(),
+            $this->getPix()->serialize()
         );
     }
 
