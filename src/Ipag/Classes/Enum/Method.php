@@ -32,4 +32,6 @@ abstract class Method
 
     const BANK_ITAUSHOPLINE = 'itaushopline';
     const BANK_BB = 'bancobrasil';
+
+    const PIX = 'pix';
 }
