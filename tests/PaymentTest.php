@@ -5,6 +5,7 @@ namespace Tests;
 use Ipag\Classes\Authentication;
 use Ipag\Classes\Endpoint;
 use Ipag\Classes\Enum\Method;
+use Ipag\Classes\Enum\PaymentStatus;
 use Ipag\Classes\Subscription;
 use Ipag\Classes\Transaction;
 use Ipag\Ipag;
@@ -133,7 +134,7 @@ class PaymentTest extends TestCase
     {
         $transaction = $this->doPayment();
 
-        $this->assertEquals(getenv('APPROVED'), $transaction->payment->status);
+        $this->assertEquals(PaymentStatus::PRE_AUTHORIZED, $transaction->payment->status);
         $this->assertEquals(36, strlen($transaction->creditCard->token));
     }
 
@@ -150,7 +151,7 @@ class PaymentTest extends TestCase
     {
         $transaction = $this->doPayment(true);
 
-        $this->assertEquals(getenv('APPROVED_CAPTURED'), $transaction->payment->status);
+        $this->assertEquals(PaymentStatus::CAPTURED, $transaction->payment->status);
         $this->assertEquals(36, strlen($transaction->creditCard->token));
     }
 
@@ -167,7 +168,7 @@ class PaymentTest extends TestCase
 
         $response = $this->doPayment();
 
-        $this->assertEquals(getenv('APPROVED'), $response->payment->status);
+        $this->assertEquals(PaymentStatus::PRE_AUTHORIZED, $response->payment->status);
         $this->assertNotEmpty($response->creditCard->token);
     }
 
@@ -192,7 +193,7 @@ class PaymentTest extends TestCase
 
         $response = $this->doPayment();
 
-        $this->assertEquals(getenv('APPROVED'), $response->payment->status);
+        $this->assertEquals(PaymentStatus::PRE_AUTHORIZED, $response->payment->status);
         $this->assertNotEmpty($response->splitRules);
         $this->assertEquals(2, count($response->splitRules));
     }
@@ -217,7 +218,7 @@ class PaymentTest extends TestCase
 
         $response = $this->doPayment();
 
-        $this->assertEquals(getenv('APPROVED'), $response->payment->status);
+        $this->assertEquals(PaymentStatus::PRE_AUTHORIZED, $response->payment->status);
         $this->assertNotEmpty($response->splitRules);
         $this->assertEquals(2, count($response->splitRules));
     }

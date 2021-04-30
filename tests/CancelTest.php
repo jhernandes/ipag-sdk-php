@@ -4,6 +4,7 @@ namespace Tests;
 
 use Ipag\Classes\Authentication;
 use Ipag\Classes\Endpoint;
+use Ipag\Classes\Enum\PaymentStatus;
 use Ipag\Ipag;
 use PHPUnit\Framework\TestCase;
 
@@ -28,7 +29,7 @@ class CancelTest extends TestCase
 
         $canceledTransaction = $this->doCancel($transaction->tid);
 
-        $this->assertEquals(getenv('CANCELED'), $canceledTransaction->payment->status);
+        $this->assertEquals(PaymentStatus::CANCELED, $canceledTransaction->payment->status);
         $this->assertEquals($transaction->tid, $canceledTransaction->tid);
     }
 
@@ -43,7 +44,7 @@ class CancelTest extends TestCase
             ->setAmount('5.00')
             ->cancel();
 
-        $this->assertEquals(getenv('APPROVED'), $canceledTransaction->payment->status);
+        $this->assertEquals(PaymentStatus::PRE_AUTHORIZED, $canceledTransaction->payment->status);
         $this->assertEquals($transaction->tid, $canceledTransaction->tid);
         $this->assertEquals('voided', $canceledTransaction->history[2]->operationType);
         $this->assertEquals('succeeded', $canceledTransaction->history[2]->status);

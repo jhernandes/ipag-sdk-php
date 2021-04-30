@@ -4,6 +4,7 @@ namespace Tests;
 
 use Ipag\Classes\Authentication;
 use Ipag\Classes\Endpoint;
+use Ipag\Classes\Enum\PaymentStatus;
 use Ipag\Ipag;
 use PHPUnit\Framework\TestCase;
 
@@ -26,11 +27,11 @@ class CaptureTest extends TestCase
         $paymentTest = new PaymentTest();
         $transaction = $paymentTest->doPayment();
 
-        $this->assertEquals(getenv('APPROVED'), $transaction->payment->status);
+        $this->assertEquals(PaymentStatus::PRE_AUTHORIZED, $transaction->payment->status);
 
         $capturedTransaction = $this->doCapture($transaction->tid);
 
-        $this->assertEquals(getenv('APPROVED_CAPTURED'), $capturedTransaction->payment->status);
+        $this->assertEquals(PaymentStatus::CAPTURED, $capturedTransaction->payment->status);
         $this->assertEquals($transaction->tid, $capturedTransaction->tid);
     }
 
@@ -45,7 +46,7 @@ class CaptureTest extends TestCase
             ->setAmount('5.00')
             ->capture();
 
-        $this->assertEquals(getenv('APPROVED_CAPTURED'), $canceledTransaction->payment->status);
+        $this->assertEquals(PaymentStatus::CAPTURED, $canceledTransaction->payment->status);
         $this->assertEquals($transaction->tid, $canceledTransaction->tid);
         $this->assertEquals('captured', $canceledTransaction->history[2]->operationType);
         $this->assertEquals('succeeded', $canceledTransaction->history[2]->status);

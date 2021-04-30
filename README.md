@@ -109,13 +109,16 @@ $creditCard = $ipag->creditCard()
 ```php
 // ...
 
-$cart = $ipag->cart(
+$products = [
     // Nome do Produto, Valor Unitário, Quantidade, SKU (Código do Produto)
     ['Produto 1', 5.00, 1, 'ABDC1'],
     ['Produto 2', 3.50, 2, 'ABDC2'],
     ['Produto 3', 5.50, 1, 'ABDC3'],
     ['Produto 4', 8.50, 5, 'ABDC4']
-);
+];
+
+// Deve-se usar o `splat operator`
+$cart = $ipag->cart(...$products);
 
 // ...
 ```
@@ -241,6 +244,7 @@ require 'vendor/autoload.php';
 use Ipag\Ipag;
 use Ipag\Classes\Authentication;
 use Ipag\Classes\Endpoint;
+use Ipag\Classes\Enum\PaymentStatus;
 
 try {
     $ipag = new Ipag(new Authentication('my_id_ipag', 'my_ipag_key'), Endpoint::SANDBOX);
@@ -258,11 +262,11 @@ try {
             ->setState('SP')
             ->setZipCode('01156-060')
     );
-
-    $cart = $ipag->cart(
+    $products = [
         ['Produto 1', 5.00, 1, 'ABDC1'],
         ['Produto 2', 2.50, 2, 'ABDC2']
-    );
+    ];
+    $cart = $ipag->cart(...$products);
 
     $creditCard = $ipag->creditCard()
         ->setNumber('4066553613548107')
@@ -293,7 +297,9 @@ try {
     }
 
     //Pagamento Aprovado (5) ou Aprovado e Capturado(8) ?
-    if ($response->payment->status == '5' || $response->payment->status == '8') {
+    if (in_array($response->payment->status, [
+        PaymentStatus::PRE_AUTHORIZED, PaymentStatus::CAPTURED
+    ]) {
         //Faz alguma coisa...
         return $response;
     }
@@ -313,6 +319,7 @@ require 'vendor/autoload.php';
 use Ipag\Ipag;
 use Ipag\Classes\Authentication;
 use Ipag\Classes\Endpoint;
+use Ipag\Classes\Enum\PaymentStatus;
 
 try {
     $ipag = new Ipag(new Authentication('my_id_ipag', 'my_ipag_key'), Endpoint::SANDBOX);
@@ -331,10 +338,11 @@ try {
             ->setZipCode('01156-060')
     );
 
-    $cart = $ipag->cart(
+    $products = [
         ['Produto 1', 5.00, 1, 'ABDC1'],
         ['Produto 2', 2.50, 2, 'ABDC2']
-    );
+    ];
+    $cart = $ipag->cart(...$products);
 
     $creditCard = $ipag->creditCard()
         ->setNumber('4066553613548107')
@@ -379,8 +387,79 @@ try {
     }
 
     //Pagamento Aprovado (5) ou Aprovado e Capturado(8) ?
-    if ($response->payment->status == '5' || $response->payment->status == '8') {
+    if (in_array($response->payment->status, [
+        PaymentStatus::PRE_AUTHORIZED, PaymentStatus::CAPTURED
+    ]) {
         //Faz alguma coisa...
+        return $response;
+    }
+} catch(\Exception $e) {
+    print_r($e->__toString());
+}
+```
+
+### Exemplo via Boleto
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use Ipag\Ipag;
+use Ipag\Classes\Authentication;
+use Ipag\Classes\Endpoint;
+use Ipag\Classes\Enum\PaymentStatus;
+
+try {
+    $ipag = new Ipag(new Authentication('my_id_ipag', 'my_ipag_key'), Endpoint::SANDBOX);
+
+    $customer = $ipag->customer()
+        ->setName('Fulano da Silva')
+        ->setTaxpayerId('799.993.388-01')
+        ->setPhone('11', '98888-3333')
+        ->setEmail('fulanodasilva@gmail.com')
+        ->setAddress($ipag->address()
+            ->setStreet('Rua Júlio Gonzalez')
+            ->setNumber('1000')
+            ->setNeighborhood('Barra Funda')
+            ->setCity('São Paulo')
+            ->setState('SP')
+            ->setZipCode('01156-060')
+    );
+    $products = [
+        ['Produto 1', 5.00, 1, 'ABDC1'],
+        ['Produto 2', 2.50, 2, 'ABDC2']
+    ];
+    $cart = $ipag->cart(...$products);
+
+    $transaction = $ipag->transaction();
+
+    $transaction->getOrder()
+        ->setOrderId($orderId)
+        ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
+        ->setAmount(10.00)
+        ->setInstallments(1)
+        ->setExpiry('10/07/2021')
+        ->setPayment($ipag->payment()
+            ->setMethod(Method::BANKSLIP_ZOOP)
+        )->setCustomer($customer)
+    );
+
+    $response = $transaction->execute();
+
+    //Retornou algum erro?
+    if (!empty($response->error)) {
+        throw new \Exception($response->errorMessage);
+    }
+
+    //Pagamento de Boleto Criado (1) ou Boleto Impresso (2) ?
+    if (in_array($response->payment->status, [
+        PaymentStatus::CREATED,
+        PaymentStatus::PRINTED_BOLETO
+    ])) {
+        // Boleto Link
+        //echo $response->urlAuthentication;
+
         return $response;
     }
 } catch(\Exception $e) {
@@ -396,6 +475,7 @@ try {
 require_once 'vendor/autoload.php';
 
 use Ipag\Classes\Services\CallbackService;
+use Ipag\Classes\Enum\PaymentStatus;
 
 $postContent = file_get_contents('php://input');
 
@@ -411,7 +491,7 @@ if (!empty($response->error)) {
 }
 
 // Verificar se a transação foi aprovada e capturada:
-if ($response->payment->status == '8') {
+if ($response->payment->status == PaymentStatus::CAPTURED) {
     echo 'Transação Aprovada e Capturada';
     // Atualize minha base de dados ...
 }
