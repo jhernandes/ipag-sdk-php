@@ -179,6 +179,29 @@ $transaction->getOrder()
 $response = $transaction->execute();
 ```
 
+### Transação com Pix
+```php
+$transaction = $ipag->transaction();
+
+$transaction->getOrder()
+    ->setOrderId($orderId)
+    ->setCallbackUrl('https://minha_loja.com.br/ipag/callback')
+    ->setAmount(10.00)
+    ->setInstallments(1)
+    ->setPayment($ipag->payment()
+        ->setMethod(Method::PIX)
+    )->setCustomer($customer)
+);
+
+$response = $transaction->execute();
+
+// PIX LINK DE PAGAMENTO (Usando o Checkout do iPag para finalizar)
+$linkDePagamento = $response->pix->link;
+
+// PIX Copia e Cola | QRCode (Utilizar a string retornada ou gerar um QrCode)
+$qrCodeString = $response->pix->qrCode;
+```
+
 ### Consulta
 
 ```php
