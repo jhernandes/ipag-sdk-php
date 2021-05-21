@@ -12,6 +12,7 @@ class PaymentTest extends TestCase
         $payment
             ->setMethod(\Ipag\Classes\Enum\Method::VISA)
             ->setSoftDescriptor('EMPRESA')
+            ->setPixExpiresIn(60)
             ->setInstructions('Instrução 1')
             ->setInstructions('Instrução 2')
             ->setInstructions('Instrução 3')
@@ -21,6 +22,7 @@ class PaymentTest extends TestCase
         $this->assertEquals(\Ipag\Classes\Enum\Method::VISA, $payment->getMethod());
         $this->assertEquals('EMPRESA', $payment->getSoftDescriptor());
         $this->assertEquals(3, count($payment->getInstructions()));
+        $this->assertEquals(60, $payment->getPixExpiresIn());
         $this->assertInstanceOf(\Ipag\Classes\CreditCard::class, $payment->getCreditCard());
     }
 }

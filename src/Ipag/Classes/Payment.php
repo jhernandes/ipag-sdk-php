@@ -36,6 +36,11 @@ final class Payment implements Emptiable, ObjectSerializable
     private $softDescriptor;
 
     /**
+     * @var string
+     */
+    private $pixExpiresIn;
+
+    /**
      * @return string
      */
     public function getMethod()
@@ -114,6 +119,24 @@ final class Payment implements Emptiable, ObjectSerializable
     }
 
     /**
+     * @return int
+     */
+    public function getPixExpiresIn()
+    {
+        return $this->pixExpiresIn;
+    }
+
+    /**
+     * @param int $pixExpiresIn
+     */
+    public function setPixExpiresIn($pixExpiresIn)
+    {
+        $this->pixExpiresIn = (int) $pixExpiresIn;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getSplitRules()
@@ -150,6 +173,7 @@ final class Payment implements Emptiable, ObjectSerializable
             ],
             $this->serializeInstructions(),
             $this->serializeSoftDescriptor(),
+            $this->serializePixExpiresIn(),
             $this->serializeSplitRules(),
             $this->getCreditCard()->serialize()
         );
@@ -189,5 +213,17 @@ final class Payment implements Emptiable, ObjectSerializable
         }
 
         return $_softDescriptor;
+    }
+
+    private function serializePixExpiresIn()
+    {
+        $_pixExpiresIn = [];
+        $pixExpiresIn = $this->getPixExpiresIn();
+
+        if (!empty($pixExpiresIn)) {
+            $_pixExpiresIn['pix_expires_in'] = urlencode($pixExpiresIn);
+        }
+
+        return $_pixExpiresIn;
     }
 }
