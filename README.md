@@ -13,8 +13,6 @@
 
 **Índice**
 
-- [iPag PHP client SDK](#ipag-php-client-sdk)
-  - [![Build Status](https://scrutinizer-ci.com/g/jhernandes/ipag-sdk-php/build-status/master)](#)
   - [Dependências](#dependências)
   - [Instalação](#instalação)
   - [Autenticação](#autenticação)
