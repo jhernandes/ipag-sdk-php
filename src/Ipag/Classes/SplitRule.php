@@ -15,7 +15,7 @@ final class SplitRule extends BaseResource implements Emptiable
     private $sellerId;
 
     /**
-     * @var int
+     * @var float
      */
     private $percentage;
 
@@ -55,7 +55,7 @@ final class SplitRule extends BaseResource implements Emptiable
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getPercentage()
     {
@@ -63,13 +63,13 @@ final class SplitRule extends BaseResource implements Emptiable
     }
 
     /**
-     * @param int $percentage
+     * @param float $percentage
      *
      * @return self
      */
     public function setPercentage($percentage)
     {
-        $this->percentage = intval($percentage);
+        $this->percentage = $this->getNumberUtil()->convertToDouble($percentage);
 
         return $this;
     }
