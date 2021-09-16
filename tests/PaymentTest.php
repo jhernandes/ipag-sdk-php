@@ -242,4 +242,22 @@ class PaymentTest extends TestCase
         $this->assertEquals('401', $response->error);
         $this->assertEquals('Unauthorized', $response->errorMessage);
     }
+
+    public function testPaymentWithSplitHoldReceivables()
+    {
+        $this->ipag = new Ipag(new Authentication('no_login_error', '123'), Endpoint::SANDBOX);
+
+        $payment = $this->transaction->getOrder()->getPayment();
+        $payment->addSplitRule(
+            $this->ipag->splitRule()
+                ->setSellerId('jabuticaba')
+                ->setAmount(1.00)
+                ->setChargeProcessingFee(0)
+                ->setHoldReceivables(1)
+        );
+
+        $response = $this->doPayment();
+
+        $this->assertEquals(1, $response->splitRules[0]->hold_receivables);
+    }
 }

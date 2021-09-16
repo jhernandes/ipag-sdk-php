@@ -145,7 +145,7 @@ final class Payment implements Emptiable, ObjectSerializable
     }
 
     /**
-     * @param array $splitRule
+     * @param SplitRule $splitRule
      *
      * @return self
      */
@@ -188,6 +188,7 @@ final class Payment implements Emptiable, ObjectSerializable
             $_splitRules["split[{$key}][amount]"] = urlencode($splitRule->getAmount());
             $_splitRules["split[{$key}][liable]"] = urlencode($splitRule->getLiable());
             $_splitRules["split[{$key}][charge_processing_fee]"] = urlencode($splitRule->getChargeProcessingFee());
+            $_splitRules["split[{$key}][hold_receivables]"] = urlencode($splitRule->getHoldReceivables());
         }
 
         return $_splitRules;

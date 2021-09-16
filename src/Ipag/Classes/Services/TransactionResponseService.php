@@ -148,6 +148,7 @@ final class TransactionResponseService implements Populable
                 $splitRule->percentage = $this->getObjectUtil()->getProperty($split_rule, 'percentage');
                 $splitRule->liable = $this->getObjectUtil()->getProperty($split_rule, 'liable');
                 $splitRule->charge_processing_fee = $this->getObjectUtil()->getProperty($split_rule, 'charge_processing_fee');
+                $splitRule->hold_receivables = $this->getObjectUtil()->getProperty($split_rule, 'hold_receivables');
                 $splitRules[] = $splitRule;
             }
         }

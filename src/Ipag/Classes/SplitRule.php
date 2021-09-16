@@ -35,6 +35,11 @@ final class SplitRule extends BaseResource implements Emptiable
     private $chargeProcessingFee;
 
     /**
+     * @var int
+     */
+    private $holdReceivables;
+
+    /**
      * @return string
      */
     public function getSellerId()
@@ -130,6 +135,30 @@ final class SplitRule extends BaseResource implements Emptiable
     public function setChargeProcessingFee($chargeProcessingFee = 0)
     {
         $this->chargeProcessingFee = intval($chargeProcessingFee);
+
+        return $this;
+    }
+
+    /**
+     * Get the value of holdReceivables
+     *
+     * @return  int
+     */
+    public function getHoldReceivables()
+    {
+        return $this->holdReceivables;
+    }
+
+    /**
+     * Set the value of holdReceivables
+     *
+     * @param  int  $holdReceivables
+     *
+     * @return  self
+     */
+    public function setHoldReceivables($holdReceivables = 0)
+    {
+        $this->holdReceivables = (int) $holdReceivables;
 
         return $this;
     }
