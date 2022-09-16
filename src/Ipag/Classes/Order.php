@@ -48,6 +48,11 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     /**
      * @var string
      */
+    private $deviceFingerprint;
+
+    /**
+     * @var string
+     */
     private $acquirerToken;
 
     /**
@@ -229,6 +234,24 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     /**
      * @return string
      */
+    public function getDeviceFingerprint()
+    {
+        return $this->deviceFingerprint;
+    }
+
+    /**
+     * @param string $fingerprint
+     */
+    public function setDeviceFingerprint($deviceFingerprint)
+    {
+        $this->deviceFingerprint = (string) $deviceFingerprint;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getAcquirerToken()
     {
         return $this->acquirerToken;
@@ -394,18 +417,19 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
         }
 
         $_order = [
-            'pedido'            => urlencode($this->getOrderId()),
-            'operacao'          => urlencode($this->getOperation()),
-            'url_retorno'       => urlencode($this->getCallbackUrl()),
-            'valor'             => urlencode($this->getAmount()),
-            'parcelas'          => urlencode($this->getInstallments()),
-            'vencto'            => urlencode($this->getExpiry()),
-            'stelo_fingerprint' => urlencode($this->getFingerprint()),
-            'acquirerToken'     => urlencode($this->getAcquirerToken()),
-            'ip'                => urlencode($this->getIp()),
-            'antifraude'        => urlencode($this->getAntifraud()),
-            'visitorId'         => urlencode($this->getVisitorId()),
-            'captura'           => urlencode($this->getCapture()),
+            'pedido'                => urlencode($this->getOrderId()),
+            'operacao'              => urlencode($this->getOperation()),
+            'url_retorno'           => urlencode($this->getCallbackUrl()),
+            'valor'                 => urlencode($this->getAmount()),
+            'parcelas'              => urlencode($this->getInstallments()),
+            'vencto'                => urlencode($this->getExpiry()),
+            'stelo_fingerprint'     => urlencode($this->getFingerprint()),
+            'device_fingerprint'    => urlencode($this->getDeviceFingerprint()),
+            'acquirerToken'         => urlencode($this->getAcquirerToken()),
+            'ip'                    => urlencode($this->getIp()),
+            'antifraude'            => urlencode($this->getAntifraud()),
+            'visitorId'             => urlencode($this->getVisitorId()),
+            'captura'               => urlencode($this->getCapture()),
         ];
 
         return array_merge(
