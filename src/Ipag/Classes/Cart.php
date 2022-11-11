@@ -68,7 +68,7 @@ final class Cart implements Emptiable, ObjectSerializable
         }
 
         return [
-            'descricao_pedido' => urlencode(json_encode($this->serializeProducts())),
+            'descricao_pedido' => urlencode((string) json_encode($this->serializeProducts())),
         ];
     }
 

@@ -417,19 +417,19 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
         }
 
         $_order = [
-            'pedido'                => urlencode($this->getOrderId()),
-            'operacao'              => urlencode($this->getOperation()),
-            'url_retorno'           => urlencode($this->getCallbackUrl()),
-            'valor'                 => urlencode($this->getAmount()),
-            'parcelas'              => urlencode($this->getInstallments()),
-            'vencto'                => urlencode($this->getExpiry()),
-            'stelo_fingerprint'     => urlencode($this->getFingerprint()),
-            'device_fingerprint'    => urlencode($this->getDeviceFingerprint()),
-            'acquirerToken'         => urlencode($this->getAcquirerToken()),
-            'ip'                    => urlencode($this->getIp()),
-            'antifraude'            => urlencode($this->getAntifraud()),
-            'visitorId'             => urlencode($this->getVisitorId()),
-            'captura'               => urlencode($this->getCapture()),
+            'pedido'                => urlencode((string) $this->getOrderId()),
+            'operacao'              => urlencode((string) $this->getOperation()),
+            'url_retorno'           => urlencode((string) $this->getCallbackUrl()),
+            'valor'                 => urlencode((string) $this->getAmount()),
+            'parcelas'              => urlencode((string) $this->getInstallments()),
+            'vencto'                => urlencode((string) $this->getExpiry()),
+            'stelo_fingerprint'     => urlencode((string) $this->getFingerprint()),
+            'device_fingerprint'    => urlencode((string) $this->getDeviceFingerprint()),
+            'acquirerToken'         => urlencode((string) $this->getAcquirerToken()),
+            'ip'                    => urlencode((string) $this->getIp()),
+            'antifraude'            => urlencode((string) $this->getAntifraud()),
+            'visitorId'             => urlencode((string) $this->getVisitorId()),
+            'captura'               => urlencode((string) $this->getCapture()),
         ];
 
         return array_merge(

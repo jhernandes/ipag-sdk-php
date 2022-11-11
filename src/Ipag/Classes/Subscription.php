@@ -298,16 +298,16 @@ final class Subscription extends BaseResource implements Emptiable, ObjectSerial
         }
 
         return [
-            'profile_id'       => urlencode($this->getProfileId()),
-            'frequencia'       => urlencode($this->getFrequency()),
-            'intervalo'        => urlencode($this->getInterval()),
-            'inicio'           => urlencode($this->getStart()),
-            'ciclos'           => urlencode($this->getCycle()),
-            'valor_rec'        => urlencode($this->getAmount()),
-            'trial'            => urlencode($this->isTrial()),
-            'trial_ciclos'     => urlencode($this->getTrialCycle()),
-            'trial_frequencia' => urlencode($this->getTrialFrequency()),
-            'trial_valor'      => urlencode($this->getTrialAmount()),
+            'profile_id'       => urlencode((string) $this->getProfileId()),
+            'frequencia'       => urlencode((string) $this->getFrequency()),
+            'intervalo'        => urlencode((string) $this->getInterval()),
+            'inicio'           => urlencode((string) $this->getStart()),
+            'ciclos'           => urlencode((string) $this->getCycle()),
+            'valor_rec'        => urlencode((string) $this->getAmount()),
+            'trial'            => urlencode((string) $this->isTrial()),
+            'trial_ciclos'     => urlencode((string) $this->getTrialCycle()),
+            'trial_frequencia' => urlencode((string) $this->getTrialFrequency()),
+            'trial_valor'      => urlencode((string) $this->getTrialAmount()),
         ];
     }
 }

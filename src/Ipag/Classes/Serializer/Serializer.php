@@ -32,8 +32,8 @@ class Serializer implements Serializable
     public function serialize()
     {
         $response = [
-            'identificacao' => urlencode($this->transaction->getIpag()->getAuthentication()->getIdentification()),
-            'transId'       => urlencode($this->transaction->getTid()),
+            'identificacao' => urlencode((string) $this->transaction->getIpag()->getAuthentication()->getIdentification()),
+            'transId'       => urlencode((string) $this->transaction->getTid()),
             'retorno_tipo'  => urlencode('xml'),
         ];
 

@@ -238,14 +238,14 @@ final class CreditCard extends BaseResource implements Emptiable, ObjectSerializ
     private function serializeCreditCardWithNumber()
     {
         $_creditCard = [
-            'num_cartao'  => urlencode($this->getNumber()),
-            'nome_cartao' => urlencode($this->getHolder()),
-            'mes_cartao'  => urlencode($this->getExpiryMonth()),
-            'ano_cartao'  => urlencode($this->getExpiryYear()),
+            'num_cartao'  => urlencode((string) $this->getNumber()),
+            'nome_cartao' => urlencode((string) $this->getHolder()),
+            'mes_cartao'  => urlencode((string) $this->getExpiryMonth()),
+            'ano_cartao'  => urlencode((string) $this->getExpiryYear()),
         ];
 
         if ($this->hasCvc()) {
-            $_creditCard['cvv_cartao'] = urlencode($this->getCvc());
+            $_creditCard['cvv_cartao'] = urlencode((string) $this->getCvc());
         }
 
         if ($this->hasSave()) {
@@ -258,11 +258,11 @@ final class CreditCard extends BaseResource implements Emptiable, ObjectSerializ
     private function serializeCreditCardWithToken()
     {
         $_creditCard = [
-            'token_cartao' => urlencode($this->getToken()),
+            'token_cartao' => urlencode((string) $this->getToken()),
         ];
 
         if ($this->hasCvc()) {
-            $_creditCard['cvv_cartao'] = urlencode($this->getCvc());
+            $_creditCard['cvv_cartao'] = urlencode((string) $this->getCvc());
         }
 
         return $_creditCard;

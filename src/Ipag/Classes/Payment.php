@@ -169,7 +169,7 @@ final class Payment implements Emptiable, ObjectSerializable
 
         return array_merge(
             [
-                'metodo' => urlencode($this->getMethod()),
+                'metodo' => urlencode((string) $this->getMethod()),
             ],
             $this->serializeInstructions(),
             $this->serializeSoftDescriptor(),
@@ -183,12 +183,12 @@ final class Payment implements Emptiable, ObjectSerializable
     {
         $_splitRules = [];
         foreach ($this->getSplitRules() as $key => $splitRule) {
-            $_splitRules["split[{$key}][seller_id]"] = urlencode($splitRule->getSellerId());
-            $_splitRules["split[{$key}][percentage]"] = urlencode($splitRule->getPercentage());
-            $_splitRules["split[{$key}][amount]"] = urlencode($splitRule->getAmount());
-            $_splitRules["split[{$key}][liable]"] = urlencode($splitRule->getLiable());
-            $_splitRules["split[{$key}][charge_processing_fee]"] = urlencode($splitRule->getChargeProcessingFee());
-            $_splitRules["split[{$key}][hold_receivables]"] = urlencode($splitRule->getHoldReceivables());
+            $_splitRules["split[{$key}][seller_id]"] = urlencode((string) $splitRule->getSellerId());
+            $_splitRules["split[{$key}][percentage]"] = urlencode((string) $splitRule->getPercentage());
+            $_splitRules["split[{$key}][amount]"] = urlencode((string) $splitRule->getAmount());
+            $_splitRules["split[{$key}][liable]"] = urlencode((string) $splitRule->getLiable());
+            $_splitRules["split[{$key}][charge_processing_fee]"] = urlencode((string) $splitRule->getChargeProcessingFee());
+            $_splitRules["split[{$key}][hold_receivables]"] = urlencode((string) $splitRule->getHoldReceivables());
         }
 
         return $_splitRules;
@@ -198,7 +198,7 @@ final class Payment implements Emptiable, ObjectSerializable
     {
         $_instructions = [];
         foreach ($this->getInstructions() as $key => $instruction) {
-            $_instructions["instrucoes[{$key}]"] = urlencode($instruction);
+            $_instructions["instrucoes[{$key}]"] = urlencode((string) $instruction);
         }
 
         return $_instructions;
@@ -210,7 +210,7 @@ final class Payment implements Emptiable, ObjectSerializable
         $softDescriptor = $this->getSoftDescriptor();
 
         if (!empty($softDescriptor)) {
-            $_softDescriptor['softdescriptor'] = urlencode($softDescriptor);
+            $_softDescriptor['softdescriptor'] = urlencode((string) $softDescriptor);
         }
 
         return $_softDescriptor;
@@ -222,7 +222,7 @@ final class Payment implements Emptiable, ObjectSerializable
         $pixExpiresIn = $this->getPixExpiresIn();
 
         if (!empty($pixExpiresIn)) {
-            $_pixExpiresIn['pix_expires_in'] = urlencode($pixExpiresIn);
+            $_pixExpiresIn['pix_expires_in'] = urlencode((string) $pixExpiresIn);
         }
 
         return $_pixExpiresIn;

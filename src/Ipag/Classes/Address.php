@@ -205,14 +205,14 @@ final class Address extends BaseResource implements Emptiable, ObjectSerializabl
         }
 
         return [
-            'endereco'        => urlencode($this->getStreet()),
-            'numero_endereco' => urlencode($this->getNumber()),
-            'complemento'     => urlencode($this->getComplement()),
-            'bairro'          => urlencode($this->getNeighborhood()),
-            'cidade'          => urlencode($this->getCity()),
-            'estado'          => urlencode($this->getState()),
-            'pais'            => urlencode($this->getCountry()),
-            'cep'             => urlencode($this->getZipCode()),
+            'endereco'        => urlencode((string) $this->getStreet()),
+            'numero_endereco' => urlencode((string) $this->getNumber()),
+            'complemento'     => urlencode((string) $this->getComplement()),
+            'bairro'          => urlencode((string) $this->getNeighborhood()),
+            'cidade'          => urlencode((string) $this->getCity()),
+            'estado'          => urlencode((string) $this->getState()),
+            'pais'            => urlencode((string) $this->getCountry()),
+            'cep'             => urlencode((string) $this->getZipCode()),
         ];
     }
 }

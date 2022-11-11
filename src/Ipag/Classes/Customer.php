@@ -101,7 +101,7 @@ final class Customer extends BaseResource implements Emptiable, ObjectSerializab
             $this->phone = new Phone();
         }
 
-        return $this->phone->getAreaCode().$this->phone->getNumber();
+        return $this->phone->getAreaCode() . $this->phone->getNumber();
     }
 
     /**
@@ -206,11 +206,11 @@ final class Customer extends BaseResource implements Emptiable, ObjectSerializab
 
         return array_merge(
             [
-                'nome'      => urlencode($this->getName()),
-                'email'     => urlencode($this->getEmail()),
-                'doc'       => urlencode($this->getTaxpayerId()),
-                'fone'      => urlencode($this->getPhone()),
-                'birthdate' => urlencode($this->getBirthdate()),
+                'nome'      => urlencode((string) $this->getName()),
+                'email'     => urlencode((string) $this->getEmail()),
+                'doc'       => urlencode((string) $this->getTaxpayerId()),
+                'fone'      => urlencode((string) $this->getPhone()),
+                'birthdate' => urlencode((string) $this->getBirthdate()),
             ],
             $this->getAddress()->serialize()
         );

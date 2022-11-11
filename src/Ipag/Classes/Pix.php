@@ -62,8 +62,8 @@ final class Pix extends BaseResource implements Emptiable
         }
 
         return [
-            'link'   => urlencode($this->getLink()),
-            'qrCode' => urlencode($this->getQrCode()),
+            'link'   => urlencode((string) $this->getLink()),
+            'qrCode' => urlencode((string) $this->getQrCode()),
         ];
     }
 }
