@@ -47,6 +47,7 @@ final class TransactionResponseService implements Populable
         $transaction->tid = $this->getObjectUtil()->getProperty($response, 'id_transacao');
         $transaction->authId = $this->getObjectUtil()->getProperty($response, 'autorizacao_id');
         $transaction->amount = $this->getObjectUtil()->getProperty($response, 'valor');
+        $transaction->installments = $this->getObjectUtil()->getProperty($response, 'parcelas');
         $transaction->acquirer = $this->getObjectUtil()->getProperty($response, 'operadora');
         $transaction->acquirerMessage = $this->getObjectUtil()->getProperty($response, 'operadora_mensagem');
         $transaction->urlAuthentication = $this->getObjectUtil()->getProperty($response, 'url_autenticacao');
