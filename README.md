@@ -1,18 +1,27 @@
 # iPag PHP client SDK
-> A ferramenta certa para uma rápida e segura integração com o iPag e a sua aplicação PHP
 
-> SDK Status
+## AVISO - SDK Abandonado
+
+Este SDK foi abandonado e não será mais mantido. Para utilizar o iPag em sua loja, utilize através do projeto oficial do iPag: [ipag-sdk-php](https://github.com/ipagdevs/ipag-sdk-php).
+
+Não há necessidade de migrar seu projeto atual para o novo SDK, pois este ainda ficará disponível para uso. Mas se for iniciar um novo projeto, utilize o SDK oficial.
+
+### SDK Status
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jhernandes/ipag-sdk-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jhernandes/ipag-sdk-php/?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a2ca7f797ac6f1084129/maintainability)](https://codeclimate.com/github/jhernandes/ipag-sdk-php/maintainability)
-[![StyleCI](https://styleci.io/repos/115621915/shield?branch=master)](https://styleci.io/repos/115621915)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1c91d5c5f9a7465bae8ad4c3ee33f232)](https://www.codacy.com/app/jhernandes/ipag-sdk-php?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jhernandes/ipag-sdk-php&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/1c91d5c5f9a7465bae8ad4c3ee33f232)](https://www.codacy.com/app/jhernandes/ipag-sdk-php?utm_source=github.com&utm_medium=referral&utm_content=jhernandes/ipag-sdk-php&utm_campaign=Badge_Coverage)
+<!-- [![StyleCI](https://styleci.io/repos/115621915/shield?branch=master)](https://styleci.io/repos/115621915) -->
+<!-- [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1c91d5c5f9a7465bae8ad4c3ee33f232)](https://www.codacy.com/app/jhernandes/ipag-sdk-php?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jhernandes/ipag-sdk-php&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/1c91d5c5f9a7465bae8ad4c3ee33f232)](https://www.codacy.com/app/jhernandes/ipag-sdk-php?utm_source=github.com&utm_medium=referral&utm_content=jhernandes/ipag-sdk-php&utm_campaign=Badge_Coverage) -->
 [![Build Status](https://scrutinizer-ci.com/g/jhernandes/ipag-sdk-php/badges/build.png?b=master)](https://scrutinizer-ci.com/g/jhernandes/ipag-sdk-php/build-status/master)
 ---
 
 **Índice**
 
+- [iPag PHP client SDK](#ipag-php-client-sdk)
+  - [AVISO - SDK Abandonado](#aviso---sdk-abandonado)
+    - [SDK Status](#sdk-status)
+  - [](#)
   - [Dependências](#dependências)
   - [Instalação](#instalação)
   - [Autenticação](#autenticação)
@@ -45,7 +54,7 @@
   - [Testes](#testes)
   - [Licença](#licença)
   - [Documentação](#documentação)
-  - [Dúvidas & Sugestões](#dúvidas--sugestões)
+  - [Dúvidas \& Sugestões](#dúvidas--sugestões)
 
 ## Dependências
 
