@@ -615,7 +615,7 @@ Os Tests Unitários são realizados contra o Sandbox do iPag, o arquivo de confi
 
 ## Documentação
 
-[Documentação Oficial](https://docs.ipag.com.br)
+[Documentação Oficial](https://developers.ipag.com.br)
 
 ## Dúvidas & Sugestões
 
