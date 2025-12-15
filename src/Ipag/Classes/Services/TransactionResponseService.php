@@ -54,6 +54,7 @@ final class TransactionResponseService implements Populable
         $transaction->urlAuthentication = $this->getObjectUtil()->getProperty($response, 'url_autenticacao');
         $transaction->digitableLine = $this->getObjectUtil()->getProperty($response, 'linha_digitavel');
         $transaction->urlCallback = $this->getObjectUtil()->getProperty($response, 'url_retorno');
+        $transaction->urlRedirect = $this->getObjectUtil()->getProperty($response, 'url_redirect');
         $transaction->createAt = $this->getObjectUtil()->getProperty($response, 'criado_em');
         $transaction->payment = $this->payment($response);
         $transaction->order = $this->order($response);

@@ -26,6 +26,11 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     private $callbackUrl;
 
     /**
+     * @var string
+     */
+    private $redirectUrl;
+
+    /**
      * @var float
      */
     private $amount;
@@ -125,6 +130,14 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getRedirectUrl()
+    {
+        return $this->redirectUrl;
+    }
+
+    /**
      * @return float
      */
     public function getAmount()
@@ -166,6 +179,16 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
     public function setCallbackUrl($callbackUrl)
     {
         $this->callbackUrl = substr((string) $callbackUrl, 0, 255);
+
+        return $this;
+    }
+
+    /**
+     * @param string $redirectUrl
+     */
+    public function setRedirectUrl($redirectUrl)
+    {
+        $this->redirectUrl = substr((string) $redirectUrl, 0, 255);
 
         return $this;
     }
@@ -420,6 +443,7 @@ final class Order extends BaseResource implements Emptiable, ObjectSerializable
             'pedido'                => urlencode((string) $this->getOrderId()),
             'operacao'              => urlencode((string) $this->getOperation()),
             'url_retorno'           => urlencode((string) $this->getCallbackUrl()),
+            'url_redirect'          => urlencode((string) $this->getRedirectUrl()),
             'valor'                 => urlencode((string) $this->getAmount()),
             'parcelas'              => urlencode((string) $this->getInstallments()),
             'vencto'                => urlencode((string) $this->getExpiry()),

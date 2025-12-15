@@ -21,6 +21,8 @@ final class Transaction extends IpagResource
      */
     private $tid;
 
+    private $numPedido;
+
     public function __construct(Ipag $ipag)
     {
         parent::__construct($ipag);
@@ -41,6 +43,24 @@ final class Transaction extends IpagResource
     public function setTid($tid)
     {
         $this->tid = $tid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNumPedido()
+    {
+        return $this->numPedido;
+    }
+
+    /**
+     * @param string $numPedido
+     */
+    public function setNumPedido($numPedido)
+    {
+        $this->numPedido = $numPedido;
 
         return $this;
     }
