@@ -21,6 +21,9 @@ final class Transaction extends IpagResource
      */
     private $tid;
 
+    /**
+     * @var string
+     */
     private $numPedido;
 
     public function __construct(Ipag $ipag)
